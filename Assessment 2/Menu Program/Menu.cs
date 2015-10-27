@@ -11,9 +11,72 @@ namespace Menu_Program
     //Last Modified: 20/10/2015
     public class Menu
     {
+        private string description;
+        private Boolean veg;
+        private int price;
         public Menu()
         {
 
+        }
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+        public Boolean Vegetarian
+        {
+            get { return veg; }
+            set { veg = value; }
+        }
+        public int Price
+        {
+            get { return price; }
+            set { price = value;}
+        }
+
+    }
+    public class SitinOrder : Menu
+    {
+        private int table;
+        private int items;
+        public SitinOrder()
+        {
+
+        }
+        public int Table
+        {
+            get { return table; }
+            set { table = value; }
+        }
+        public int Items
+        {
+            get { return items; }
+            set { items = value; }
+        }
+    }
+    public class deliveryOrder : Menu
+    {
+        private string name;
+        private string address;
+        private int items;
+        public deliveryOrder()
+        {
+
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+        public int Items
+        {
+            get { return items; }
+            set { items = value; }
         }
     }
 }

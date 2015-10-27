@@ -67,7 +67,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu.cs" />
+    <Compile Include="Menu.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -23,24 +23,28 @@ namespace Menu_Program
     {
         int filelength = 0;
         public string[,] menu = new string[100,5];
+        public string[,] server = new string[100, 2];
         string menupath = @"..\..\menu.txt";
-        string filepath;
+        string serverpath = @"..\..\server.txt";
+        string menufilepath;
+        string serverfilepath;
         public MainWindow()
         {
             InitializeComponent();
-            filepath = System.IO.Path.GetFullPath(menupath);
-            
+            menufilepath = System.IO.Path.GetFullPath(menupath);
+            serverfilepath = System.IO.Path.GetFullPath(serverpath);  
             readin();
         }
 
         private void readin()
         {
-            using (StreamReader r = new StreamReader(filepath))
+            //read in menu text file
+            using (StreamReader r = new StreamReader(menufilepath))
             {
                 while (r.ReadLine() != null) { filelength++; }
             }
             int i = 1;
-            string[] file = System.IO.File.ReadAllLines(filepath);
+            string[] file = System.IO.File.ReadAllLines(menufilepath);
             int len = file.Length;
             while (i < (len))
             {
@@ -54,7 +58,28 @@ namespace Menu_Program
                 }
                 i++;
             }
-            int k = 1;
+            filelength = 0;
+            //read in server text file
+            using (StreamReader r = new StreamReader(serverfilepath))
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            i = 1;
+            file = System.IO.File.ReadAllLines(serverfilepath);
+            len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    server[i, j] = buffer;
+                    j++;
+                }
+                serverlist.Items.Add(server[i, 0]);
+                i++;
+            }
         }
 
 
