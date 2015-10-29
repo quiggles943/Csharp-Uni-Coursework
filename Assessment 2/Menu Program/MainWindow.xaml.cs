@@ -86,7 +86,7 @@ namespace Menu_Program
 
         private void serverlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            serverstatusbox.Content = serverlist.SelectedItem;
+            
         }
 
         private void logonbtn_Click(object sender, RoutedEventArgs e)
@@ -96,10 +96,27 @@ namespace Menu_Program
                 isloggedin = true;
                 foodlistbox.IsEnabled = true;
                 serverlist.IsEnabled = false;
+                serverstatusbox.Content = serverlist.SelectedItem;
             }
             else
                 return;
 
+        }
+
+        private void foodlistbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (foodlistbox.SelectedIndex == -1)
+            {
+                orderlistbox.IsEnabled = false;
+            }
+            else
+                orderlistbox.IsEnabled = true;
+
+        }
+
+        private void addtobtn_Click(object sender, RoutedEventArgs e)
+        {
+            orderlistbox.Items.Add(foodlistbox.SelectedItem);
         }
 
 

@@ -9,7 +9,11 @@
         <Label x:Name="serverstatusbox" Content="hello" Height="23" Margin="499,0,0,7" VerticalAlignment="Bottom"/>
         <Label Content="Select Server:" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top"/>
         <Button x:Name="logonbtn" Content="Logon" HorizontalAlignment="Left" Margin="244,25,0,0" VerticalAlignment="Top" Width="75" Click="logonbtn_Click"/>
-        <ListBox x:Name="foodlistbox" HorizontalAlignment="Left" Height="125" Margin="20,88,0,0" VerticalAlignment="Top" Width="111" IsEnabled="False"/>
+        <ListBox x:Name="foodlistbox" HorizontalAlignment="Left" Height="125" Margin="20,126,0,0" VerticalAlignment="Top" Width="111" IsEnabled="False" SelectionChanged="foodlistbox_SelectionChanged"/>
+        <ListBox x:Name="orderlistbox" HorizontalAlignment="Left" Height="177" Margin="276,126,0,0" VerticalAlignment="Top" Width="114"/>
+        <Button x:Name="addtobtn" Content="Add to Order -&gt;" HorizontalAlignment="Left" Height="21" Margin="150,178,0,0" VerticalAlignment="Top" Width="96" Click="addtobtn_Click"/>
+        <RadioButton x:Name="sitinradbtn" Content="Sit-in" HorizontalAlignment="Left" Margin="49,69,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="takeawayradbtn" Content="Take-away" HorizontalAlignment="Left" Margin="164,69,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
