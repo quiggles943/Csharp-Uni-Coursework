@@ -45,9 +45,11 @@ namespace Menu_Program
     {
         private int table;
         private int items;
-        public SitinOrder()
+        public SitinOrder(string desc, bool veg, int price)
         {
-
+            Description = desc;
+            Vegetarian = veg;
+            Price = price;
         }
         public int Table
         {
@@ -65,9 +67,11 @@ namespace Menu_Program
         private string name;
         private string address;
         private int items;
-        public deliveryOrder()
+        public deliveryOrder(string desc, bool veg, int price)
         {
-
+            Description = desc;
+            Vegetarian = veg;
+            Price = price;
         }
         public string Name
         {

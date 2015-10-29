@@ -28,17 +28,23 @@ namespace Menu_Program
         string serverpath = @"..\..\server.txt";
         string menufilepath;
         string serverfilepath;
-        bool isloggedin = false;
+        bool optionselected = false;
+        bool sitin;
+        double subtotal;
         IDictionary<string, Menu> menuitems = new Dictionary<string, Menu>();
+        IDictionary<string, SitinOrder> sitinmenuitems = new Dictionary<string, SitinOrder>();
+        IDictionary<string, deliveryOrder> deliverymenuitems = new Dictionary<string, deliveryOrder>();
         public MainWindow()
         {
             InitializeComponent();
+            tablebox.Visibility = Visibility.Hidden;
+            tabletxt.Visibility = Visibility.Hidden;
             menufilepath = System.IO.Path.GetFullPath(menupath);
-            serverfilepath = System.IO.Path.GetFullPath(serverpath);  
-            readin();
+            serverfilepath = System.IO.Path.GetFullPath(serverpath);
+            readinservers();
         }
 
-        private void readin()
+        private void menureadin()
         {
             //read in menu text file
             using (StreamReader r = new StreamReader(menufilepath))
@@ -64,19 +70,25 @@ namespace Menu_Program
                     case "Y": theanswer = true; break;
                     case "N": theanswer = false; break;
                 }
-                menuitems[menu[i, 0]] = new Menu(menu[i, 0],theanswer ,Int32.Parse(menu[i, 1])); 
+                if(sitin)
+                    menuitems[menu[i, 0]] = new SitinOrder(menu[i, 0],theanswer ,Int32.Parse(menu[i, 1])); 
+                else
+                    menuitems[menu[i, 0]] = new deliveryOrder(menu[i, 0], theanswer, Int32.Parse(menu[i, 1]));
                 foodlistbox.Items.Add(menu[i, 0]);
                 i++;
             }
             filelength = 0;
+        }
+        public void readinservers()
+        {
             //read in server text file
             using (StreamReader r = new StreamReader(serverfilepath))
             {
                 while (r.ReadLine() != null) { filelength++; }
             }
-            i = 1;
-            file = System.IO.File.ReadAllLines(serverfilepath);
-            len = file.Length;
+            int i = 1;
+            string [] file = System.IO.File.ReadAllLines(serverfilepath);
+            int len = file.Length;
             while (i < (len))
             {
                 string[] column = file[i].Split('\t');
@@ -101,8 +113,6 @@ namespace Menu_Program
         {
             if (serverlist.SelectedIndex != -1)
             {
-                isloggedin = true;
-                foodlistbox.IsEnabled = true;
                 serverlist.IsEnabled = false;
                 serverstatusbox.Content = serverlist.SelectedItem;
             }
@@ -126,8 +136,34 @@ namespace Menu_Program
         {
             
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
-            string buffer = foodlistbox.SelectedItem.ToString();
-            price.Content =  menuitems[buffer].Price;
+            subtotal  = subtotal + menuitems[foodlistbox.SelectedItem.ToString()].Price;
+            subtotallabel.Content = (subtotal/100);
+        }
+
+        private void sitinradbtn_Checked(object sender, RoutedEventArgs e)
+        {
+            sitin = true;
+            tablebox.Visibility = Visibility.Visible;
+            tabletxt.Visibility = Visibility.Visible;
+             
+        }
+
+        private void takeawayradbtn_Checked(object sender, RoutedEventArgs e)
+        {
+            sitin = false;
+            tablebox.Visibility = Visibility.Hidden;
+            tabletxt.Visibility = Visibility.Hidden;
+            tabletxt.Content = "";
+            
+            
+        }
+
+        private void selectbtn_Click(object sender, RoutedEventArgs e)
+        {
+            menureadin();
+            sitinradbtn.IsEnabled = false;
+            takeawayradbtn.IsEnabled = false;
+            foodlistbox.IsEnabled = true;
         }
 
 
