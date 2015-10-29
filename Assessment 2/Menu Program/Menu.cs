@@ -54,7 +54,11 @@ namespace Menu_Program
         public int Table
         {
             get { return table; }
-            set { table = value; }
+            set
+            {
+
+                table = value; 
+            }
         }
         public int Items
         {

@@ -9,19 +9,23 @@
         <Label x:Name="serverstatusbox" Content="hello" Height="23" Margin="499,0,0,7" VerticalAlignment="Bottom"/>
         <Label Content="Select Server:" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top"/>
         <Button x:Name="logonbtn" Content="Logon" HorizontalAlignment="Left" Margin="244,25,0,0" VerticalAlignment="Top" Width="75" Click="logonbtn_Click"/>
-        <ListBox x:Name="foodlistbox" HorizontalAlignment="Left" Height="125" Margin="20,126,0,0" VerticalAlignment="Top" Width="111" IsEnabled="False" SelectionChanged="foodlistbox_SelectionChanged"/>
+        <ListBox x:Name="foodlistbox" HorizontalAlignment="Left" Height="125" Margin="22,173,0,0" VerticalAlignment="Top" Width="111" IsEnabled="False" SelectionChanged="foodlistbox_SelectionChanged"/>
         <ListBox x:Name="orderlistbox" HorizontalAlignment="Left" Height="177" Margin="276,126,0,0" VerticalAlignment="Top" Width="114"/>
         <Button x:Name="addtobtn" Content="Add to Order -&gt;" HorizontalAlignment="Left" Height="21" Margin="150,178,0,0" VerticalAlignment="Top" Width="96" Click="addtobtn_Click"/>
         <RadioButton x:Name="sitinradbtn" Content="Sit-in" HorizontalAlignment="Left" Margin="49,69,0,0" VerticalAlignment="Top" Checked="sitinradbtn_Checked"/>
         <RadioButton x:Name="takeawayradbtn" Content="Take-away" HorizontalAlignment="Left" Margin="174,69,0,0" VerticalAlignment="Top" Checked="takeawayradbtn_Checked"/>
-        <Label x:Name="subtotallabel" Content="Label" HorizontalAlignment="Left" Margin="319,308,0,0" VerticalAlignment="Top" Width="60"/>
+        <Label x:Name="subtotallabel" Content="0.00" HorizontalAlignment="Left" Margin="319,308,0,0" VerticalAlignment="Top" Width="60"/>
         <Label Content="Bill Sub-Total: £" HorizontalAlignment="Left" Margin="236,308,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="tabletxt" Content="Table:" HorizontalAlignment="Left" Margin="20,266,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tablebox" HorizontalAlignment="Left" Height="23" Margin="66,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"/>
+        <Label x:Name="tablelabel" Content="Table:" HorizontalAlignment="Left" Margin="22,114,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tablebox" HorizontalAlignment="Left" Height="23" Margin="68,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"/>
         <Button x:Name="selectbtn" Content="Select" HorizontalAlignment="Left" Margin="95,90,0,0" VerticalAlignment="Top" Width="76" Click="selectbtn_Click"/>
-        <Label Content="Table" HorizontalAlignment="Left" Margin="276,100,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="tabletxt1" Content="00" HorizontalAlignment="Left" Margin="306,100,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="addtablebtn" Content="Add Table" HorizontalAlignment="Left" Margin="34,297,0,0" VerticalAlignment="Top" Width="77"/>
+        <Label x:Name="destinationlabel" Content="Table" HorizontalAlignment="Left" Margin="276,100,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="tabletxt" Content="00" HorizontalAlignment="Left" Margin="306,100,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="addtablebtn" Content="Add Table" HorizontalAlignment="Left" Margin="36,145,0,0" VerticalAlignment="Top" Width="77" Click="addtablebtn_Click"/>
+        <Button x:Name="clearbtn" Content="Clear" HorizontalAlignment="Left" Margin="36,337,0,0" VerticalAlignment="Top" Width="75" Click="clearbtn_Click"/>
+        <Label Content="Bill Total: £" HorizontalAlignment="Left" Margin="236,341,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="totallabel" Content="0.00" HorizontalAlignment="Left" Margin="294,341,0,0" VerticalAlignment="Top" Width="60"/>
+        <Button x:Name="totalbtn" Content="Total" HorizontalAlignment="Left" Margin="359,343,0,0" VerticalAlignment="Top" Width="48" Click="totalbtn_Click"/>
 
     </Grid>
 </Window>

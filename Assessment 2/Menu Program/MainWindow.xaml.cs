@@ -31,6 +31,7 @@ namespace Menu_Program
         bool optionselected = false;
         bool sitin;
         double subtotal;
+        int table;
         IDictionary<string, Menu> menuitems = new Dictionary<string, Menu>();
         IDictionary<string, SitinOrder> sitinmenuitems = new Dictionary<string, SitinOrder>();
         IDictionary<string, deliveryOrder> deliverymenuitems = new Dictionary<string, deliveryOrder>();
@@ -39,6 +40,13 @@ namespace Menu_Program
             InitializeComponent();
             tablebox.Visibility = Visibility.Hidden;
             tabletxt.Visibility = Visibility.Hidden;
+            addtablebtn.Visibility = Visibility.Hidden;
+            tablelabel.Visibility = Visibility.Hidden;
+            tablebox.Visibility = Visibility.Hidden;
+            destinationlabel.Visibility = Visibility.Hidden;
+            orderlistbox.IsEnabled = false;
+            sitinradbtn.IsEnabled = false;
+            takeawayradbtn.IsEnabled = false;
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
             readinservers();
@@ -115,6 +123,8 @@ namespace Menu_Program
             {
                 serverlist.IsEnabled = false;
                 serverstatusbox.Content = serverlist.SelectedItem;
+                sitinradbtn.IsEnabled = true;
+                takeawayradbtn.IsEnabled = true;
             }
             else
                 return;
@@ -134,10 +144,14 @@ namespace Menu_Program
 
         private void addtobtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (foodlistbox.SelectedIndex == -1)
+                return;
+            double buffer = 0;
+            buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
+            buffer = (buffer / 100);
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
-            subtotal  = subtotal + menuitems[foodlistbox.SelectedItem.ToString()].Price;
-            subtotallabel.Content = (subtotal/100);
+            subtotal  = subtotal + buffer;
+            subtotallabel.Content = subtotal;
         }
 
         private void sitinradbtn_Checked(object sender, RoutedEventArgs e)
@@ -145,6 +159,7 @@ namespace Menu_Program
             sitin = true;
             tablebox.Visibility = Visibility.Visible;
             tabletxt.Visibility = Visibility.Visible;
+            destinationlabel.Content = "Table";
              
         }
 
@@ -154,16 +169,86 @@ namespace Menu_Program
             tablebox.Visibility = Visibility.Hidden;
             tabletxt.Visibility = Visibility.Hidden;
             tabletxt.Content = "";
+            destinationlabel.Content = "";
             
             
         }
 
         private void selectbtn_Click(object sender, RoutedEventArgs e)
         {
-            menureadin();
+            if (sitin == false)
+            {
+                menureadin();
+                foodlistbox.IsEnabled = true;
+                addtablebtn.Visibility = Visibility.Hidden;
+                tablelabel.Visibility = Visibility.Hidden;
+                tablebox.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                addtablebtn.Visibility = Visibility.Visible;
+                tablelabel.Visibility = Visibility.Visible;
+                tablebox.Visibility = Visibility.Visible;
+                
+            }
+            destinationlabel.Visibility = Visibility.Visible;
+            addtobtn.IsEnabled = true;
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
-            foodlistbox.IsEnabled = true;
+            
+        }
+
+        private void addtablebtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Int32.Parse(tablebox.Text) < 1 || Int32.Parse(tablebox.Text) > 20)
+                    throw new ArgumentException("Table number invalid");
+                table = Int32.Parse(tablebox.Text);
+                tabletxt.Content = table;
+                if(sitin)
+                {
+                    menureadin();
+                    foodlistbox.IsEnabled = true;
+                }
+                addtablebtn.IsEnabled = false;
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "error");
+            }
+        }
+
+        private void clearbtn_Click(object sender, RoutedEventArgs e)
+        {
+            tablebox.Clear();
+            subtotal = 0;
+            subtotallabel.Content = "0.00";
+            totallabel.Content = "0.00";
+            table = 0;
+            tabletxt.Content = "";
+            tablelabel.Visibility = Visibility.Hidden;
+            addtablebtn.Visibility = Visibility.Hidden;
+            tablelabel.Visibility = Visibility.Hidden;
+            tablebox.Visibility = Visibility.Hidden;
+            destinationlabel.Visibility = Visibility.Hidden;
+            addtablebtn.IsEnabled = true;
+            sitinradbtn.IsEnabled = true;
+            takeawayradbtn.IsEnabled = true;
+            foodlistbox.Items.Clear();
+            foodlistbox.IsEnabled = false;
+            orderlistbox.Items.Clear();
+        }
+
+        private void totalbtn_Click(object sender, RoutedEventArgs e)
+        {
+            orderlistbox.IsEnabled = false;
+            foodlistbox.IsEnabled = false;
+            addtobtn.IsEnabled = false;
+            if (sitin)
+                totallabel.Content = subtotal;
+            else
+                totallabel.Content = subtotal + (subtotal * 0.15);
         }
 
 
