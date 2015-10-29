@@ -28,6 +28,7 @@ namespace Menu_Program
         string serverpath = @"..\..\server.txt";
         string menufilepath;
         string serverfilepath;
+        bool isloggedin = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -56,6 +57,7 @@ namespace Menu_Program
                     menu[i, j] = buffer;
                     j++;
                 }
+                foodlistbox.Items.Add(menu[i, 0]);
                 i++;
             }
             filelength = 0;
@@ -80,6 +82,24 @@ namespace Menu_Program
                 serverlist.Items.Add(server[i, 0]);
                 i++;
             }
+        }
+
+        private void serverlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            serverstatusbox.Content = serverlist.SelectedItem;
+        }
+
+        private void logonbtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (serverlist.SelectedIndex != -1)
+            {
+                isloggedin = true;
+                foodlistbox.IsEnabled = true;
+                serverlist.IsEnabled = false;
+            }
+            else
+                return;
+
         }
 
 
