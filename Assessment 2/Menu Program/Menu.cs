@@ -18,6 +18,12 @@ namespace Menu_Program
         {
 
         }
+        public Menu(string desc, bool veg, int price)
+        {
+            Description = desc;
+            Vegetarian = veg;
+            Price = price;
+        }
         public string Description
         {
             get { return description; }

@@ -14,6 +14,7 @@
         <Button x:Name="addtobtn" Content="Add to Order -&gt;" HorizontalAlignment="Left" Height="21" Margin="150,178,0,0" VerticalAlignment="Top" Width="96" Click="addtobtn_Click"/>
         <RadioButton x:Name="sitinradbtn" Content="Sit-in" HorizontalAlignment="Left" Margin="49,69,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="takeawayradbtn" Content="Take-away" HorizontalAlignment="Left" Margin="164,69,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="price" Content="Label" HorizontalAlignment="Left" Margin="329,335,0,0" VerticalAlignment="Top" Width="87"/>
 
     </Grid>
 </Window>

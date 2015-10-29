@@ -29,6 +29,7 @@ namespace Menu_Program
         string menufilepath;
         string serverfilepath;
         bool isloggedin = false;
+        IDictionary<string, Menu> menuitems = new Dictionary<string, Menu>();
         public MainWindow()
         {
             InitializeComponent();
@@ -57,6 +58,13 @@ namespace Menu_Program
                     menu[i, j] = buffer;
                     j++;
                 }
+                bool theanswer = false;
+                switch (menu[i,2])
+                {
+                    case "Y": theanswer = true; break;
+                    case "N": theanswer = false; break;
+                }
+                menuitems[menu[i, 0]] = new Menu(menu[i, 0],theanswer ,Int32.Parse(menu[i, 1])); 
                 foodlistbox.Items.Add(menu[i, 0]);
                 i++;
             }
@@ -116,7 +124,10 @@ namespace Menu_Program
 
         private void addtobtn_Click(object sender, RoutedEventArgs e)
         {
+            
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
+            string buffer = foodlistbox.SelectedItem.ToString();
+            price.Content =  menuitems[buffer].Price;
         }
 
 
