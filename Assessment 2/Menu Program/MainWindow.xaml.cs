@@ -32,9 +32,12 @@ namespace Menu_Program
         bool sitin;
         double subtotal;
         int table;
+        int itemsordered = 0;
         IDictionary<string, Menu> menuitems = new Dictionary<string, Menu>();
         IDictionary<string, SitinOrder> sitinmenuitems = new Dictionary<string, SitinOrder>();
         IDictionary<string, deliveryOrder> deliverymenuitems = new Dictionary<string, deliveryOrder>();
+        deliveryOrder d = new deliveryOrder();
+        SitinOrder s = new SitinOrder();
         public MainWindow()
         {
             InitializeComponent();
@@ -78,6 +81,7 @@ namespace Menu_Program
                     case "Y": theanswer = true; break;
                     case "N": theanswer = false; break;
                 }
+                menuitems[menu[i, 0]] = new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1]));
                 if(sitin)
                     menuitems[menu[i, 0]] = new SitinOrder(menu[i, 0],theanswer ,Int32.Parse(menu[i, 1])); 
                 else
@@ -147,11 +151,22 @@ namespace Menu_Program
             if (foodlistbox.SelectedIndex == -1)
                 return;
             double buffer = 0;
-            buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
-            buffer = (buffer / 100);
+            if (sitin)
+            {
+                buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
+                buffer = (buffer / 100);
+                s.Items[itemsordered] = menuitems[foodlistbox.SelectedItem.ToString()];
+            }
+            else
+            {
+                buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
+                buffer = (buffer / 100);
+                d.Items[itemsordered] = menuitems[foodlistbox.SelectedItem.ToString()];
+            }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + buffer;
             subtotallabel.Content = subtotal;
+            itemsordered++;
         }
 
         private void sitinradbtn_Checked(object sender, RoutedEventArgs e)
@@ -183,6 +198,7 @@ namespace Menu_Program
                 addtablebtn.Visibility = Visibility.Hidden;
                 tablelabel.Visibility = Visibility.Hidden;
                 tablebox.Visibility = Visibility.Hidden;
+                
             }
             else
             {

@@ -44,7 +44,11 @@ namespace Menu_Program
     public class SitinOrder : Menu
     {
         private int table;
-        private int items;
+        private Object[] items;
+        public SitinOrder()
+        {
+
+        }
         public SitinOrder(string desc, bool veg, int price)
         {
             Description = desc;
@@ -60,17 +64,24 @@ namespace Menu_Program
                 table = value; 
             }
         }
-        public int Items
+        public Object[] Items
         {
             get { return items; }
-            set { items = value; }
+            set
+            {
+                items = value;
+            }
         }
     }
     public class deliveryOrder : Menu
     {
         private string name;
         private string address;
-        private int items;
+        private Object[] items;
+        public deliveryOrder()
+        {
+
+        }
         public deliveryOrder(string desc, bool veg, int price)
         {
             Description = desc;
@@ -87,10 +98,13 @@ namespace Menu_Program
             get { return address; }
             set { address = value; }
         }
-        public int Items
+        public Object[] Items
         {
             get { return items; }
-            set { items = value; }
+            set
+            {
+                items = value;
+            }
         }
     }
 }
