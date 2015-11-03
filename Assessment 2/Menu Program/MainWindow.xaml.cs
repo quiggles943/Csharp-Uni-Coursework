@@ -47,6 +47,11 @@ namespace Menu_Program
             tablelabel.Visibility = Visibility.Hidden;
             tablebox.Visibility = Visibility.Hidden;
             destinationlabel.Visibility = Visibility.Hidden;
+            detailsbtn.Visibility = Visibility.Hidden;
+            nametxtbox.Visibility = Visibility.Hidden;
+            addresstxtbox.Visibility = Visibility.Hidden;
+            namelabel.Visibility = Visibility.Hidden;
+            addresslabel.Visibility = Visibility.Hidden;
             orderlistbox.IsEnabled = false;
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
@@ -161,7 +166,7 @@ namespace Menu_Program
             {
                 buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
                 buffer = (buffer / 100);
-                d.Items[itemsordered] = menuitems[foodlistbox.SelectedItem.ToString()];
+                d.Dishes(menuitems[foodlistbox.SelectedItem.ToString()]);
             }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + buffer;
@@ -191,21 +196,23 @@ namespace Menu_Program
 
         private void selectbtn_Click(object sender, RoutedEventArgs e)
         {
-            if (sitin == false)
-            {
-                menureadin();
-                foodlistbox.IsEnabled = true;
-                addtablebtn.Visibility = Visibility.Hidden;
-                tablelabel.Visibility = Visibility.Hidden;
-                tablebox.Visibility = Visibility.Hidden;
-                
-            }
-            else
+
+            if (sitin)
             {
                 addtablebtn.Visibility = Visibility.Visible;
                 tablelabel.Visibility = Visibility.Visible;
                 tablebox.Visibility = Visibility.Visible;
                 
+                
+            }
+            else
+            {
+                detailsbtn.Visibility = Visibility.Visible;
+                nametxtbox.Visibility = Visibility.Visible;
+                addresstxtbox.Visibility = Visibility.Visible;
+                namelabel.Visibility = Visibility.Visible;
+                addresslabel.Visibility = Visibility.Visible;
+
             }
             destinationlabel.Visibility = Visibility.Visible;
             addtobtn.IsEnabled = true;
@@ -226,6 +233,7 @@ namespace Menu_Program
                 {
                     menureadin();
                     foodlistbox.IsEnabled = true;
+                    destinationlabel.Content = "Table";
                 }
                 addtablebtn.IsEnabled = false;
             }
@@ -265,6 +273,35 @@ namespace Menu_Program
                 totallabel.Content = subtotal;
             else
                 totallabel.Content = subtotal + (subtotal * 0.15);
+        }
+
+        private void detailsbtn_Click(object sender, RoutedEventArgs e)
+        {
+            menureadin();
+            foodlistbox.IsEnabled = true;
+            addtablebtn.Visibility = Visibility.Hidden;
+            tablelabel.Visibility = Visibility.Hidden;
+            tablebox.Visibility = Visibility.Hidden;
+            d.Name = nametxtbox.Text;
+            d.Address = addresstxtbox.Text;
+            destinationlabel.Content = "Name";
+            tabletxt.Content = nametxtbox.Text;
+            nametxtbox.IsEnabled = false;
+            addresstxtbox.IsEnabled = false;
+            
+
+        }
+
+        private void nametxtbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void billbtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window Bill = new Bill(d);
+            Bill.ShowDialog();
+
         }
 
 

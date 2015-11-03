@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Globalization;
+using System.Collections;
 namespace Menu_Program
 {
     //Created by Paul Quigley
@@ -39,12 +40,12 @@ namespace Menu_Program
             get { return price; }
             set { price = value;}
         }
-
     }
+
     public class SitinOrder : Menu
     {
         private int table;
-        private Object[] items;
+        private Object[] items = new Object[20];
         public SitinOrder()
         {
 
@@ -77,7 +78,9 @@ namespace Menu_Program
     {
         private string name;
         private string address;
-        private Object[] items;
+        private int count=0;
+        //private Menu[] items = new Menu[20];
+        public List<Menu> items = new List<Menu>();
         public deliveryOrder()
         {
 
@@ -98,13 +101,14 @@ namespace Menu_Program
             get { return address; }
             set { address = value; }
         }
-        public Object[] Items
+        public void Dishes(Menu item)
         {
-            get { return items; }
-            set
-            {
-                items = value;
-            }
+            items.Add(item);
+                
+        }
+        public void Display(int i)
+        {
+
         }
     }
 }
