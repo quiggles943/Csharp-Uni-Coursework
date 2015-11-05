@@ -34,11 +34,9 @@ namespace Menu_Program
         int table;
         int itemsordered = 0;
         List<Menu> menuitems = new List<Menu>();
-        //IDictionary<string, Menu> menuitems = new Dictionary<string, Menu>();
-        //IDictionary<string, SitinOrder> sitinmenuitems = new Dictionary<string, SitinOrder>();
-        //IDictionary<string, deliveryOrder> deliverymenuitems = new Dictionary<string, deliveryOrder>();
         deliveryOrder d = new deliveryOrder();
         SitinOrder s = new SitinOrder();
+        bool detailsadded = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -56,6 +54,7 @@ namespace Menu_Program
             orderlistbox.IsEnabled = false;
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
+            logoutbtn.IsEnabled = false;
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
             readinservers();
@@ -135,6 +134,8 @@ namespace Menu_Program
                 serverstatusbox.Content = serverlist.SelectedItem;
                 sitinradbtn.IsEnabled = true;
                 takeawayradbtn.IsEnabled = true;
+                logoutbtn.IsEnabled = true;
+                logonbtn.IsEnabled = false;
             }
             else
                 return;
@@ -204,6 +205,13 @@ namespace Menu_Program
                 addtablebtn.Visibility = Visibility.Visible;
                 tablelabel.Visibility = Visibility.Visible;
                 tablebox.Visibility = Visibility.Visible;
+                nametxtbox.Visibility = Visibility.Hidden;
+                nametxtbox.Text = "";
+                addresstxtbox.Visibility = Visibility.Hidden;
+                addresstxtbox.Text = "";
+                namelabel.Visibility = Visibility.Hidden;
+                addresslabel.Visibility = Visibility.Hidden;
+
                 
                 
             }
@@ -214,6 +222,8 @@ namespace Menu_Program
                 addresstxtbox.Visibility = Visibility.Visible;
                 namelabel.Visibility = Visibility.Visible;
                 addresslabel.Visibility = Visibility.Visible;
+                nametxtbox.IsEnabled = true;
+                addresstxtbox.IsEnabled = true;
 
             }
             destinationlabel.Visibility = Visibility.Visible;
@@ -264,6 +274,16 @@ namespace Menu_Program
             foodlistbox.Items.Clear();
             foodlistbox.IsEnabled = false;
             orderlistbox.Items.Clear();
+            nametxtbox.Visibility = Visibility.Hidden;
+            nametxtbox.Text = "";
+            addresstxtbox.Visibility = Visibility.Hidden;
+            addresstxtbox.Text = "";
+            namelabel.Visibility = Visibility.Hidden;
+            addresslabel.Visibility = Visibility.Hidden;
+            nametxtbox.IsEnabled = true;
+            addresstxtbox.IsEnabled = true;
+            detailsbtn.Visibility = Visibility.Hidden;
+            detailsadded = false;
         }
 
         private void totalbtn_Click(object sender, RoutedEventArgs e)
@@ -279,6 +299,8 @@ namespace Menu_Program
 
         private void detailsbtn_Click(object sender, RoutedEventArgs e)
         {
+            if (detailsadded)
+                return;
             menureadin();
             foodlistbox.IsEnabled = true;
             addtablebtn.Visibility = Visibility.Hidden;
@@ -290,7 +312,7 @@ namespace Menu_Program
             tabletxt.Content = nametxtbox.Text;
             nametxtbox.IsEnabled = false;
             addresstxtbox.IsEnabled = false;
-            
+            detailsadded = true;
 
         }
 
@@ -304,6 +326,17 @@ namespace Menu_Program
             Window Bill = new Bill(d);
             Bill.ShowDialog();
 
+        }
+
+        private void logoutbtn_Click(object sender, RoutedEventArgs e)
+        {
+            clearbtn_Click(sender, e);
+            selectbtn.IsEnabled = false;
+            sitinradbtn.IsEnabled = false;
+            takeawayradbtn.IsEnabled = false;
+            serverlist.IsEnabled = true;
+            logoutbtn.IsEnabled = false;
+            logonbtn.IsEnabled = true;
         }
 
 
