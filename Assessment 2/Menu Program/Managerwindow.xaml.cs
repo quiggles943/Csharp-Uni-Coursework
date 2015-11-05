@@ -22,7 +22,7 @@ namespace Menu_Program
     {
         string sitin;
         string delivery;
-        string[,] sit = new string[100, 3];
+        string[,] sit = new string[100, 20];
         public Managerwindow(string delivery_filepath, string sitin_filepath)
         {
             InitializeComponent();

@@ -32,6 +32,7 @@ namespace Menu_Program
         string serverfilepath;
         string sitin_order_filepath;
         string delivery_order_filepath;
+        string items;
         
         bool sitin;
         double subtotal;
@@ -131,7 +132,7 @@ namespace Menu_Program
             }
         }
 
-        private void writetofile(string server, int table, double paid)     //writes to sit in order log 
+        private void writetofile(string server, int table, double paid, string items)     //writes to sit in order log 
         {
             if (File.Exists(sitin_order_filepath))
             {
@@ -139,7 +140,7 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.AppendText(sitin_order_filepath))
                 {
 
-                    logfile.WriteLine(server + "\t" + table + "\t£" + paid);
+                    logfile.WriteLine(server + "\t" + table + "\t£" + paid+"\t"+items);
                 }
             }
             else
@@ -147,12 +148,12 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.CreateText (sitin_order_filepath))
                 {
                     logfile.WriteLine("Server\tTable\tAmountpaid");
-                    logfile.WriteLine(server + "\t" + table + "\t£" + paid);
+                    logfile.WriteLine(server + "\t" + table + "\t£" + paid+"\t"+items);
                 }
             }
 
         }
-        private void writetofile(string server, string driver, string name, double paid)        //writes to delivery order log 
+        private void writetofile(string server, string driver, string name, double paid, string items)        //writes to delivery order log 
         {
             if (File.Exists(delivery_order_filepath))
             {
@@ -160,7 +161,7 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.AppendText(delivery_order_filepath))
                 {
 
-                    logfile.WriteLine(server + "\t" + driver + "\t" + name + "\t£" + paid);
+                    logfile.WriteLine(server + "\t" + driver + "\t" + name + "\t£" + paid + "\t" + items);
                 }
             }
             else
@@ -168,7 +169,7 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.CreateText(delivery_order_filepath))
                 {
                     logfile.WriteLine("Server\tDriver\tCust Name\tAmountpaid");
-                    logfile.WriteLine(server + "\t" + driver + "\t" + name+"\t£"+ paid);
+                    logfile.WriteLine(server + "\t" + driver + "\t" + name + "\t£" + paid + "\t" + items);
                 }
             }
 
@@ -227,6 +228,7 @@ namespace Menu_Program
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + buffer;
             subtotallabel.Content = subtotal;
+            items = string.Join("\t", items, foodlistbox.SelectedItem.ToString());
             itemsordered++;
         }
 
@@ -381,7 +383,7 @@ namespace Menu_Program
         {
             if (sitin)
             {
-                writetofile(serverlist.SelectedItem.ToString(), table, subtotal) ;
+                writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items) ;
                 Window Bill = new Bill(s);
                 Bill.ShowDialog();
                 o.Details(sitinorders,serverlist.SelectedItem.ToString(), table, subtotal);
@@ -389,7 +391,7 @@ namespace Menu_Program
             else
             {
                 string driver = "";
-                writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal);
+                writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal, items);
                 Window Bill = new Bill(d);
                 Bill.ShowDialog();
             }
