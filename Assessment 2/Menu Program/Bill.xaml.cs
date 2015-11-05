@@ -23,11 +23,11 @@ namespace Menu_Program
         public Bill(deliveryOrder d)
         {
             InitializeComponent();
-            testtxt2.Content = d.Price;
+            //testtxt2.Content = d.Price;
             int total = d.items.Count;
-            foreach (var i in d.items)
+            foreach (Menu m in d.items)
             {
-                billlist.Items.Add(d.items);
+                billlist.Items.Add(m.Description) ;
             }
         }
 

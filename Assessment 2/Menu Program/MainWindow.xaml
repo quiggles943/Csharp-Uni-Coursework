@@ -5,8 +5,8 @@
     <Grid>
         <ComboBox x:Name="serverlist" HorizontalAlignment="Left" Margin="95,25,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="serverlist_SelectionChanged"/>
         <Border BorderBrush="#FF979797" BorderThickness="0,2,0,0" VerticalAlignment="Bottom" Height="30" Background="#FFB8B8B8"/>
-        <Label Content="Server:" Height="23" Margin="535,0,109,7" VerticalAlignment="Bottom"/>
-        <Label x:Name="serverstatusbox" Content="hello" Height="23" Margin="587,0,0,7" VerticalAlignment="Bottom"/>
+        <Label Content="Server:" Height="23" Margin="525,0,109,7" VerticalAlignment="Bottom"/>
+        <Label x:Name="serverstatusbox" Content="hello" Height="23" Margin="561,0,0,7" VerticalAlignment="Bottom"/>
         <Label Content="Select Server:" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top"/>
         <Button x:Name="logonbtn" Content="Logon" HorizontalAlignment="Left" Margin="244,25,0,0" VerticalAlignment="Top" Width="75" Click="logonbtn_Click"/>
         <ListBox x:Name="foodlistbox" HorizontalAlignment="Left" Height="125" Margin="22,173,0,0" VerticalAlignment="Top" Width="111" IsEnabled="False" SelectionChanged="foodlistbox_SelectionChanged"/>
@@ -32,6 +32,7 @@
         <Label x:Name="addresslabel" Content="Address" HorizontalAlignment="Left" Margin="150,145,0,0" VerticalAlignment="Top" Width="53"/>
         <Button x:Name="detailsbtn" Content="Add details" HorizontalAlignment="Left" Margin="227,175,0,0" VerticalAlignment="Top" Width="75" Click="detailsbtn_Click"/>
         <Button x:Name="billbtn" Content="Print Bill" HorizontalAlignment="Left" Margin="535,345,0,0" VerticalAlignment="Top" Width="75" Click="billbtn_Click"/>
+        <Button x:Name="logoutbtn" Content="Logout" HorizontalAlignment="Left" Margin="335,25,0,0" VerticalAlignment="Top" Width="75" Click="logoutbtn_Click"/>
 
     </Grid>
 </Window>
