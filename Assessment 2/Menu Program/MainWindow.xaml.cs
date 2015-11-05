@@ -26,10 +26,13 @@ namespace Menu_Program
         public string[,] server = new string[100, 2];
         string menupath = @"..\..\menu.txt";
         string serverpath = @"..\..\server.txt";
+        string orderpath = @"..\..\orderlog.txt";
         string menufilepath;
         string serverfilepath;
-        bool optionselected = false;
+        string orderfilepath;
+        
         bool sitin;
+        bool ran = false;
         double subtotal;
         int table;
         int itemsordered = 0;
@@ -39,6 +42,8 @@ namespace Menu_Program
         SitinOrder s = new SitinOrder();
         public List<Order> sitinorders = new List<Order>();
         bool detailsadded = false;
+        StreamWriter logfile;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -59,7 +64,16 @@ namespace Menu_Program
             logoutbtn.IsEnabled = false;
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
+            orderfilepath = System.IO.Path.GetFullPath(orderpath);
             readinservers();
+            //logfile = stream();
+            
+        }
+
+        public StreamWriter stream()
+        {
+            StreamWriter logfile = File.CreateText(orderfilepath);
+            return logfile;
         }
 
         private void menureadin()
@@ -121,6 +135,28 @@ namespace Menu_Program
                 serverlist.Items.Add(server[i, 0]);
                 i++;
             }
+        }
+
+        private void writetofile(string server, int table, double paid)
+        {
+            if (File.Exists(orderfilepath))
+            {
+
+                using (StreamWriter logfile = File.AppendText(orderfilepath))
+                {
+
+                    logfile.WriteLine(server + "/t" + table + "/t" + paid);
+                }
+            }
+            else
+            {
+                using (StreamWriter logfile = File.CreateText (orderfilepath))
+                {
+
+                    logfile.WriteLine(server + "/t" + table + "/t" + paid);
+                }
+            }
+
         }
 
         private void serverlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -330,6 +366,7 @@ namespace Menu_Program
         {
             if (sitin)
             {
+                writetofile(serverlist.SelectedItem.ToString(), table, subtotal) ;
                 Window Bill = new Bill(s);
                 Bill.ShowDialog();
                 o.Details(sitinorders,serverlist.SelectedItem.ToString(), table, subtotal);
