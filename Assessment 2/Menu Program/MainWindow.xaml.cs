@@ -136,6 +136,7 @@ namespace Menu_Program
                 takeawayradbtn.IsEnabled = true;
                 logoutbtn.IsEnabled = true;
                 logonbtn.IsEnabled = false;
+                selectbtn.IsEnabled = true;
             }
             else
                 return;
@@ -160,7 +161,6 @@ namespace Menu_Program
             double buffer = 0;
             if (sitin)
             {
-                //buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
                 buffer = menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
                 s.Dishes(menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
@@ -284,6 +284,9 @@ namespace Menu_Program
             addresstxtbox.IsEnabled = true;
             detailsbtn.Visibility = Visibility.Hidden;
             detailsadded = false;
+            d.Clear();
+            s.Clear();
+
         }
 
         private void totalbtn_Click(object sender, RoutedEventArgs e)
@@ -323,8 +326,18 @@ namespace Menu_Program
 
         private void billbtn_Click(object sender, RoutedEventArgs e)
         {
-            Window Bill = new Bill(d);
-            Bill.ShowDialog();
+            if (sitin)
+            {
+                Window Bill = new Bill(s);
+                Bill.ShowDialog();
+            }
+            else
+            {
+                Window Bill = new Bill(d);
+                Bill.ShowDialog();
+            }
+
+            
 
         }
 

@@ -19,8 +19,7 @@ namespace Menu_Program
     /// </summary>
     public partial class Bill : Window
     {
-        Menu order = new Menu();
-        public Bill(deliveryOrder d)
+        public Bill(Order d)
         {
             InitializeComponent();
             //testtxt2.Content = d.Price;
