@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,13 +20,40 @@ namespace Menu_Program
     /// </summary>
     public partial class Managerwindow : Window
     {
-        List<Order> sitin = new List<Order>();
-        public Managerwindow(List<Order> sitinorders)
+        string sitin;
+        string delivery;
+        string[,] sit = new string[100, 3];
+        public Managerwindow(string delivery_filepath, string sitin_filepath)
         {
             InitializeComponent();
-            List<Order> sitin = sitinorders;
+            sitin = sitin_filepath;
+            delivery = delivery_filepath;
         }
 
+        private void readin_sitin()
+        {
+            int filelength = 0;
+            using (StreamReader r = new StreamReader(sitin))
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(sitin);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    sit[i, j] = buffer;
+                    j++;
+                }
+                testlistbox.Items.Add(sit[i, 0]);
+                i++;
+            }
+        }
 
         private void closebtn_Click(object sender, RoutedEventArgs e)
         {
@@ -34,11 +62,7 @@ namespace Menu_Program
 
         private void sitinbtn_Click(object sender, RoutedEventArgs e)
         {
-            int j = sitin.Count();
-            for (int i = 0; i<= j; i++)
-            {
-                sitin.Find(x => x.Index == i);
-            }
+            readin_sitin();
             /*foreach (Order i in sitin.)
             {
                 testlistbox.Items.Add(i.Server);

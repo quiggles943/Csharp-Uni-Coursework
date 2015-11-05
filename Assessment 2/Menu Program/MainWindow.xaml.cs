@@ -34,7 +34,6 @@ namespace Menu_Program
         string delivery_order_filepath;
         
         bool sitin;
-        bool ran = false;
         double subtotal;
         int table;
         int itemsordered = 0;
@@ -132,7 +131,7 @@ namespace Menu_Program
             }
         }
 
-        private void writetofile(string server, int table, double paid)     //writes to sit in order logs
+        private void writetofile(string server, int table, double paid)     //writes to sit in order log 
         {
             if (File.Exists(sitin_order_filepath))
             {
@@ -140,7 +139,7 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.AppendText(sitin_order_filepath))
                 {
 
-                    logfile.WriteLine(server + "\t" + table + "\t" + paid);
+                    logfile.WriteLine(server + "\t" + table + "\t£" + paid);
                 }
             }
             else
@@ -148,12 +147,12 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.CreateText (sitin_order_filepath))
                 {
                     logfile.WriteLine("Server\tTable\tAmountpaid");
-                    logfile.WriteLine(server + "\t" + table + "\t" + paid);
+                    logfile.WriteLine(server + "\t" + table + "\t£" + paid);
                 }
             }
 
         }
-        private void writetofile(string server, string driver, string name, double paid)        //writes to delivery order logs
+        private void writetofile(string server, string driver, string name, double paid)        //writes to delivery order log 
         {
             if (File.Exists(delivery_order_filepath))
             {
@@ -161,7 +160,7 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.AppendText(delivery_order_filepath))
                 {
 
-                    logfile.WriteLine(server + "\t" + table + "\t" + paid);
+                    logfile.WriteLine(server + "\t" + driver + "\t" + name + "\t£" + paid);
                 }
             }
             else
@@ -169,7 +168,7 @@ namespace Menu_Program
                 using (StreamWriter logfile = File.CreateText(delivery_order_filepath))
                 {
                     logfile.WriteLine("Server\tDriver\tCust Name\tAmountpaid");
-                    logfile.WriteLine(server + "\t" + driver + "\t" + name+"\t"+ paid);
+                    logfile.WriteLine(server + "\t" + driver + "\t" + name+"\t£"+ paid);
                 }
             }
 
@@ -389,7 +388,8 @@ namespace Menu_Program
             }
             else
             {
-                writetofile(serverlist.SelectedItem.ToString(),  table, subtotal);
+                string driver = "";
+                writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal);
                 Window Bill = new Bill(d);
                 Bill.ShowDialog();
             }
@@ -411,7 +411,7 @@ namespace Menu_Program
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)
         {
-            Managerwindow manager = new Managerwindow(sitinorders);
+            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath);
             manager.ShowDialog();
         }
 
