@@ -33,9 +33,10 @@ namespace Menu_Program
         double subtotal;
         int table;
         int itemsordered = 0;
-        IDictionary<string, Menu> menuitems = new Dictionary<string, Menu>();
-        IDictionary<string, SitinOrder> sitinmenuitems = new Dictionary<string, SitinOrder>();
-        IDictionary<string, deliveryOrder> deliverymenuitems = new Dictionary<string, deliveryOrder>();
+        List<Menu> menuitems = new List<Menu>();
+        //IDictionary<string, Menu> menuitems = new Dictionary<string, Menu>();
+        //IDictionary<string, SitinOrder> sitinmenuitems = new Dictionary<string, SitinOrder>();
+        //IDictionary<string, deliveryOrder> deliverymenuitems = new Dictionary<string, deliveryOrder>();
         deliveryOrder d = new deliveryOrder();
         SitinOrder s = new SitinOrder();
         public MainWindow()
@@ -86,11 +87,11 @@ namespace Menu_Program
                     case "Y": theanswer = true; break;
                     case "N": theanswer = false; break;
                 }
-                menuitems[menu[i, 0]] = new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1]));
-                if(sitin)
+                menuitems.Add(new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1])));
+                /*if(sitin)
                     menuitems[menu[i, 0]] = new SitinOrder(menu[i, 0],theanswer ,Int32.Parse(menu[i, 1])); 
                 else
-                    menuitems[menu[i, 0]] = new deliveryOrder(menu[i, 0], theanswer, Int32.Parse(menu[i, 1]));
+                    menuitems[menu[i, 0]] = new deliveryOrder(menu[i, 0], theanswer, Int32.Parse(menu[i, 1]));*/
                 foodlistbox.Items.Add(menu[i, 0]);
                 i++;
             }
@@ -158,15 +159,16 @@ namespace Menu_Program
             double buffer = 0;
             if (sitin)
             {
-                buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
+                //buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
+                buffer = menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
-                s.Items[itemsordered] = menuitems[foodlistbox.SelectedItem.ToString()];
+                s.Dishes(menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
             }
             else
             {
-                buffer = menuitems[foodlistbox.SelectedItem.ToString()].Price;
+                buffer = menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
-                d.Dishes(menuitems[foodlistbox.SelectedItem.ToString()]);
+                d.Dishes(menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
             }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + buffer;
