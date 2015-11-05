@@ -10,14 +10,17 @@ namespace Menu_Program
     public class Order
     {
         public List<Menu> items = new List<Menu>();
-        public List<Order> sitinorders = new List<Order>();
+        
         public List<Order> deliveryorders = new List<Order>();
-        string server;
+        private string server;
         string driver;
         string name;
-        int table;
-        double paid;
+        private int table;
+        private double paid;
+        int sitincount;
+        int deliverycount;
         string[] orders = new string[10];
+        int index =0;
         public Order()
         {
 
@@ -26,19 +29,50 @@ namespace Menu_Program
         {
             items.Clear();
         }
-        public void Details(string s, int t, double p )
+        public void Details(List<Order> sitinorders, string s, int t, double p )
         {
             int i;
             i = sitinorders.Count;
-            sitinorders.Add( new Order { server = s, table = t, paid = p});
+            sitinorders.Add( new Order { Server = s, Table = t, Paid = p, Index = index});
+            index++;
+            sitincount = sitinorders.Count;
         }
         public void Details(string s, string d, string n, double p)
         {
             int i;
             i = deliveryorders.Count;
-            deliveryorders.Add(new Order { server = s, driver = d, name = n, paid = p });
+            deliveryorders.Add(new Order { Server = s, Driver = d, name = n, paid = p });
+        }
+        public int sitinCount()
+        {
+            return sitincount;
+        }
+        public string Server
+        {
+            get { return server; }
+            set { server = value; }
+        }
+        public string Driver
+        {
+            get { return driver; }
+            set { driver = value; }
+        }
+        public int Table
+        {
+            get { return table; }
+            set { table = value; }
+        }
+        public double Paid
+        {
+            get { return paid; }
+            set { paid = value; }
         }
 
+        public int Index
+        {
+            get { return index; }
+            set { index++; }
+        }
     }
     public class SitinOrder : Order
     {
@@ -48,15 +82,7 @@ namespace Menu_Program
         {
 
         }
-        public int Table
-        {
-            get { return table; }
-            set
-            {
 
-                table = value;
-            }
-        }
         public void Dishes(Menu item)
         {
             items.Add(item);

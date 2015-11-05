@@ -34,8 +34,10 @@ namespace Menu_Program
         int table;
         int itemsordered = 0;
         List<Menu> menuitems = new List<Menu>();
+        Order o = new Order();
         deliveryOrder d = new deliveryOrder();
         SitinOrder s = new SitinOrder();
+        public List<Order> sitinorders = new List<Order>();
         bool detailsadded = false;
         public MainWindow()
         {
@@ -330,6 +332,7 @@ namespace Menu_Program
             {
                 Window Bill = new Bill(s);
                 Bill.ShowDialog();
+                o.Details(sitinorders,serverlist.SelectedItem.ToString(), table, subtotal);
             }
             else
             {
@@ -350,6 +353,12 @@ namespace Menu_Program
             serverlist.IsEnabled = true;
             logoutbtn.IsEnabled = false;
             logonbtn.IsEnabled = true;
+        }
+
+        private void managerbtn_Click(object sender, RoutedEventArgs e)
+        {
+            Managerwindow manager = new Managerwindow(sitinorders);
+            manager.ShowDialog();
         }
 
 
