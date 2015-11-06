@@ -34,6 +34,7 @@ namespace Menu_Program
         string delivery_order_filepath;
         string items;
         int menulength;
+        int serverlength;
         
         bool sitin;
         double subtotal;
@@ -133,6 +134,7 @@ namespace Menu_Program
                 serverlist.Items.Add(server[i, 0]);
                 i++;
             }
+            serverlength = filelength;
             filelength = 0;
         }
 
@@ -417,7 +419,7 @@ namespace Menu_Program
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)
         {
-            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath, menu, menulength);
+            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath, menu, menulength, server, serverlength);
             manager.ShowDialog();
         }
 

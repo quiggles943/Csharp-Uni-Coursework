@@ -26,10 +26,11 @@ namespace Menu_Program
         string[,] sit = new string[100, 20];
         string[,] deliver = new string[100, 20];
         int[] count = new int[100];
+        string[,] servers = new string[100, 2];
         int menulength;
         int sitinlength;
         int deliverylength;
-        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length)
+        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length, string[,] server, int serverlength)
         {
             InitializeComponent();
             sitin = sitin_filepath;
@@ -38,7 +39,11 @@ namespace Menu_Program
             menulength = length;
             readin_delivery();
             readin_sitin();
-            
+            servers = server;
+            for(int i = 1; i<serverlength; i++)
+            {
+                serverbox.Items.Add(servers[i, 0]);
+            }
         }
 
         private void readin_delivery()
@@ -120,9 +125,9 @@ namespace Menu_Program
         private void sitinbtn_Click(object sender, RoutedEventArgs e)
         {
             testlistbox.Items.Clear();
-            for(int i = 1; i <= sitinlength; i++)
+            for (int i = 1; i <= sitinlength; i++)
             {
-                testlistbox.Items.Add(sit[i, 0]+" " +sit[i,1]+ " " +sit[i,2]);
+                testlistbox.Items.Add(sit[i, 0] + " " + sit[i, 1] + " " + sit[i, 2]);
             }
         }
 
@@ -142,6 +147,42 @@ namespace Menu_Program
             for (int i = 1; i <= deliverylength; i++)
             {
                 testlistbox.Items.Add(deliver[i, 0] + " " + deliver[i, 2] + " " + deliver[i, 3]);
+            }
+        }
+
+        private void serverbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (serverbox.SelectedIndex == -1)
+            {
+                serverbtn.IsEnabled = false;
+                serverbtn.Content = "Please select server";
+            }
+
+            else
+            {
+                serverbtn.IsEnabled = true;
+                serverbtn.Content = "Show orders for " + serverbox.SelectedItem.ToString();
+            }
+        }
+
+        private void serverbtn_Click(object sender, RoutedEventArgs e)
+        {
+            testlistbox.Items.Clear();
+
+            for (int i = 1; i <= sitinlength; i++)
+            {
+                if (serverbox.SelectedItem.ToString() == sit[i, 0])
+                {
+                    testlistbox.Items.Add(sit[i, 1] + " " + sit[i, 2]);
+                }
+            }
+                for (int j = 1; j <= deliverylength; j++)
+                {
+                    if (serverbox.SelectedItem.ToString() == deliver[j, 0])
+                {
+                    testlistbox.Items.Add(deliver[j, 2] + " " + deliver[j, 3]);
+                }
+
             }
         }
     }
