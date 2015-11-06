@@ -22,12 +22,14 @@ namespace Menu_Program
     {
         string sitin;
         string delivery;
+        string[,] menu = new string[100, 5];
         string[,] sit = new string[100, 20];
-        public Managerwindow(string delivery_filepath, string sitin_filepath)
+        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems)
         {
             InitializeComponent();
             sitin = sitin_filepath;
             delivery = delivery_filepath;
+            menu = menuitems;
         }
 
         private void readin_sitin()
@@ -46,6 +48,16 @@ namespace Menu_Program
                 int j = 0;
                 while (j < (column.Length))
                 {
+                    for (int l = 3; l <= column.Length; l++)
+                    {
+                        for(int m = 1; m <= menu.Length; m++)
+                        {
+                            if(column[l] == menu[m,0])
+                            {
+
+                            }
+                        }
+                    }
                     string buffer = column[j];
                     sit[i, j] = buffer;
                     j++;
