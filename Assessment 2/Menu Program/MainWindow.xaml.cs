@@ -33,6 +33,7 @@ namespace Menu_Program
         string sitin_order_filepath;
         string delivery_order_filepath;
         string items;
+        int menulength;
         
         bool sitin;
         double subtotal;
@@ -68,6 +69,7 @@ namespace Menu_Program
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
             readinservers();
+            menureadin();
             
         }
 
@@ -105,6 +107,7 @@ namespace Menu_Program
                 foodlistbox.Items.Add(menu[i, 0]);
                 i++;
             }
+            menulength = filelength;
             filelength = 0;
         }
         public void readinservers()
@@ -130,6 +133,7 @@ namespace Menu_Program
                 serverlist.Items.Add(server[i, 0]);
                 i++;
             }
+            filelength = 0;
         }
 
         private void writetofile(string server, int table, double paid, string items)     //writes to sit in order log 
@@ -298,7 +302,7 @@ namespace Menu_Program
                 tabletxt.Content = table;
                 if(sitin)
                 {
-                    menureadin();
+                    //menureadin();
                     foodlistbox.IsEnabled = true;
                     destinationlabel.Content = "Table";
                 }
@@ -326,7 +330,7 @@ namespace Menu_Program
             addtablebtn.IsEnabled = true;
             sitinradbtn.IsEnabled = true;
             takeawayradbtn.IsEnabled = true;
-            foodlistbox.Items.Clear();
+            //foodlistbox.Items.Clear();
             foodlistbox.IsEnabled = false;
             orderlistbox.Items.Clear();
             nametxtbox.Visibility = Visibility.Hidden;
@@ -359,7 +363,7 @@ namespace Menu_Program
         {
             if (detailsadded)
                 return;
-            menureadin();
+            //menureadin();
             foodlistbox.IsEnabled = true;
             addtablebtn.Visibility = Visibility.Hidden;
             tablelabel.Visibility = Visibility.Hidden;
@@ -413,7 +417,7 @@ namespace Menu_Program
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)
         {
-            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath, menu);
+            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath, menu, menulength);
             manager.ShowDialog();
         }
 
