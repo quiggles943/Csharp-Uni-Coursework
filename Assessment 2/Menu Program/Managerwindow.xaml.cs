@@ -30,9 +30,17 @@ namespace Menu_Program
         int menulength;
         int sitinlength;
         int deliverylength;
-        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length, string[,] server, int serverlength)
+        string menupath = @"..\..\menu.txt";
+        string serverpath = @"..\..\server.txt";
+        string menufilepath;
+        string serverfilepath;
+        int serverlength;
+        List<Menu> menuitems = new List<Menu>();
+        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length, string[,] server, int slength)
         {
             InitializeComponent();
+            menufilepath = System.IO.Path.GetFullPath(menupath);
+            serverfilepath = System.IO.Path.GetFullPath(serverpath);
             sitin = sitin_filepath;
             delivery = delivery_filepath;
             menu = menuitems;
@@ -40,10 +48,11 @@ namespace Menu_Program
             readin_delivery();
             readin_sitin();
             servers = server;
-            for(int i = 1; i<serverlength; i++)
+            for(int i = 1; i<slength; i++)
             {
                 serverbox.Items.Add(servers[i, 0]);
             }
+            serverlength = slength;
         }
 
         private void readin_delivery()
@@ -117,6 +126,77 @@ namespace Menu_Program
             sitinlength = filelength;
         }
 
+        private void readin_menu()
+        {
+            //read in menu text file
+            int filelength = 0;
+            using (StreamReader r = new StreamReader(menufilepath))
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(menufilepath);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    menu[i, j] = buffer;
+                    j++;
+                }
+                bool theanswer = false;
+                switch (menu[i, 2])
+                {
+                    case "Y": theanswer = true; break;
+                    case "N": theanswer = false; break;
+                }
+                menuitems.Add(new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1])));
+
+                i++;
+            }
+            menulength = filelength;
+            filelength = 0;
+        }
+
+        private void writeservers()
+        {
+            //using (StreamWriter logfile = File.AppendText(serverfilepath))
+            //{
+                if (addrbtn.IsChecked == true)
+                {
+                        using (StreamWriter logfile = File.AppendText(serverfilepath))
+                        logfile.WriteLine(servers[serverlength, 0] + "\t" + servers[serverlength, 1]);
+                }
+                else if (editrbtn.IsChecked  == true)
+                {
+                    string[] empty = new string[0];
+                    File.WriteAllLines(serverfilepath, empty);
+                    StreamWriter logfile = File.AppendText(serverfilepath);
+                    logfile.WriteLine("Name\tID");
+                    for (int i = 1; i <= serverlength-1; i++)
+                    {
+                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
+                    }
+                    logfile.Close();
+                }
+                else if (removerbtn.IsChecked  == true)
+                {
+                    string[] empty = new string[0];
+                    File.WriteAllLines(serverfilepath, empty);
+                    StreamWriter logfile = File.AppendText(serverfilepath);
+                    logfile.WriteLine("Name\tID");
+                    for (int i = 1; i <= serverlength-2; i++)
+                    {
+                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
+                    }
+                    logfile.Close();
+                }
+            //}
+        }
+
         private void closebtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -183,6 +263,111 @@ namespace Menu_Program
                     testlistbox.Items.Add(deliver[j, 2] + " " + deliver[j, 3]);
                 }
 
+            }
+        }
+
+        private void edit_selection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (edit_selection.SelectedIndex == 0)
+            {
+                for (int i = 1; i <= ((servers.Length/2)-1); i++)
+                {
+                    item_selection.Items.Add(servers[i, 0]);
+                }
+            }
+            if(edit_selection.SelectedIndex == 2)
+            {
+                vegetarianlabel.Visibility = Visibility.Visible;
+                yesrbtn.Visibility = Visibility.Visible;
+                norbtn.Visibility = Visibility.Visible;
+                yesrbtn.IsChecked = false;
+                norbtn.IsChecked = false;
+                for (int i = 1; i <= menulength; i++)
+                {
+                    item_selection.Items.Add(menu[i, 0]);
+                }
+            }
+            else
+            {
+                vegetarianlabel.Visibility = Visibility.Hidden;
+                yesrbtn.Visibility = Visibility.Hidden;
+                norbtn.Visibility = Visibility.Hidden;
+            }
+            addrbtn.IsChecked = false;
+            editrbtn.IsChecked = false;
+            removerbtn.IsChecked = false;
+            yesrbtn.IsChecked = false;
+            norbtn.IsChecked = false;
+        }
+
+        private void addrbtn_Checked(object sender, RoutedEventArgs e)
+        {
+            namelabel.Visibility = Visibility.Visible;
+            namebox.Visibility = Visibility.Visible;
+            staffidlabel.Visibility = Visibility.Visible;
+            staffidbox.Visibility = Visibility.Visible;
+            item_selection.Visibility = Visibility.Hidden;
+        }
+
+        private void editrbtn_Checked(object sender, RoutedEventArgs e)
+        {
+            namebox.Text = "";
+            staffidbox.Text = "";
+            item_selection.Visibility = Visibility.Visible;
+        }
+
+        private void removerbtn_Checked(object sender, RoutedEventArgs e)
+        {
+            namelabel.Visibility = Visibility.Hidden;
+            namebox.Visibility = Visibility.Hidden;
+            staffidlabel.Visibility = Visibility.Hidden;
+            staffidbox.Visibility = Visibility.Hidden;
+            namebox.Text = "";
+            staffidbox.Text = "";
+            item_selection.Visibility = Visibility.Visible;
+        }
+
+        private void item_selection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(editrbtn.IsChecked == true)
+            {
+                for (int i = 1; i <= ((servers.Length/2)-1); i++)
+                {
+                    if(servers[i,0] == item_selection.SelectedItem.ToString())
+                    {
+                        servers[i, 0] = namebox.Text;
+                        servers[i, 1] = Int32.Parse(staffidbox.Text).ToString();
+                    }
+                }
+                writeservers();
+                
+            }
+            if(addrbtn.IsChecked==true)
+            {
+                servers[serverlength, 0] = namebox.Text;
+                servers[serverlength, 1] = Int32.Parse(staffidbox.Text).ToString();
+                writeservers();
+            }
+            if(removerbtn.IsChecked==true)
+            {
+                for (int i = 1; i <= serverlength; i++)
+                {
+                    if (servers[i, 0] == item_selection.SelectedItem.ToString())
+                    {
+                        for(int j = i; j<= serverlength;j++)
+                        {
+                            servers[j, 0] = servers[j+1, 0];
+                            servers[j, 1] = servers[j+1, 1];
+                        }
+                    }
+                    
+                }
+                writeservers();
             }
         }
     }

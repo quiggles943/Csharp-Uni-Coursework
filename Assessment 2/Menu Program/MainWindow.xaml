@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Menu_Program.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="453" Width="697" ResizeMode="NoResize">
+        Title="Order Management" Height="453" Width="697" ResizeMode="NoResize">
     <Grid>
         <ComboBox x:Name="serverlist" HorizontalAlignment="Left" Margin="95,25,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="serverlist_SelectionChanged"/>
         <Border BorderBrush="#FF979797" BorderThickness="0,2,0,0" VerticalAlignment="Bottom" Height="30" Background="#FFB8B8B8"/>

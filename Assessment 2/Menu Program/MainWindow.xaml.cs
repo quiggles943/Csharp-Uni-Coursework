@@ -70,8 +70,7 @@ namespace Menu_Program
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
             readinservers();
-            menureadin();
-            
+            menureadin();            
         }
 
         private void menureadin()
@@ -101,10 +100,6 @@ namespace Menu_Program
                     case "N": theanswer = false; break;
                 }
                 menuitems.Add(new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1])));
-                /*if(sitin)
-                    menuitems[menu[i, 0]] = new SitinOrder(menu[i, 0],theanswer ,Int32.Parse(menu[i, 1])); 
-                else
-                    menuitems[menu[i, 0]] = new deliveryOrder(menu[i, 0], theanswer, Int32.Parse(menu[i, 1]));*/
                 foodlistbox.Items.Add(menu[i, 0]);
                 i++;
             }
@@ -114,7 +109,8 @@ namespace Menu_Program
         public void readinservers()
         {
             //read in server text file
-            using (StreamReader r = new StreamReader(serverfilepath))
+            StreamReader r = new StreamReader(serverfilepath);
+            using (r)
             {
                 while (r.ReadLine() != null) { filelength++; }
             }
@@ -136,6 +132,7 @@ namespace Menu_Program
             }
             serverlength = filelength;
             filelength = 0;
+            //r.Close();
         }
 
         private void writetofile(string server, int table, double paid, string items)     //writes to sit in order log 
