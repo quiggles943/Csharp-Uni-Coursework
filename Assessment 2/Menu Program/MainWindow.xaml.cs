@@ -24,18 +24,21 @@ namespace Menu_Program
         int filelength = 0;
         public string[,] menu = new string[100,5];
         public string[,] server = new string[100, 2];
+        public string[,] driver = new string[100, 3];
         string menupath = @"..\..\menu.txt";
         string serverpath = @"..\..\server.txt";
         string sitin_orderpath = @"..\..\sitin_orderlog.txt";
         string delivery_orderpath = @"..\..\delivery_orderlog.txt";
+        string driverpath = @"..\..\driver.txt";
         string menufilepath;
         string serverfilepath;
+        string driverfilepath;
         string sitin_order_filepath;
         string delivery_order_filepath;
         string items;
         int menulength;
         int serverlength;
-        
+        int driverlength;
         bool sitin;
         double subtotal;
         int table;
@@ -61,16 +64,19 @@ namespace Menu_Program
             addresstxtbox.Visibility = Visibility.Hidden;
             namelabel.Visibility = Visibility.Hidden;
             addresslabel.Visibility = Visibility.Hidden;
+            driverbox.Visibility = Visibility.Hidden;
             orderlistbox.IsEnabled = false;
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
             logoutbtn.IsEnabled = false;
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
+            driverfilepath = System.IO.Path.GetFullPath(driverpath);
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
             readinservers();
-            menureadin();            
+            menureadin();
+            readindrivers();
         }
 
         private void menureadin()
@@ -131,6 +137,35 @@ namespace Menu_Program
                 i++;
             }
             serverlength = filelength;
+            filelength = 0;
+            //r.Close();
+        }
+
+        public void readindrivers()
+        {
+            //read in driver text file
+            StreamReader r = new StreamReader(driverfilepath);
+            using (r)
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(driverfilepath);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    driver[i, j] = buffer;
+                    j++;
+                }
+                driverbox.Items.Add(driver[i, 0]);
+                i++;
+            }
+            driverlength = filelength;
             filelength = 0;
             //r.Close();
         }
@@ -280,6 +315,7 @@ namespace Menu_Program
                 addresstxtbox.Visibility = Visibility.Visible;
                 namelabel.Visibility = Visibility.Visible;
                 addresslabel.Visibility = Visibility.Visible;
+                driverbox.Visibility = Visibility.Visible;
                 nametxtbox.IsEnabled = true;
                 addresstxtbox.IsEnabled = true;
 
@@ -344,6 +380,8 @@ namespace Menu_Program
             detailsadded = false;
             d.Clear();
             s.Clear();
+            driverbox.Visibility = Visibility.Hidden;
+            driverbox.SelectedIndex = -1;
 
         }
 

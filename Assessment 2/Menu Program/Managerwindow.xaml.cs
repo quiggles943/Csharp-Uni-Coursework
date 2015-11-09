@@ -24,6 +24,7 @@ namespace Menu_Program
         string delivery;
         string[,] menu = new string[100, 5];
         string[,] sit = new string[100, 20];
+        string[,] driver = new string[100, 3];
         string[,] deliver = new string[100, 20];
         int[] count = new int[100];
         string[,] servers = new string[100, 2];
@@ -32,9 +33,12 @@ namespace Menu_Program
         int deliverylength;
         string menupath = @"..\..\menu.txt";
         string serverpath = @"..\..\server.txt";
+        string driverpath = @"..\..\driver.txt";
         string menufilepath;
         string serverfilepath;
+        string driverfilepath;
         int serverlength;
+        int driverlength;
         List<Menu> menuitems = new List<Menu>();
         public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length, int slength)
         {
@@ -53,7 +57,7 @@ namespace Menu_Program
             start();
         }
 
-        private void readin_delivery()
+        private void readin_delivery()      //reads in delivery orders from file
         {
             int filelength = 0;
             using (StreamReader r = new StreamReader(delivery))
@@ -83,12 +87,11 @@ namespace Menu_Program
                     }
                     j++;
                 }
-                //testlistbox.Items.Add(deliver[i, 0] + " " + deliver[i, 1] + " " + deliver[i, 2]);
                 i++;
             }
             deliverylength = filelength;
         }
-        private void readin_sitin()
+        private void readin_sitin()     //reads in sit in orders from file
         {
             int filelength = 0;
             using (StreamReader r = new StreamReader(sitin))
@@ -118,13 +121,12 @@ namespace Menu_Program
                     }
                     j++;
                 }
-                //testlistbox.Items.Add(sit[i, 0]+" " +sit[i,1]+ " " +sit[i,2]);
                 i++;
             }
             sitinlength = filelength;
         }
 
-        private void readin_menu()
+        private void readin_menu()      //reads in menu from file
         {
             //read in menu text file
             int filelength = 0;
@@ -159,7 +161,7 @@ namespace Menu_Program
             filelength = 0;
         }
 
-        private void readinservers()
+        private void readinservers()        //reads in servers from file
         {
             //read in server text file
             serverbox.Items.Clear();
@@ -189,7 +191,36 @@ namespace Menu_Program
             filelength = 0;
         }
 
-        private void writeservers()
+        public void readindrivers()
+        {
+            //read in driver text file
+            int filelength = 0;
+            StreamReader r = new StreamReader(driverfilepath);
+            using (r)
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(driverfilepath);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    driver[i, j] = buffer;
+                    j++;
+
+                    i++;
+                }
+                driverlength = filelength;
+                //r.Close();
+            }
+        }
+
+        private void writeservers()     //writes server changes to file
         {
 
                 if (addrbtn.IsChecked == true)
@@ -224,7 +255,7 @@ namespace Menu_Program
                 readinservers();
         }
 
-        private void writemenu()
+        private void writemenu()        //writes menu changes to file
         {
             if (addrbtn.IsChecked == true)
             {
@@ -258,7 +289,7 @@ namespace Menu_Program
             readin_menu();
         }
 
-        private void start()
+        private void start()        //sets visibility for items on page
         {
             namelabel.Visibility = Visibility.Hidden;
             namebox.Clear();
@@ -286,7 +317,7 @@ namespace Menu_Program
             testlistbox.Items.Clear();
             for (int i = 1; i <= sitinlength; i++)
             {
-                testlistbox.Items.Add(sit[i, 0] + " " + sit[i, 1] + " " + sit[i, 2]);
+                testlistbox.Items.Add(sit[i, 0] + " " + sit[i, 1] + " " + sit[i, 2]);       //adds sit in orders to item box
             }
         }
 
@@ -296,7 +327,7 @@ namespace Menu_Program
             testlistbox.Items.Clear();
             for( int i=1; i< menulength; i++)
             {
-                testlistbox.Items.Add(menu[i, 0] + " " + count[i]);
+                testlistbox.Items.Add(menu[i, 0] + " " + count[i]);         //adds total amount of each item ordered to item box
             }
         }
 
@@ -305,7 +336,7 @@ namespace Menu_Program
             testlistbox.Items.Clear();
             for (int i = 1; i <= deliverylength; i++)
             {
-                testlistbox.Items.Add(deliver[i, 0] + " " + deliver[i, 2] + " " + deliver[i, 3]);
+                testlistbox.Items.Add(deliver[i, 0] + " " + deliver[i, 2] + " " + deliver[i, 3]);       //adds delivery orders to item box
             }
         }
 
@@ -354,7 +385,7 @@ namespace Menu_Program
                 editrbtn.Visibility = Visibility.Visible;
                 removerbtn.Visibility = Visibility.Visible;
             }
-            if (edit_selection.SelectedIndex == 0)
+            if (edit_selection.SelectedIndex == 0)      //Servers
             {
                 for (int i = 1; i <= (serverlength-1); i++)
                 {
@@ -362,10 +393,13 @@ namespace Menu_Program
                 }
                 staffidlabel.Content = "Staff Id";
             }
-            if(edit_selection.SelectedIndex == 2)
+
+            if (edit_selection.SelectedIndex == 1)      //Drivers
             {
-                //vegetarianlabel.Visibility = Visibility.Visible;
-                //vegetarianbox.Visibility = Visibility.Visible;
+
+            }
+            if(edit_selection.SelectedIndex == 2)       //Menu Items
+            {
                 vegetarianbox.Clear();
                 for (int i = 1; i <= menulength; i++)
                 {
@@ -419,7 +453,7 @@ namespace Menu_Program
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (edit_selection.SelectedIndex == 0)
+            if (edit_selection.SelectedIndex == 0)      //Servers
             {
                 if (editrbtn.IsChecked == true)
                 {
@@ -458,12 +492,12 @@ namespace Menu_Program
                 }
             }
 
-            else if (edit_selection.SelectedIndex == 1)
+            else if (edit_selection.SelectedIndex == 1)     //Drivers
             {
 
             }
 
-            else if (edit_selection.SelectedIndex == 2)
+            else if (edit_selection.SelectedIndex == 2)     //Menu Items
             {
                 if (editrbtn.IsChecked == true)
                 {
