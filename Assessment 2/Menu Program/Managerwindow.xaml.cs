@@ -36,7 +36,7 @@ namespace Menu_Program
         string serverfilepath;
         int serverlength;
         List<Menu> menuitems = new List<Menu>();
-        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length, string[,] server, int slength)
+        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length, int slength)
         {
             InitializeComponent();
             menufilepath = System.IO.Path.GetFullPath(menupath);
@@ -45,14 +45,12 @@ namespace Menu_Program
             delivery = delivery_filepath;
             menu = menuitems;
             menulength = length;
+            serverlength = slength;
             readin_delivery();
             readin_sitin();
-            servers = server;
-            for(int i = 1; i<slength; i++)
-            {
-                serverbox.Items.Add(servers[i, 0]);
-            }
-            serverlength = slength;
+            readinservers();          
+            vegetarianbox.MaxLength = 1;
+            start();
         }
 
         private void readin_delivery()
@@ -161,10 +159,39 @@ namespace Menu_Program
             filelength = 0;
         }
 
+        private void readinservers()
+        {
+            //read in server text file
+            serverbox.Items.Clear();
+            int filelength = 0;
+            StreamReader r = new StreamReader(serverfilepath);
+            using (r)
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(serverfilepath);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    servers[i, j] = buffer;
+                    j++;
+                }
+                serverbox.Items.Add(servers[i, 0]);
+                i++;
+            }
+            serverlength = filelength;
+            filelength = 0;
+        }
+
         private void writeservers()
         {
-            //using (StreamWriter logfile = File.AppendText(serverfilepath))
-            //{
+
                 if (addrbtn.IsChecked == true)
                 {
                         using (StreamWriter logfile = File.AppendText(serverfilepath))
@@ -194,9 +221,61 @@ namespace Menu_Program
                     }
                     logfile.Close();
                 }
-            //}
+                readinservers();
         }
 
+        private void writemenu()
+        {
+            if (addrbtn.IsChecked == true)
+            {
+                using (StreamWriter logfile = File.AppendText(menufilepath))
+                    logfile.WriteLine(menu[menulength, 0] + "\t" + menu[menulength, 1] + "\t" + menu[menulength, 2]);
+            }
+            else if (editrbtn.IsChecked == true)
+            {
+                string[] empty = new string[0];
+                File.WriteAllLines(menufilepath, empty);
+                StreamWriter logfile = File.AppendText(menufilepath);
+                logfile.WriteLine("Name\tID\tVegetarian");
+                for (int i = 1; i <= menulength - 1; i++)
+                {
+                    logfile.WriteLine(menu[i, 0] + "\t" + menu[i, 1]+ "\t" + menu[i,2]);
+                }
+                logfile.Close();
+            }
+            else if (removerbtn.IsChecked == true)
+            {
+                string[] empty = new string[0];
+                File.WriteAllLines(menufilepath, empty);
+                StreamWriter logfile = File.AppendText(menufilepath);
+                logfile.WriteLine("Name\tID\tVegetarian");
+                for (int i = 1; i <= menulength - 2; i++)
+                {
+                    logfile.WriteLine(menu[i, 0] + "\t" + menu[i, 1] + "\t" + menu[i, 2]);
+                }
+                logfile.Close();
+            }
+            readin_menu();
+        }
+
+        private void start()
+        {
+            namelabel.Visibility = Visibility.Hidden;
+            namebox.Clear();
+            namebox.Visibility = Visibility.Hidden;
+            staffidlabel.Visibility = Visibility.Hidden;
+            staffidbox.Clear();
+            staffidbox.Visibility = Visibility.Hidden;
+            vegetarianlabel.Visibility = Visibility.Hidden;
+            vegetarianbox.Clear();
+            vegetarianbox.Visibility = Visibility.Hidden;
+            addrbtn.Visibility = Visibility.Hidden;
+            editrbtn.Visibility = Visibility.Hidden;
+            removerbtn.Visibility = Visibility.Hidden;
+            item_selection.Visibility = Visibility.Hidden;
+            edit_selection.SelectedIndex = -1;
+
+        }
         private void closebtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -268,36 +347,42 @@ namespace Menu_Program
 
         private void edit_selection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            item_selection.Items.Clear();
+            if (edit_selection.SelectedIndex != -1)
+            {
+                addrbtn.Visibility = Visibility.Visible;
+                editrbtn.Visibility = Visibility.Visible;
+                removerbtn.Visibility = Visibility.Visible;
+            }
             if (edit_selection.SelectedIndex == 0)
             {
-                for (int i = 1; i <= ((servers.Length/2)-1); i++)
+                for (int i = 1; i <= (serverlength-1); i++)
                 {
                     item_selection.Items.Add(servers[i, 0]);
                 }
+                staffidlabel.Content = "Staff Id";
             }
             if(edit_selection.SelectedIndex == 2)
             {
-                vegetarianlabel.Visibility = Visibility.Visible;
-                yesrbtn.Visibility = Visibility.Visible;
-                norbtn.Visibility = Visibility.Visible;
-                yesrbtn.IsChecked = false;
-                norbtn.IsChecked = false;
+                //vegetarianlabel.Visibility = Visibility.Visible;
+                //vegetarianbox.Visibility = Visibility.Visible;
+                vegetarianbox.Clear();
                 for (int i = 1; i <= menulength; i++)
                 {
                     item_selection.Items.Add(menu[i, 0]);
                 }
+                staffidlabel.Content = "Price £";
             }
             else
             {
                 vegetarianlabel.Visibility = Visibility.Hidden;
-                yesrbtn.Visibility = Visibility.Hidden;
-                norbtn.Visibility = Visibility.Hidden;
+                vegetarianbox.Visibility = Visibility.Hidden;
+                staffidlabel.Content = "Staff Id";
             }
             addrbtn.IsChecked = false;
             editrbtn.IsChecked = false;
             removerbtn.IsChecked = false;
-            yesrbtn.IsChecked = false;
-            norbtn.IsChecked = false;
+            vegetarianbox.Clear();
         }
 
         private void addrbtn_Checked(object sender, RoutedEventArgs e)
@@ -314,6 +399,10 @@ namespace Menu_Program
             namebox.Text = "";
             staffidbox.Text = "";
             item_selection.Visibility = Visibility.Visible;
+            namelabel.Visibility = Visibility.Visible;
+            namebox.Visibility = Visibility.Visible;
+            staffidlabel.Visibility = Visibility.Visible;
+            staffidbox.Visibility = Visibility.Visible;
         }
 
         private void removerbtn_Checked(object sender, RoutedEventArgs e)
@@ -327,48 +416,102 @@ namespace Menu_Program
             item_selection.Visibility = Visibility.Visible;
         }
 
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (edit_selection.SelectedIndex == 0)
+            {
+                if (editrbtn.IsChecked == true)
+                {
+                    for (int i = 1; i <= ((servers.Length / 2) - 1); i++)
+                    {
+                        if (servers[i, 0] == item_selection.SelectedItem.ToString())
+                        {
+                            servers[i, 0] = namebox.Text;
+                            servers[i, 1] = Int32.Parse(staffidbox.Text).ToString();
+                        }
+                    }
+                    writeservers();
+
+                }
+                if (addrbtn.IsChecked == true)
+                {
+                    servers[serverlength, 0] = namebox.Text;
+                    servers[serverlength, 1] = Int32.Parse(staffidbox.Text).ToString();
+                    writeservers();
+                }
+                if (removerbtn.IsChecked == true)
+                {
+                    for (int i = 1; i <= serverlength; i++)
+                    {
+                        if (servers[i, 0] == item_selection.SelectedItem.ToString())
+                        {
+                            for (int j = i; j <= serverlength; j++)
+                            {
+                                servers[j, 0] = servers[j + 1, 0];
+                                servers[j, 1] = servers[j + 1, 1];
+                            }
+                        }
+
+                    }
+                    writeservers();
+                }
+            }
+
+            else if (edit_selection.SelectedIndex == 1)
+            {
+
+            }
+
+            else if (edit_selection.SelectedIndex == 2)
+            {
+                if (editrbtn.IsChecked == true)
+                {
+                    for (int i = 1; i <= menulength; i++)
+                    {
+                        if (menu[i, 0] == item_selection.SelectedItem.ToString())
+                        {
+                            menu[i, 0] = namebox.Text;
+                            menu[i, 1] = Int32.Parse(staffidbox.Text).ToString();
+                            menu[menulength, 2] = vegetarianbox.Text;
+                        }
+                    }
+                    writemenu();
+
+                }
+                if (addrbtn.IsChecked == true)
+                {
+                    menu[menulength, 0] = namebox.Text;
+                    menu[menulength, 1] = Int32.Parse(staffidbox.Text).ToString();
+                    menu[menulength, 2] = vegetarianbox.Text;
+                    writemenu();
+                }
+                if (removerbtn.IsChecked == true)
+                {
+                    for (int i = 1; i <= menulength; i++)
+                    {
+                        if (menu[i, 0] == item_selection.SelectedItem.ToString())
+                        {
+                            for (int j = i; j <= serverlength; j++)
+                            {
+                                menu[j, 0] = menu[j + 1, 0];
+                                menu[j, 1] = menu[j + 1, 1];
+                                menu[j, 2] = menu[j + 1, 2];
+                            }
+                        }
+
+                    }
+                    writemenu();
+                }
+            }
+            start();
+
+        }
+
         private void item_selection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if(editrbtn.IsChecked == true)
-            {
-                for (int i = 1; i <= ((servers.Length/2)-1); i++)
-                {
-                    if(servers[i,0] == item_selection.SelectedItem.ToString())
-                    {
-                        servers[i, 0] = namebox.Text;
-                        servers[i, 1] = Int32.Parse(staffidbox.Text).ToString();
-                    }
-                }
-                writeservers();
-                
-            }
-            if(addrbtn.IsChecked==true)
-            {
-                servers[serverlength, 0] = namebox.Text;
-                servers[serverlength, 1] = Int32.Parse(staffidbox.Text).ToString();
-                writeservers();
-            }
-            if(removerbtn.IsChecked==true)
-            {
-                for (int i = 1; i <= serverlength; i++)
-                {
-                    if (servers[i, 0] == item_selection.SelectedItem.ToString())
-                    {
-                        for(int j = i; j<= serverlength;j++)
-                        {
-                            servers[j, 0] = servers[j+1, 0];
-                            servers[j, 1] = servers[j+1, 1];
-                        }
-                    }
-                    
-                }
-                writeservers();
-            }
-        }
     }
 }

@@ -1,5 +1,4 @@
-Name		Cost	Vegetarian
+Name	ID	Vegetarian
 Tomato Pizza	450	Y
 Peperoni Pizza	500	N
 Spaghetti Bolognaise	600	N
-Tomato Pasta	350	Y

@@ -416,7 +416,7 @@ namespace Menu_Program
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)
         {
-            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath, menu, menulength, server, serverlength);
+            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath, menu, menulength, serverlength);
             manager.ShowDialog();
         }
 
