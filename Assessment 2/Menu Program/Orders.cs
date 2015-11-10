@@ -13,12 +13,11 @@ namespace Menu_Program
         
         public List<Order> deliveryorders = new List<Order>();
         private string server;
-        string driver;
-        string name;
+        public string driver;
+        public string name;
         private int table;
         private double paid;
         int sitincount;
-        int deliverycount;
         string[] orders = new string[10];
         int index =0;
         public Order()
@@ -55,7 +54,15 @@ namespace Menu_Program
         public string Driver
         {
             get { return driver; }
-            set { driver = value; }
+            set 
+            {
+                if (value == "")
+                {
+                    throw new ArgumentException("No name entered");
+                }
+                else
+                driver = value; 
+            }
         }
         public int Table
         {
@@ -76,8 +83,6 @@ namespace Menu_Program
     }
     public class SitinOrder : Order
     {
-        private int table;
-        //public List<Menu> items = new List<Menu>();
         public SitinOrder()
         {
 
@@ -91,9 +96,8 @@ namespace Menu_Program
     }
     public class deliveryOrder : Order
     {
-        private string name;
+        
         private string address;
-        //public List<Menu> items = new List<Menu>();
         public deliveryOrder()
         {
 
@@ -101,13 +105,30 @@ namespace Menu_Program
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set 
+            {
+                if(value == "")
+                {
+                    throw new ArgumentException("No name entered");
+                }
+                else
+                name = value; 
+            }
         }
         public string Address
         {
             get { return address; }
-            set { address = value; }
+            set 
+            {
+                if (value == "")
+                {
+                    throw new ArgumentException("No address entered");
+                }
+                else
+                address = value;
+            }
         }
+
         public void Dishes(Menu item)
         {
             items.Add(item);

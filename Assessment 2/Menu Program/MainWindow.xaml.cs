@@ -49,6 +49,8 @@ namespace Menu_Program
         SitinOrder s = new SitinOrder();
         public List<Order> sitinorders = new List<Order>();
         bool detailsadded = false;
+        //int denotes number of tables in restaraunt
+        int tablenos = 20;
         
         public MainWindow()
         {
@@ -229,6 +231,7 @@ namespace Menu_Program
                 logoutbtn.IsEnabled = true;
                 logonbtn.IsEnabled = false;
                 selectbtn.IsEnabled = true;
+                statuslabel.Content = "Logged on";
             }
             else
                 return;
@@ -264,19 +267,16 @@ namespace Menu_Program
                 d.Dishes(menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
             }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
-            subtotal  = subtotal + buffer;
+            subtotal  = subtotal + Math.Round(buffer,2);
             subtotallabel.Content = subtotal;
             items = string.Join("\t", items, foodlistbox.SelectedItem.ToString());
             itemsordered++;
+            statuslabel.Content = "Item added";
         }
 
         private void sitinradbtn_Checked(object sender, RoutedEventArgs e)
         {
-            sitin = true;
-            tablebox.Visibility = Visibility.Visible;
-            tabletxt.Visibility = Visibility.Visible;
-            destinationlabel.Content = "Table";
-             
+            sitin = true;   
         }
 
         private void takeawayradbtn_Checked(object sender, RoutedEventArgs e)
@@ -304,7 +304,10 @@ namespace Menu_Program
                 addresstxtbox.Text = "";
                 namelabel.Visibility = Visibility.Hidden;
                 addresslabel.Visibility = Visibility.Hidden;
-
+                statuslabel.Content = "Sit-in selected";
+                tabletxt.Visibility = Visibility.Visible;
+                destinationlabel.Visibility = Visibility.Visible;
+                destinationlabel.Content = "Table:";
                 
                 
             }
@@ -318,6 +321,7 @@ namespace Menu_Program
                 driverbox.Visibility = Visibility.Visible;
                 nametxtbox.IsEnabled = true;
                 addresstxtbox.IsEnabled = true;
+                statuslabel.Content = "Delivery selected";
 
             }
             destinationlabel.Visibility = Visibility.Visible;
@@ -331,16 +335,12 @@ namespace Menu_Program
         {
             try
             {
-                if (Int32.Parse(tablebox.Text) < 1 || Int32.Parse(tablebox.Text) > 20)
+                if (Int32.Parse(tablebox.Text) < 1 || Int32.Parse(tablebox.Text) > tablenos)
                     throw new ArgumentException("Table number invalid");
                 table = Int32.Parse(tablebox.Text);
                 tabletxt.Content = table;
-                if(sitin)
-                {
-                    //menureadin();
-                    foodlistbox.IsEnabled = true;
-                    destinationlabel.Content = "Table";
-                }
+                statuslabel.Content = "Table selected";
+                foodlistbox.IsEnabled = true;
                 addtablebtn.IsEnabled = false;
             }
             catch (Exception excep)
@@ -354,7 +354,6 @@ namespace Menu_Program
             tablebox.Clear();
             subtotal = 0;
             subtotallabel.Content = "0.00";
-            totallabel.Content = "0.00";
             table = 0;
             tabletxt.Content = "";
             tablelabel.Visibility = Visibility.Hidden;
@@ -382,6 +381,7 @@ namespace Menu_Program
             s.Clear();
             driverbox.Visibility = Visibility.Hidden;
             driverbox.SelectedIndex = -1;
+            statuslabel.Content = "Order cleared";
 
         }
 
@@ -390,28 +390,38 @@ namespace Menu_Program
             orderlistbox.IsEnabled = false;
             foodlistbox.IsEnabled = false;
             addtobtn.IsEnabled = false;
-            if (sitin)
-                totallabel.Content = subtotal;
-            else
-                totallabel.Content = subtotal + (subtotal * 0.15);
+            statuslabel.Content = "Subtotal generated";
+
         }
 
         private void detailsbtn_Click(object sender, RoutedEventArgs e)
         {
             if (detailsadded)
                 return;
-            //menureadin();
-            foodlistbox.IsEnabled = true;
-            addtablebtn.Visibility = Visibility.Hidden;
-            tablelabel.Visibility = Visibility.Hidden;
-            tablebox.Visibility = Visibility.Hidden;
-            d.Name = nametxtbox.Text;
-            d.Address = addresstxtbox.Text;
-            destinationlabel.Content = "Name";
-            tabletxt.Content = nametxtbox.Text;
-            nametxtbox.IsEnabled = false;
-            addresstxtbox.IsEnabled = false;
-            detailsadded = true;
+            try
+            {
+                if(driverbox.SelectedIndex == -1)
+                    throw new ArgumentException("No driver selected");
+                d.Driver = driverbox.SelectedItem.ToString();
+                d.Name = nametxtbox.Text;
+                d.Address = addresstxtbox.Text;
+                foodlistbox.IsEnabled = true;
+                addtablebtn.Visibility = Visibility.Hidden;
+                tablelabel.Visibility = Visibility.Hidden;
+                tablebox.Visibility = Visibility.Hidden;
+                d.Name = nametxtbox.Text;
+                d.Address = addresstxtbox.Text;
+                destinationlabel.Content = "Name";
+                tabletxt.Content = nametxtbox.Text;
+                nametxtbox.IsEnabled = false;
+                addresstxtbox.IsEnabled = false;
+                detailsadded = true;
+                statuslabel.Content = "Details added";
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "error");
+            }
 
         }
 
@@ -424,19 +434,21 @@ namespace Menu_Program
         {
             if (sitin)
             {
-                writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items) ;
-                Window Bill = new Bill(s);
+                writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items);
+                s.Paid = subtotal;
+                Window Bill = new Bill(s, sitin);
                 Bill.ShowDialog();
-                o.Details(sitinorders,serverlist.SelectedItem.ToString(), table, subtotal);
+                //o.Details(sitinorders,serverlist.SelectedItem.ToString(), table, subtotal);
             }
             else
             {
-                string driver = "";
+                string driver = driverbox.SelectedItem.ToString();
+                d.Paid = subtotal;
                 writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal, items);
                 Window Bill = new Bill(d);
                 Bill.ShowDialog();
             }
-
+            statuslabel.Content = "Bill printed";
             
 
         }
@@ -450,6 +462,7 @@ namespace Menu_Program
             serverlist.IsEnabled = true;
             logoutbtn.IsEnabled = false;
             logonbtn.IsEnabled = true;
+            statuslabel.Content = "Logged out";
         }
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)

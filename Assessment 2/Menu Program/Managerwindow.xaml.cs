@@ -45,6 +45,7 @@ namespace Menu_Program
             InitializeComponent();
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
+            driverfilepath = System.IO.Path.GetFullPath(driverpath);
             sitin = sitin_filepath;
             delivery = delivery_filepath;
             menu = menuitems;
@@ -191,7 +192,7 @@ namespace Menu_Program
             filelength = 0;
         }
 
-        public void readindrivers()
+        public void readindrivers()         //reads in drivers from file
         {
             //read in driver text file
             int filelength = 0;
@@ -289,6 +290,40 @@ namespace Menu_Program
             readin_menu();
         }
 
+        private void writedrivers()     //writes driver changes to file
+        {
+            if (addrbtn.IsChecked == true)
+            {
+                using (StreamWriter logfile = File.AppendText(driverfilepath))
+                    logfile.WriteLine(driver[serverlength, 0] + "\t" + driver[serverlength, 1] + "\t" + driver[serverlength, 2]);
+            }
+            else if (editrbtn.IsChecked == true)
+            {
+                string[] empty = new string[0];
+                File.WriteAllLines(driverfilepath, empty);
+                StreamWriter logfile = File.AppendText(driverfilepath);
+                logfile.WriteLine("Name\tID\tCar Reg");
+                for (int i = 1; i <= driverlength - 1; i++)
+                {
+                    logfile.WriteLine(driver[i, 0] + "\t" + driver[i, 1] + "\t" + driver[i, 2]);
+                }
+                logfile.Close();
+            }
+            else if (removerbtn.IsChecked == true)
+            {
+                string[] empty = new string[0];
+                File.WriteAllLines(driverfilepath, empty);
+                StreamWriter logfile = File.AppendText(driverfilepath);
+                logfile.WriteLine("Name\tID\tCar Reg");
+                for (int i = 1; i <= driverlength - 2; i++)
+                {
+                    logfile.WriteLine(driver[i, 0] + "\t" + driver[i, 1] + "\t" + driver[i, 2]);
+                }
+                logfile.Close();
+            }
+            readinservers();
+        }
+
         private void start()        //sets visibility for items on page
         {
             namelabel.Visibility = Visibility.Hidden;
@@ -336,7 +371,7 @@ namespace Menu_Program
             testlistbox.Items.Clear();
             for (int i = 1; i <= deliverylength; i++)
             {
-                testlistbox.Items.Add(deliver[i, 0] + " " + deliver[i, 2] + " " + deliver[i, 3]);       //adds delivery orders to item box
+                testlistbox.Items.Add(deliver[i, 0] + " " +deliver[i,1] +" "+ deliver[i, 2] + " " + deliver[i, 3]);       //adds delivery orders to item box
             }
         }
 
@@ -392,11 +427,17 @@ namespace Menu_Program
                     item_selection.Items.Add(servers[i, 0]);
                 }
                 staffidlabel.Content = "Staff Id";
+                vegetarianlabel.Visibility = Visibility.Hidden;
+                vegetarianbox.Visibility = Visibility.Hidden;
             }
 
             if (edit_selection.SelectedIndex == 1)      //Drivers
             {
-
+                vegetarianlabel.Visibility = Visibility.Hidden;
+                vegetarianbox.Visibility = Visibility.Hidden;
+                vegetarianlabel.Content = "               Car Reg:";
+                vegetarianbox.MaxLength = 8;
+                vegetarianbox.Width = 64;
             }
             if(edit_selection.SelectedIndex == 2)       //Menu Items
             {
@@ -406,12 +447,15 @@ namespace Menu_Program
                     item_selection.Items.Add(menu[i, 0]);
                 }
                 staffidlabel.Content = "Price £";
+                vegetarianbox.MaxLength = 1;
+                vegetarianlabel.Content = "Vegetarian (Y/N):";
+                vegetarianbox.Width = 16;
             }
             else
             {
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
-                staffidlabel.Content = "Staff Id";
+                staffidlabel.Content = "Staff Id:";
             }
             addrbtn.IsChecked = false;
             editrbtn.IsChecked = false;
@@ -426,6 +470,8 @@ namespace Menu_Program
             staffidlabel.Visibility = Visibility.Visible;
             staffidbox.Visibility = Visibility.Visible;
             item_selection.Visibility = Visibility.Hidden;
+            vegetarianlabel.Visibility = Visibility.Visible;
+            vegetarianbox.Visibility = Visibility.Visible;
         }
 
         private void editrbtn_Checked(object sender, RoutedEventArgs e)
@@ -437,6 +483,8 @@ namespace Menu_Program
             namebox.Visibility = Visibility.Visible;
             staffidlabel.Visibility = Visibility.Visible;
             staffidbox.Visibility = Visibility.Visible;
+            vegetarianlabel.Visibility = Visibility.Visible;
+            vegetarianbox.Visibility = Visibility.Visible;
         }
 
         private void removerbtn_Checked(object sender, RoutedEventArgs e)
@@ -448,6 +496,8 @@ namespace Menu_Program
             namebox.Text = "";
             staffidbox.Text = "";
             item_selection.Visibility = Visibility.Visible;
+            vegetarianlabel.Visibility = Visibility.Hidden;
+            vegetarianbox.Visibility = Visibility.Hidden;
         }
 
 
@@ -544,7 +594,16 @@ namespace Menu_Program
 
         private void item_selection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (edit_selection.SelectedIndex == 2)     //Menu Items
+            {
+                vegetarianlabel.Visibility = Visibility.Visible;
+                vegetarianbox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                vegetarianlabel.Visibility = Visibility.Hidden;
+                vegetarianbox.Visibility = Visibility.Hidden;
+            }
         }
 
     }

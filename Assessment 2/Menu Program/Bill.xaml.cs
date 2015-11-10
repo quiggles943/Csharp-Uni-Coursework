@@ -22,12 +22,30 @@ namespace Menu_Program
         public Bill(Order d)
         {
             InitializeComponent();
-            //testtxt2.Content = d.Price;
             int total = d.items.Count;
             foreach (Menu m in d.items)
             {
                 billlist.Items.Add(m.Description) ;
             }
+            subtotallabel.Content = Math.Round(d.Paid,2);
+            deliv_chargelabel.Content = Math.Round((d.Paid * 0.15),2);
+            totallabel.Content = Math.Round((d.Paid + (d.Paid * 0.15)),2);
+
+        }
+        public Bill(Order s, bool sitin)
+        {
+            InitializeComponent();
+            deliv_chargelabel.Visibility = Visibility.Hidden;
+            deliverychargelabel.Visibility = Visibility.Hidden;
+            int total = s.items.Count;
+            foreach (Menu m in s.items)
+            {
+                billlist.Items.Add(m.Description);
+            }
+            subtotallabel.Content = Math.Round(s.Paid,2);
+            deliv_chargelabel.Content = "0";
+            totallabel.Content = Math.Round(s.Paid,2);
+
         }
 
         private void closebtn_Click(object sender, RoutedEventArgs e)

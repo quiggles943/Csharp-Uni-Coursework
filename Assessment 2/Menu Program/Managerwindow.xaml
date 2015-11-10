@@ -12,22 +12,24 @@
         <Button x:Name="deliverybtn" Content="Take Away Orders" HorizontalAlignment="Left" Margin="56,64,0,0" VerticalAlignment="Top" Width="104" Click="deliverybtn_Click_1"/>
         <ComboBox x:Name="serverbox" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="150" ToolTip="List of servers " SelectionChanged="serverbox_SelectionChanged"/>
         <Button x:Name="serverbtn" Content="Please select server" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" Width="150" IsEnabled="False" Click="serverbtn_Click"/>
-        <ComboBox x:Name="edit_selection" HorizontalAlignment="Left" Margin="378,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="edit_selection_SelectionChanged">
+        <ComboBox x:Name="edit_selection" HorizontalAlignment="Left" Margin="396,29,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="edit_selection_SelectionChanged">
             <ComboBoxItem Content="Servers"/>
             <ComboBoxItem Content="Drivers"/>
             <ComboBoxItem Content="Menu Items"/>
         </ComboBox>
-        <RadioButton x:Name="addrbtn" Content="Add" HorizontalAlignment="Left" Margin="356,51,0,0" VerticalAlignment="Top" Checked="addrbtn_Checked"/>
-        <RadioButton x:Name="editrbtn" Content="Edit" HorizontalAlignment="Left" Margin="406,51,0,0" VerticalAlignment="Top" Checked="editrbtn_Checked"/>
-        <RadioButton x:Name="removerbtn" Content="Remove" HorizontalAlignment="Left" Margin="454,51,0,0" VerticalAlignment="Top" Checked="removerbtn_Checked"/>
-        <Label x:Name="namelabel" Content="Name:" HorizontalAlignment="Left" Margin="334,112,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="namebox" HorizontalAlignment="Left" Height="23" Margin="378,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="staffidbox" HorizontalAlignment="Left" Height="24" Margin="378,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="staffidlabel" Content="Staff Id:" HorizontalAlignment="Left" Margin="328,141,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="vegetarianlabel" Content="Vegetarian (Y/N):" HorizontalAlignment="Left" Margin="277,172,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="item_selection" HorizontalAlignment="Left" Margin="378,78,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="item_selection_SelectionChanged"/>
-        <Button Content="Accept" HorizontalAlignment="Left" Margin="396,206,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <TextBox x:Name="vegetarianbox" HorizontalAlignment="Left" Height="24" Margin="378,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16"/>
+        <RadioButton x:Name="addrbtn" Content="Add" HorizontalAlignment="Left" Margin="374,70,0,0" VerticalAlignment="Top" Checked="addrbtn_Checked"/>
+        <RadioButton x:Name="editrbtn" Content="Edit" HorizontalAlignment="Left" Margin="424,70,0,0" VerticalAlignment="Top" Checked="editrbtn_Checked"/>
+        <RadioButton x:Name="removerbtn" Content="Remove" HorizontalAlignment="Left" Margin="472,70,0,0" VerticalAlignment="Top" Checked="removerbtn_Checked"/>
+        <Label x:Name="namelabel" Content="Name:" HorizontalAlignment="Left" Margin="352,131,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="namebox" HorizontalAlignment="Left" Height="23" Margin="396,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="staffidbox" HorizontalAlignment="Left" Height="24" Margin="396,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="staffidlabel" Content="Staff Id:" HorizontalAlignment="Left" Margin="346,160,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="vegetarianlabel" Content="Vegetarian (Y/N):" HorizontalAlignment="Left" Margin="295,191,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="item_selection" HorizontalAlignment="Left" Margin="396,97,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="item_selection_SelectionChanged"/>
+        <Button Content="Accept" HorizontalAlignment="Left" Margin="414,225,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <TextBox x:Name="vegetarianbox" HorizontalAlignment="Left" Height="24" Margin="396,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16"/>
+        <Label Content="Order Options" HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="Editing Options" HorizontalAlignment="Left" Margin="396,0,0,0" VerticalAlignment="Top" FontSize="16"/>
 
     </Grid>
 </Window>
