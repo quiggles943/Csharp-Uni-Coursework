@@ -60,71 +60,81 @@ namespace Menu_Program
 
         private void readin_delivery()      //reads in delivery orders from file
         {
-            int filelength = 0;
-            using (StreamReader r = new StreamReader(delivery))
+            if (File.Exists(delivery))
             {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(delivery);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
+                int filelength = 0;
+                using (StreamReader r = new StreamReader(delivery))
                 {
-                    string buffer = column[j];
-                    deliver[i, j] = buffer;
-                    if (j > 2)
+                    while (r.ReadLine() != null) { filelength++; }
+                }
+                int i = 1;
+                string[] file = System.IO.File.ReadAllLines(delivery);
+                int len = file.Length;
+                while (i < (len))
+                {
+                    string[] column = file[i].Split('\t');
+                    int j = 0;
+                    while (j < (column.Length))
                     {
-                        for (int m = 1; m <= menulength; m++)
+                        string buffer = column[j];
+                        deliver[i, j] = buffer;
+                        if (j > 2)
                         {
-                            if (column[j] == menu[m, 0])
+                            for (int m = 1; m <= menulength; m++)
                             {
-                                count[m]++;
+                                if (column[j] == menu[m, 0])
+                                {
+                                    count[m]++;
+                                }
                             }
                         }
+                        j++;
                     }
-                    j++;
+                    i++;
                 }
-                i++;
+                deliverylength = filelength;
             }
-            deliverylength = filelength;
+            else
+                return;
         }
         private void readin_sitin()     //reads in sit in orders from file
         {
-            int filelength = 0;
-            using (StreamReader r = new StreamReader(sitin))
+            if (File.Exists(sitin))
             {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(sitin);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
+                int filelength = 0;
+                using (StreamReader r = new StreamReader(sitin))
                 {
-                    string buffer = column[j];
-                    sit[i, j] = buffer;
-                    if (j > 2)
+                    while (r.ReadLine() != null) { filelength++; }
+                }
+                int i = 1;
+                string[] file = System.IO.File.ReadAllLines(sitin);
+                int len = file.Length;
+                while (i < (len))
+                {
+                    string[] column = file[i].Split('\t');
+                    int j = 0;
+                    while (j < (column.Length))
                     {
-                        for (int m = 1; m <= menulength; m++)
+                        string buffer = column[j];
+                        sit[i, j] = buffer;
+                        if (j > 2)
                         {
-                            if (column[j] == menu[m, 0])
+                            for (int m = 1; m <= menulength; m++)
                             {
-                                count[m]++;
+                                if (column[j] == menu[m, 0])
+                                {
+                                    count[m]++;
+                                }
                             }
                         }
+                        j++;
                     }
-                    j++;
+                    i++;
                 }
-                i++;
+                sitinlength = filelength;
             }
-            sitinlength = filelength;
+            else
+                return;
         }
 
         private void readin_menu()      //reads in menu from file
