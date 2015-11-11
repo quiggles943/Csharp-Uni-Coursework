@@ -54,6 +54,14 @@ namespace Menu_Program
         
         public MainWindow()
         {
+            menufilepath = System.IO.Path.GetFullPath(menupath);
+            serverfilepath = System.IO.Path.GetFullPath(serverpath);
+            driverfilepath = System.IO.Path.GetFullPath(driverpath);
+            sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
+            delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
+            readinservers();
+            menureadin();
+            readindrivers();
             InitializeComponent();
             tablebox.Visibility = Visibility.Hidden;
             tabletxt.Visibility = Visibility.Hidden;
@@ -71,15 +79,9 @@ namespace Menu_Program
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
             logoutbtn.IsEnabled = false;
-            menufilepath = System.IO.Path.GetFullPath(menupath);
-            serverfilepath = System.IO.Path.GetFullPath(serverpath);
-            driverfilepath = System.IO.Path.GetFullPath(driverpath);
-            sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
-            delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
-            readinservers();
-            menureadin();
-            readindrivers();
+            
         }
+
 
         private void menureadin()
         {

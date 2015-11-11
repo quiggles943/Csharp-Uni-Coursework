@@ -305,7 +305,7 @@ namespace Menu_Program
             if (addrbtn.IsChecked == true)
             {
                 using (StreamWriter logfile = File.AppendText(driverfilepath))
-                    logfile.WriteLine(driver[serverlength, 0] + "\t" + driver[serverlength, 1] + "\t" + driver[serverlength, 2]);
+                    logfile.WriteLine(driver[driverlength, 0] + "\t" + driver[driverlength, 1] + "\t" + driver[driverlength, 2]);
             }
             else if (editrbtn.IsChecked == true)
             {
@@ -328,6 +328,41 @@ namespace Menu_Program
                 for (int i = 1; i <= driverlength - 2; i++)
                 {
                     logfile.WriteLine(driver[i, 0] + "\t" + driver[i, 1] + "\t" + driver[i, 2]);
+                }
+                logfile.Close();
+            }
+            readinservers();
+        }
+
+        //test
+        private void write(string filepath, string[,] store, string title, int length )
+        {
+            if (addrbtn.IsChecked == true)
+            {
+                using (StreamWriter logfile = File.AppendText(filepath))
+                    logfile.WriteLine(store[length, 0] + "\t" + store[length, 1] + "\t" + store[length, 2]);
+            }
+            else if (editrbtn.IsChecked == true)
+            {
+                string[] empty = new string[0];
+                File.WriteAllLines(filepath, empty);
+                StreamWriter logfile = File.AppendText(filepath);
+                logfile.WriteLine(title);
+                for (int i = 1; i <= length - 1; i++)
+                {
+                    logfile.WriteLine(store[i, 0] + "\t" + store[i, 1] + "\t" + store[i, 2]);
+                }
+                logfile.Close();
+            }
+            else if (removerbtn.IsChecked == true)
+            {
+                string[] empty = new string[0];
+                File.WriteAllLines(filepath, empty);
+                StreamWriter logfile = File.AppendText(filepath);
+                logfile.WriteLine(title);
+                for (int i = 1; i <= driverlength - 2; i++)
+                {
+                    logfile.WriteLine(store[i, 0] + "\t" + store[i, 1] + "\t" + store[i, 2]);
                 }
                 logfile.Close();
             }
