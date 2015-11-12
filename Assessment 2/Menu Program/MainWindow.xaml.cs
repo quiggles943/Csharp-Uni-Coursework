@@ -43,6 +43,7 @@ namespace Menu_Program
         double subtotal;
         int table;
         int itemsordered = 0;
+        string missingfiles = "";
         List<Menu> menuitems = new List<Menu>();
         Order o = new Order();
         deliveryOrder d = new deliveryOrder();
@@ -59,10 +60,14 @@ namespace Menu_Program
             driverfilepath = System.IO.Path.GetFullPath(driverpath);
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
-            readinservers();
-            menureadin();
-            readindrivers();
             InitializeComponent();
+           /* filesexist();
+            if(missingfiles != "")
+            {
+                Managerwindow manager = new Managerwindow(menu, menulength, serverlength, missingfiles);
+                this.Hide();
+                manager.ShowDialog();
+            }*/
             tablebox.Visibility = Visibility.Hidden;
             tabletxt.Visibility = Visibility.Hidden;
             addtablebtn.Visibility = Visibility.Hidden;
@@ -79,9 +84,35 @@ namespace Menu_Program
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
             logoutbtn.IsEnabled = false;
+            readinservers();
+            menureadin();
+            readindrivers();
             
         }
 
+        /*private void filesexist()
+        {
+            string menu;
+            string server;
+            string driver;
+            if(!File.Exists(menufilepath))
+                menu = "menu," ;
+            else
+                menu = "";
+
+            if (!File.Exists(serverfilepath))
+                server = "server,";
+            else
+                server = "";
+
+            if (!File.Exists(driverfilepath))
+                driver = "driver";
+            else
+                driver = "";
+
+            missingfiles = menu+ "  " +server+ "  "+ driver;
+
+        }*/
 
         private void menureadin()
         {
@@ -469,7 +500,7 @@ namespace Menu_Program
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)
         {
-            Managerwindow manager = new Managerwindow(delivery_order_filepath, sitin_order_filepath, menu, menulength, serverlength);
+            Managerwindow manager = new Managerwindow(menu, menulength, serverlength, missingfiles);
             manager.ShowDialog();
         }
 

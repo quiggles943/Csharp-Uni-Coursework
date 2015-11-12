@@ -34,26 +34,29 @@ namespace Menu_Program
         string menupath = @"..\..\menu.txt";
         string serverpath = @"..\..\server.txt";
         string driverpath = @"..\..\driver.txt";
+        string sitin_orderpath = @"..\..\sitin_orderlog.txt";
+        string delivery_orderpath = @"..\..\delivery_orderlog.txt";
         string menufilepath;
         string serverfilepath;
         string driverfilepath;
         int serverlength;
         int driverlength;
         List<Menu> menuitems = new List<Menu>();
-        public Managerwindow(string delivery_filepath, string sitin_filepath, string[,] menuitems, int length, int slength)
+        public Managerwindow(string[,] menuitems, int length, int slength, string missingfiles)
         {
             InitializeComponent();
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
             driverfilepath = System.IO.Path.GetFullPath(driverpath);
-            sitin = sitin_filepath;
-            delivery = delivery_filepath;
+            sitin = System.IO.Path.GetFullPath(sitin_orderpath);
+            delivery = System.IO.Path.GetFullPath(delivery_orderpath);
             menu = menuitems;
             menulength = length;
             serverlength = slength;
             readin_delivery();
             readin_sitin();
-            readinservers();          
+            readinservers();
+            statuslabel.Content = "Files loaded successfully";
             vegetarianbox.MaxLength = 1;
             start();
         }
