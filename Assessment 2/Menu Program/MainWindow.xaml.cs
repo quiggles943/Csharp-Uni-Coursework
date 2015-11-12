@@ -492,8 +492,16 @@ namespace Menu_Program
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)
         {
-            Managerwindow manager = new Managerwindow(menu, menulength, serverlength);
-            manager.ShowDialog();
+            Password password = new Password();
+            password.ShowDialog();
+            if (password.correct)
+            {
+                Managerwindow manager = new Managerwindow(menu, menulength, serverlength);
+                manager.ShowDialog();
+            }
+            else
+                MessageBox.Show("Password incorrect", "error");
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
