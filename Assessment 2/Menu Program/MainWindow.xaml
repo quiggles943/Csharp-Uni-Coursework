@@ -28,7 +28,7 @@
         <Button x:Name="detailsbtn" Content="Add details" HorizontalAlignment="Left" Margin="230,196,0,0" VerticalAlignment="Top" Width="74" Click="detailsbtn_Click" ToolTip="Adds delivery details"/>
         <Button x:Name="billbtn" Content="Create Bill" HorizontalAlignment="Left" Margin="424,343,0,0" VerticalAlignment="Top" Width="61" Click="billbtn_Click" ToolTip="Generates the bill Note: order is unchangable from this point"/>
         <Button x:Name="logoutbtn" Content="Logout" HorizontalAlignment="Left" Margin="335,25,0,0" VerticalAlignment="Top" Width="75" Click="logoutbtn_Click" ToolTip="Logs out of system"/>
-        <Button x:Name="managerbtn" Content="Manager" HorizontalAlignment="Left" Margin="186,368,0,0" VerticalAlignment="Top" Width="75" Click="managerbtn_Click"/>
+        <Button x:Name="managerbtn" Content="Manager" HorizontalAlignment="Left" Margin="186,363,0,0" VerticalAlignment="Top" Width="75" Click="managerbtn_Click"/>
         <ComboBox x:Name="driverbox" HorizontalAlignment="Left" Margin="210,113,0,0" VerticalAlignment="Top" Width="120"/>
         <StatusBar HorizontalAlignment="Left" Height="25" Margin="0,390,0,0" VerticalAlignment="Top" Width="532">
             <ListBoxItem Content="Server:"/>

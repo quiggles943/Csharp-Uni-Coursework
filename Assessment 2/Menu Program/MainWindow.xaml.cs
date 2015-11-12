@@ -43,7 +43,6 @@ namespace Menu_Program
         double subtotal;
         int table;
         int itemsordered = 0;
-        string missingfiles = "";
         List<Menu> menuitems = new List<Menu>();
         Order o = new Order();
         deliveryOrder d = new deliveryOrder();
@@ -61,13 +60,6 @@ namespace Menu_Program
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
             InitializeComponent();
-           /* filesexist();
-            if(missingfiles != "")
-            {
-                Managerwindow manager = new Managerwindow(menu, menulength, serverlength, missingfiles);
-                this.Hide();
-                manager.ShowDialog();
-            }*/
             tablebox.Visibility = Visibility.Hidden;
             tabletxt.Visibility = Visibility.Hidden;
             addtablebtn.Visibility = Visibility.Hidden;
@@ -500,8 +492,14 @@ namespace Menu_Program
 
         private void managerbtn_Click(object sender, RoutedEventArgs e)
         {
-            Managerwindow manager = new Managerwindow(menu, menulength, serverlength, missingfiles);
+            Managerwindow manager = new Managerwindow(menu, menulength, serverlength);
             manager.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Password password = new Password();
+            password.ShowDialog();
         }
 
 
