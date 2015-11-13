@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 
 namespace Menu_Program
 {
-    public static partial class encryption
+    internal static partial class encryption
     {
-        public static string encrypt(string password)
+        internal static string encrypt(string password)
         {
             var seed = 12584;
             char[] pass = password.ToCharArray();
@@ -28,7 +28,7 @@ namespace Menu_Program
 
         }
 
-        public static string decrypt(string password)
+        private static string decrypt(string password)
         {
             var seed = 12584;
             char[] pass = password.ToCharArray();
