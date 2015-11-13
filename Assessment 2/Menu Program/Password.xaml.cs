@@ -25,14 +25,15 @@ namespace Menu_Program
     {
         int settinglength = 0;
         string settingpath = @"..\..\setting.txt";
-        string settingfilepath;
-        string[,] setting = new string[100, 2];
+        public string settingfilepath;
+        public string[,] setting = new string[100, 2];
         public bool correct = false;
         
 
         public Password()
         {
             InitializeComponent();
+            passwordbox.Focus();
             settingfilepath = System.IO.Path.GetFullPath(settingpath);
             readinpassword();
         }
@@ -65,7 +66,7 @@ namespace Menu_Program
             filelength = 0;
         }
 
-        private void writepassword()
+        public void writepassword()
         {
             string[] empty = new string[0];
             File.WriteAllLines(settingfilepath, empty);

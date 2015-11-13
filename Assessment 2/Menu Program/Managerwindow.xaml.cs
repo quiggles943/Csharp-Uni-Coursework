@@ -654,5 +654,11 @@ namespace Menu_Program
             }
         }
 
+        private void passwordbtn_Click(object sender, RoutedEventArgs e)
+        {
+            changePassword password = new changePassword();
+            password.ShowDialog();
+        }
+
     }
 }
