@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Controls;
 
 namespace Menu_Program
 {
@@ -41,6 +42,8 @@ namespace Menu_Program
         string driverfilepath;
         int serverlength;
         int driverlength;
+        Password p = new Password();
+        Setting s = new Setting();
         List<Menu> menuitems = new List<Menu>();
         public Managerwindow(string[,] menuitems, int length, int slength)
         {
@@ -233,6 +236,35 @@ namespace Menu_Program
                 //r.Close();
             }
         }
+        private void readinsettings()
+        {
+            int filelength = 0;
+            using (StreamReader r = new StreamReader(p.settingfilepath))
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(p.settingfilepath);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    string buffer2 = buffer;
+                    p.setting[i, j] = buffer2;
+                    j++;
+                }
+
+                i++;
+            }
+            p.settinglength = filelength;
+            filelength = 0;
+        }
+
+        
 
         private void writeservers()     //writes server changes to file
         {
@@ -335,6 +367,19 @@ namespace Menu_Program
                 logfile.Close();
             }
             readinservers();
+        }
+
+        public void writesettings()
+        {
+            string[] empty = new string[0];
+            File.WriteAllLines(p.settingfilepath, empty);
+            StreamWriter logfile = File.AppendText(p.settingfilepath);
+            logfile.WriteLine("Title\tVariable");
+            for (int i = 1; i <= p.settinglength + 1; i++)
+            {
+                logfile.WriteLine(p.setting[i, 0] + "\t" + p.setting[i, 1]);
+            }
+            logfile.Close();
         }
 
         //test
@@ -658,6 +703,30 @@ namespace Menu_Program
         {
             changePassword password = new changePassword();
             password.ShowDialog();
+        }
+
+        private void size10_Click(object sender, RoutedEventArgs e)
+        {
+            s.Fontsize = 10;
+            p.setting[2, 1] = s.Fontsize.ToString();
+            this.FontSize = s.Fontsize;
+            writesettings();
+        }
+
+        private void size12_Click(object sender, RoutedEventArgs e)
+        {
+            s.Fontsize = 12;
+            p.setting[2, 1] = s.Fontsize.ToString();
+            this.FontSize = s.Fontsize;
+            writesettings();
+        }
+
+        private void size14_Click(object sender, RoutedEventArgs e)
+        {
+            s.Fontsize = 14;
+            p.setting[2, 1] = s.Fontsize.ToString();
+            this.FontSize = s.Fontsize;
+            writesettings();
         }
 
     }

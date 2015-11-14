@@ -21,6 +21,7 @@ namespace Menu_Program
     {
         bool correct = false;
         Password p = new Password();
+        Setting setting = new Setting();
         public changePassword()
         {
             InitializeComponent();
@@ -54,8 +55,7 @@ namespace Menu_Program
             }
             if (correct)
             {
-                p.setting[1, 1] = encryption.encrypt(newPassword.Password);
-                p.writepassword();
+                setting.Password = encryption.encrypt(newPassword.Password);
             }
         }
     }

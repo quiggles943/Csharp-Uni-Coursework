@@ -23,11 +23,12 @@ namespace Menu_Program
     public partial class Password : Window
 
     {
-        int settinglength = 0;
+        public int settinglength = 0;
         string settingpath = @"..\..\setting.txt";
         public string settingfilepath;
         public string[,] setting = new string[100, 2];
         public bool correct = false;
+        Setting s = new Setting();
         
 
         public Password()
@@ -35,58 +36,14 @@ namespace Menu_Program
             InitializeComponent();
             passwordbox.Focus();
             settingfilepath = System.IO.Path.GetFullPath(settingpath);
-            readinpassword();
         }
 
-       private void readinpassword()
-        {
-            int filelength = 0;
-            using (StreamReader r = new StreamReader(settingfilepath))
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(settingfilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    string buffer2 = buffer;
-                    setting[i, j] = buffer2;
-                    j++;
-                }
-
-                i++;
-            }
-            settinglength = filelength;
-            filelength = 0;
-        }
-
-        public void writepassword()
-        {
-            string[] empty = new string[0];
-            File.WriteAllLines(settingfilepath, empty);
-            StreamWriter logfile = File.AppendText(settingfilepath);
-            logfile.WriteLine("hello\tVariable");
-            for (int i = 1; i <= settinglength+1; i++)
-            {
-                logfile.WriteLine(setting[i, 0] + "\t" + setting[i, 1]);
-            }
-            logfile.Close();
-        }
 
 
         private void enterbtn_Click(object sender, RoutedEventArgs e)
         {
             string input = encryption.encrypt(passwordbox.Password);
-            /*setting[1, 1] = input;
-            writepassword();*/
-
-            if(input == setting[1,1])
+            if(input == s.Password)
             {
                 correct = true;
                 this.Close();

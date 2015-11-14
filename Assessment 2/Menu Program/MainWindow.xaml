@@ -19,7 +19,7 @@
         <Label x:Name="destinationlabel" Content="Table:" HorizontalAlignment="Left" Margin="371,100,0,0" VerticalAlignment="Top"/>
         <Label x:Name="tabletxt" Content="00" HorizontalAlignment="Left" Margin="406,100,0,0" VerticalAlignment="Top"/>
         <Button x:Name="addtablebtn" Content="Add Table" HorizontalAlignment="Left" Margin="36,145,0,0" VerticalAlignment="Top" Width="77" Click="addtablebtn_Click" ToolTip="Adds table to order"/>
-        <Button x:Name="clearbtn" Content="Clear" HorizontalAlignment="Left" Margin="36,337,0,0" VerticalAlignment="Top" Width="75" Click="clearbtn_Click" ToolTip="Clears the order"/>
+        <Button x:Name="clearbtn" Content="Clear" HorizontalAlignment="Left" Margin="36,312,0,0" VerticalAlignment="Top" Width="75" Click="clearbtn_Click" ToolTip="Clears the order"/>
         <Button x:Name="totalbtn" Content="Total" HorizontalAlignment="Left" Margin="371,343,0,0" VerticalAlignment="Top" Width="48" Click="totalbtn_Click" ToolTip="Generates a subtotal"/>
         <TextBox x:Name="nametxtbox" HorizontalAlignment="Left" Height="23" Margin="210,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="nametxtbox_TextChanged"/>
         <TextBox x:Name="addresstxtbox" HorizontalAlignment="Left" Height="23" Margin="210,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

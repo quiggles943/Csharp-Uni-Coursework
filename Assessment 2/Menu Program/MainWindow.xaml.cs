@@ -44,9 +44,10 @@ namespace Menu_Program
         int table;
         int itemsordered = 0;
         List<Menu> menuitems = new List<Menu>();
-        Order o = new Order();
+        //Order o = new Order();
         deliveryOrder d = new deliveryOrder();
         SitinOrder s = new SitinOrder();
+        Setting setting = new Setting();
         public List<Order> sitinorders = new List<Order>();
         bool detailsadded = false;
         //int denotes number of tables in restaraunt
@@ -195,6 +196,11 @@ namespace Menu_Program
             driverlength = filelength;
             filelength = 0;
             //r.Close();
+        }
+
+        public void fontsize()
+        {
+            this.FontSize = setting.Fontsize;
         }
 
         private void writetofile(string server, int table, double paid, string items)     //writes to sit in order log 
@@ -463,7 +469,6 @@ namespace Menu_Program
                 s.Paid = subtotal;
                 Window Bill = new Bill(s, sitin);
                 Bill.ShowDialog();
-                //o.Details(sitinorders,serverlist.SelectedItem.ToString(), table, subtotal);
             }
             else
             {
@@ -490,7 +495,7 @@ namespace Menu_Program
             statuslabel.Content = "Logged out";
         }
 
-        private void managerbtn_Click(object sender, RoutedEventArgs e)
+        public void managerbtn_Click(object sender, RoutedEventArgs e)
         {
             Password password = new Password();
             password.ShowDialog();
@@ -498,6 +503,7 @@ namespace Menu_Program
             {
                 Managerwindow manager = new Managerwindow(menu, menulength, serverlength);
                 manager.ShowDialog();
+                fontsize();
             }
             else
                 MessageBox.Show("Password incorrect", "error");
@@ -510,6 +516,9 @@ namespace Menu_Program
             password.ShowDialog();
         }
 
-
+        public void fontsizechange()
+        {
+            this.FontSize = setting.Fontsize;
+        }
     }
 }
