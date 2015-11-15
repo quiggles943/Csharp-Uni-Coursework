@@ -25,8 +25,15 @@ namespace Menu_Program
             get
             {
                 setting = Settingreadwrite;
-                fontsize = Int32.Parse(setting[2, 1]);
-                return fontsize;
+                if (setting[2, 1] == null)
+                {
+                    return 12;
+                }
+                else
+                {
+                    fontsize = Int32.Parse(setting[2, 1]);
+                    return fontsize;
+                }
             }
             set
             {
@@ -40,7 +47,6 @@ namespace Menu_Program
         {
             get
             { 
-                setting = Settingreadwrite;
                 string pass = setting[1, 1];
                 return pass; 
             }

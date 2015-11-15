@@ -27,6 +27,12 @@ namespace Menu_Program
             InitializeComponent();
             old1.Focus();
             passwordmatch.Content = "passwords do not match";
+            fontsize();
+        }
+
+        public void fontsize()
+        {
+            this.FontSize = setting.Fontsize;
         }
 
         private void old2_TextChanged(object sender, RoutedEventArgs e)

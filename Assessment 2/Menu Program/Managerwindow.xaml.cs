@@ -62,6 +62,7 @@ namespace Menu_Program
             statuslabel.Content = "Files loaded successfully";
             vegetarianbox.MaxLength = 1;
             start();
+            fontsize();
         }
 
         private void readin_delivery()      //reads in delivery orders from file
@@ -369,7 +370,7 @@ namespace Menu_Program
             readinservers();
         }
 
-        public void writesettings()
+        /*public void writesettings()
         {
             string[] empty = new string[0];
             File.WriteAllLines(p.settingfilepath, empty);
@@ -380,10 +381,10 @@ namespace Menu_Program
                 logfile.WriteLine(p.setting[i, 0] + "\t" + p.setting[i, 1]);
             }
             logfile.Close();
-        }
+        }*/
 
         //test
-        private void write(string filepath, string[,] store, string title, int length )
+       /* private void write(string filepath, string[,] store, string title, int length )
         {
             if (addrbtn.IsChecked == true)
             {
@@ -415,7 +416,7 @@ namespace Menu_Program
                 logfile.Close();
             }
             readinservers();
-        }
+        }*/
 
         private void start()        //sets visibility for items on page
         {
@@ -435,6 +436,12 @@ namespace Menu_Program
             edit_selection.SelectedIndex = -1;
 
         }
+
+        public void fontsize()
+        {
+            this.FontSize = s.Fontsize;
+        }
+
         private void closebtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -708,25 +715,22 @@ namespace Menu_Program
         private void size10_Click(object sender, RoutedEventArgs e)
         {
             s.Fontsize = 10;
-            p.setting[2, 1] = s.Fontsize.ToString();
+            //p.setting[2, 1] = s.Fontsize.ToString();
             this.FontSize = s.Fontsize;
-            writesettings();
         }
 
         private void size12_Click(object sender, RoutedEventArgs e)
         {
             s.Fontsize = 12;
-            p.setting[2, 1] = s.Fontsize.ToString();
+            //p.setting[2, 1] = s.Fontsize.ToString();
             this.FontSize = s.Fontsize;
-            writesettings();
         }
 
         private void size14_Click(object sender, RoutedEventArgs e)
         {
             s.Fontsize = 14;
-            p.setting[2, 1] = s.Fontsize.ToString();
+            //p.setting[2, 1] = s.Fontsize.ToString();
             this.FontSize = s.Fontsize;
-            writesettings();
         }
 
     }

@@ -80,6 +80,7 @@ namespace Menu_Program
             readinservers();
             menureadin();
             readindrivers();
+            fontsize();
             
         }
 
@@ -507,6 +508,7 @@ namespace Menu_Program
             }
             else
                 MessageBox.Show("Password incorrect", "error");
+            fontsize();
 
         }
 
@@ -514,11 +516,6 @@ namespace Menu_Program
         {
             Password password = new Password();
             password.ShowDialog();
-        }
-
-        public void fontsizechange()
-        {
-            this.FontSize = setting.Fontsize;
         }
     }
 }

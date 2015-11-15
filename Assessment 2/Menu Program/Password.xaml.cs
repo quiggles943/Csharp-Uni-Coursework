@@ -36,9 +36,13 @@ namespace Menu_Program
             InitializeComponent();
             passwordbox.Focus();
             settingfilepath = System.IO.Path.GetFullPath(settingpath);
+            fontsize();
         }
 
-
+        public void fontsize()
+        {
+            this.FontSize = s.Fontsize;
+        }
 
         private void enterbtn_Click(object sender, RoutedEventArgs e)
         {
