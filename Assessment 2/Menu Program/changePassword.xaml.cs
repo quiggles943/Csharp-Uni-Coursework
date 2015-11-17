@@ -35,16 +35,6 @@ namespace Menu_Program
             this.FontSize = setting.Fontsize;
         }
 
-        private void old2_TextChanged(object sender, RoutedEventArgs e)
-        {
-            if (old1.Password == old2.Password)
-            {
-                passwordmatch.Content = "passwords match";
-                correct = true;
-            }
-            else
-                passwordmatch.Content = "passwords do not match";
-        }
 
         private void changeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -52,16 +42,66 @@ namespace Menu_Program
 
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (old1.Password == old2.Password && newPassword.Password != "")
+            if (encryption.encrypt(old1.Password) == setting.Password)
             {
-                passwordmatch.Content = "passwords match";
-                correct = true;
+                if (newPassword.Password == new2.Password && newPassword.Password != "")
+                {
+                    passwordmatch.Content = "Passwords match";
+                    correct = true;
+                }
+                if (correct)
+                {
+                    setting.Password = encryption.encrypt(newPassword.Password);
+                    this.Close();
+                }
             }
-            if (correct)
+            else
+            { 
+                MessageBox.Show("Old password does not match stored password", "Password Incorrect", MessageBoxButton.OK); 
+            }
+        }
+
+        private void textchanged(object sender, RoutedEventArgs e)
+        {
+            if (newPassword.Password == new2.Password)
             {
-                setting.Password = encryption.encrypt(newPassword.Password);
+                if (newPassword.Password == new2.Password && newPassword.Password != "")
+                {
+                    passwordmatch.Content = "Passwords match";
+                    correct = true;
+                }
+                else
+                {
+                    passwordmatch.Content = "Passwords do not match";
+                    correct = false;
+                }
+            }
+        }
+
+        private void oldkeypress(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                newPassword.Focus();
+            }
+        }
+
+        private void new1keypress(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                new2.Focus();
+            }
+        }
+
+        private void newPasswordKeyPress(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Button_Click(sender, e);
             }
         }
     }

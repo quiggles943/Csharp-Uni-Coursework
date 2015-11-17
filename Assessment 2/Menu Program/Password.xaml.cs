@@ -60,6 +60,14 @@ namespace Menu_Program
         {
             this.Close();
         }
+
+        private void keypress(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                enterbtn_Click(sender, e);
+            }
+        }
         
     }
 }

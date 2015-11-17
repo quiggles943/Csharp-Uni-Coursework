@@ -712,12 +712,6 @@ namespace Menu_Program
             password.ShowDialog();
         }
 
-        private void size10_Click(object sender, RoutedEventArgs e)
-        {
-            s.Fontsize = 10;
-            //p.setting[2, 1] = s.Fontsize.ToString();
-            this.FontSize = s.Fontsize;
-        }
 
         private void size12_Click(object sender, RoutedEventArgs e)
         {
@@ -728,7 +722,7 @@ namespace Menu_Program
 
         private void size14_Click(object sender, RoutedEventArgs e)
         {
-            s.Fontsize = 14;
+            s.Fontsize = 15;
             //p.setting[2, 1] = s.Fontsize.ToString();
             this.FontSize = s.Fontsize;
         }

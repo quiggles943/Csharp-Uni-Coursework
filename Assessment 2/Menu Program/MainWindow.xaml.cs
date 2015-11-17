@@ -464,6 +464,7 @@ namespace Menu_Program
 
         private void billbtn_Click(object sender, RoutedEventArgs e)
         {
+            totalbtn_Click(sender, e);
             if (sitin)
             {
                 writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items);
