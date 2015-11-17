@@ -20,7 +20,7 @@ namespace Menu_Program
             settingfilepath = System.IO.Path.GetFullPath(settingpath);
             setting = Settingreadwrite;
         }
-        public int Fontsize
+        public int Fontsize         //gets or sets the font size of the application
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Menu_Program
             }
         }
 
-        public string Password
+        public string Password          //retrieves or sets the password of the application
         {
             get
             { 
@@ -59,7 +59,7 @@ namespace Menu_Program
 
         public string[,] Settingreadwrite
         {
-            get
+            get     //reads in the settings from file
             {
                 int filelength = 0;
                 using (StreamReader r = new StreamReader(settingfilepath))
@@ -86,8 +86,9 @@ namespace Menu_Program
                 settinglength = filelength;
                 filelength = 0;
                 return setting;
+                
             }
-            set
+            set     //writes any changes of settings to file
             {
                 string[] empty = new string[0];
                 File.WriteAllLines(settingfilepath, empty);

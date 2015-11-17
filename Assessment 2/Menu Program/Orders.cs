@@ -93,6 +93,10 @@ namespace Menu_Program
             items.Add(item);
 
         }
+        public void removeDish(Menu item)
+        {
+            items.Remove(item);
+        }
     }
     public class deliveryOrder : Order
     {
@@ -134,6 +138,11 @@ namespace Menu_Program
             items.Add(item);
 
         }
+        public void removeDish(Menu item)
+        {
+            items.Remove(item);
+        }
+
         public void Display(int i)
         {
 

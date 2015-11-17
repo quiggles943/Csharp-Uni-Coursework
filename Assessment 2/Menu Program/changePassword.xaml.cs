@@ -36,13 +36,6 @@ namespace Menu_Program
         }
 
 
-        private void changeButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-
-        }
-
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (encryption.encrypt(old1.Password) == setting.Password)

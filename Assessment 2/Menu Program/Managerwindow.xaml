@@ -4,7 +4,7 @@
         Title="Management" Height="357" Width="560.868">
     <Grid>
         <Button x:Name="closebtn" Content="Close" HorizontalAlignment="Left" Margin="318,265,0,0" VerticalAlignment="Top" Width="74" Click="closebtn_Click"/>
-        <ListBox x:Name="testlistbox" HorizontalAlignment="Left" Height="118" Margin="164,42,0,0" VerticalAlignment="Top" Width="140">
+        <ListBox x:Name="testlistbox" HorizontalAlignment="Left" Height="156" Margin="164,42,0,0" VerticalAlignment="Top" Width="177">
             <StackPanel Height="100" Width="100"/>
         </ListBox>
         <Button x:Name="sitinbtn" Content="Sit-in orders" HorizontalAlignment="Left" Margin="56,42,0,0" VerticalAlignment="Top" Width="102" Click="sitinbtn_Click"/>

@@ -450,9 +450,10 @@ namespace Menu_Program
         private void sitinbtn_Click(object sender, RoutedEventArgs e)
         {
             testlistbox.Items.Clear();
+            testlistbox.Items.Add("Server\tTable\tAmount");
             for (int i = 1; i <= sitinlength; i++)
             {
-                testlistbox.Items.Add(sit[i, 0] + " " + sit[i, 1] + " " + sit[i, 2]);       //adds sit in orders to item box
+                testlistbox.Items.Add(sit[i, 0] + "\t" + sit[i, 1] + "\t" + sit[i, 2]);       //adds sit in orders to item box
             }
         }
 
@@ -460,18 +461,20 @@ namespace Menu_Program
         private void total_itemsbtn_Click(object sender, RoutedEventArgs e)
         {
             testlistbox.Items.Clear();
+            testlistbox.Items.Add("Menu Item     Amount");
             for( int i=1; i< menulength; i++)
             {
-                testlistbox.Items.Add(menu[i, 0] + " " + count[i]);         //adds total amount of each item ordered to item box
+                testlistbox.Items.Add(menu[i, 0] + " - " + count[i]);         //adds total amount of each item ordered to item box
             }
         }
 
         private void deliverybtn_Click_1(object sender, RoutedEventArgs e)
         {
             testlistbox.Items.Clear();
+            testlistbox.Items.Add("Server\tDriver\tCustomer\tAmount");
             for (int i = 1; i <= deliverylength; i++)
             {
-                testlistbox.Items.Add(deliver[i, 0] + " " +deliver[i,1] +" "+ deliver[i, 2] + " " + deliver[i, 3]);       //adds delivery orders to item box
+                testlistbox.Items.Add(deliver[i, 0] + "\t" +deliver[i,1] +"\t"+ deliver[i, 2] + "\t\t" + deliver[i, 3]);       //adds delivery orders to item box
             }
         }
 
@@ -715,7 +718,7 @@ namespace Menu_Program
 
         private void size12_Click(object sender, RoutedEventArgs e)
         {
-            s.Fontsize = 12;
+            s.Fontsize = 13;
             //p.setting[2, 1] = s.Fontsize.ToString();
             this.FontSize = s.Fontsize;
         }

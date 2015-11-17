@@ -381,7 +381,7 @@ namespace Menu_Program
             }
         }
 
-        private void clearbtn_Click(object sender, RoutedEventArgs e)
+        internal void clearbtn_Click(object sender, RoutedEventArgs e)
         {
             tablebox.Clear();
             subtotal = 0;
@@ -522,6 +522,11 @@ namespace Menu_Program
         private void closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Environment.Exit(1);
+        }
+
+        private void foodlistbox_doubleclick(object sender, MouseButtonEventArgs e)
+        {
+            addtobtn_Click(sender, e);
         }
     }
 }
