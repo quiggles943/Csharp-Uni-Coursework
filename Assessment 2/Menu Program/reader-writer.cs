@@ -23,6 +23,8 @@ namespace Menu_Program
         public int menulength;
         public int serverlength;
         public int driverlength;
+        public int sitinlength;
+        public int deliverylength;
 
         string sitin;
         string delivery;
@@ -30,7 +32,7 @@ namespace Menu_Program
         public string[,] sit = new string[100, 20];
         public string[,] driver = new string[100, 3];
         public string[,] deliver = new string[100, 20];
-        int[] count = new int[100];
+        public int[] count = new int[100];
         public string[,] server = new string[100, 2];
 
         
@@ -204,6 +206,93 @@ namespace Menu_Program
                 filelength = 0;
                 return driver;
                 //r.Close();
+            }
+        }
+
+        public string[,] readin_sitin
+        {
+            get
+            {
+                if (File.Exists(sitin))
+                {
+                    int filelength = 0;
+                    using (StreamReader r = new StreamReader(sitin))
+                    {
+                        while (r.ReadLine() != null) { filelength++; }
+                    }
+                    int i = 1;
+                    string[] file = System.IO.File.ReadAllLines(sitin);
+                    int len = file.Length;
+                    while (i < (len))
+                    {
+                        string[] column = file[i].Split('\t');
+                        int j = 0;
+                        while (j < (column.Length))
+                        {
+                            string buffer = column[j];
+                            sit[i, j] = buffer;
+                            if (j > 2)
+                            {
+                                for (int m = 1; m <= menulength; m++)
+                                {
+                                    if (column[j] == menu[m, 0])
+                                    {
+                                        count[m]++;
+                                    }
+                                }
+                            }
+                            j++;
+                        }
+                        i++;
+                    }
+                    sitinlength = filelength;
+                    return sit;
+                }
+                else
+                    throw new ArgumentException("No sitin log detected");
+            }
+        }
+
+        public string[,] readin_delivery
+        {
+            get
+            {
+                if (File.Exists(delivery))
+                {
+                    int filelength = 0;
+                    using (StreamReader r = new StreamReader(delivery))
+                    {
+                        while (r.ReadLine() != null) { filelength++; }
+                    }
+                    int i = 1;
+                    string[] file = System.IO.File.ReadAllLines(delivery);
+                    int len = file.Length;
+                    while (i < (len))
+                    {
+                        string[] column = file[i].Split('\t');
+                        int j = 0;
+                        while (j < (column.Length))
+                        {
+                            string buffer = column[j];
+                            deliver[i, j] = buffer;
+                            if (j > 2)
+                            {
+                                for (int m = 1; m <= rw.menulength; m++)
+                                {
+                                    if (column[j] == rw.menu[m, 0])
+                                    {
+                                        count[m]++;
+                                    }
+                                }
+                            }
+                            j++;
+                        }
+                        i++;
+                    }
+                    deliverylength = filelength;
+                }
+                else
+                    throw new ArgumentException("delivery log detected");
             }
         }
     }

@@ -50,7 +50,7 @@ namespace Menu_Program
             //menulength = length;
             //serverlength = slength;
             readin_delivery();
-            readin_sitin();
+            rw.sit = rw.readin_sitin;
             statuslabel.Content = "Files loaded successfully";
             vegetarianbox.MaxLength = 1;
             start();
@@ -64,7 +64,7 @@ namespace Menu_Program
             menulength = length;
             serverlength = slength;
             readin_delivery();
-            readin_sitin();
+            rw.sit = rw.readin_sitin;
             statuslabel.Content = "Files loaded successfully";
             vegetarianbox.MaxLength = 1;
             start();
@@ -110,7 +110,7 @@ namespace Menu_Program
             else
                 return;
         }
-        private void readin_sitin()     //reads in sit in orders from file
+        /*private void readin_sitin()     //reads in sit in orders from file
         {
             if (File.Exists(sitin))
             {
@@ -148,101 +148,8 @@ namespace Menu_Program
             }
             else
                 return;
-        }
-
-        /*private void readin_menu()      //reads in menu from file
-        {
-            //read in menu text file
-            int filelength = 0;
-            using (StreamReader r = new StreamReader(menufilepath))
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(menufilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    menu[i, j] = buffer;
-                    j++;
-                }
-                bool theanswer = false;
-                switch (menu[i, 2])
-                {
-                    case "Y": theanswer = true; break;
-                    case "N": theanswer = false; break;
-                }
-                menuitems.Add(new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1])));
-
-                i++;
-            }
-            menulength = filelength;
-            filelength = 0;
         }*/
 
-        /*private void readinservers()        //reads in servers from file
-        {
-            //read in server text file
-            serverbox.Items.Clear();
-            int filelength = 0;
-            StreamReader r = new StreamReader(serverfilepath);
-            using (r)
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(serverfilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    servers[i, j] = buffer;
-                    j++;
-                }
-                serverbox.Items.Add(servers[i, 0]);
-                i++;
-            }
-            serverlength = filelength;
-            filelength = 0;
-        }*/
-
-       /* public void readindrivers()         //reads in drivers from file
-        {
-            //read in driver text file
-            int filelength = 0;
-            StreamReader r = new StreamReader(driverfilepath);
-            using (r)
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(driverfilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    driver[i, j] = buffer;
-                    j++;
-
-                    i++;
-                }
-                driverlength = filelength;
-                //r.Close();
-            }
-        }*/
         private void readinsettings()
         {
             int filelength = 0;
@@ -270,159 +177,6 @@ namespace Menu_Program
             p.settinglength = filelength;
             filelength = 0;
         }
-
-        
-
-        /*private void writeservers()     //writes server changes to file
-        {
-
-                if (addrbtn.IsChecked == true)
-                {
-                        using (StreamWriter logfile = File.AppendText(serverfilepath))
-                        logfile.WriteLine(servers[serverlength, 0] + "\t" + servers[serverlength, 1]);
-                }
-                else if (editrbtn.IsChecked  == true)
-                {
-                    string[] empty = new string[0];
-                    File.WriteAllLines(serverfilepath, empty);
-                    StreamWriter logfile = File.AppendText(serverfilepath);
-                    logfile.WriteLine("Name\tID");
-                    for (int i = 1; i <= serverlength-1; i++)
-                    {
-                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
-                    }
-                    logfile.Close();
-                }
-                else if (removerbtn.IsChecked  == true)
-                {
-                    string[] empty = new string[0];
-                    File.WriteAllLines(serverfilepath, empty);
-                    StreamWriter logfile = File.AppendText(serverfilepath);
-                    logfile.WriteLine("Name\tID");
-                    for (int i = 1; i <= serverlength-2; i++)
-                    {
-                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
-                    }
-                    logfile.Close();
-                }
-                readinservers();
-        }*/
-
-        /*private void writemenu()        //writes menu changes to file
-        {
-            if (addrbtn.IsChecked == true)
-            {
-                using (StreamWriter logfile = File.AppendText(menufilepath))
-                    logfile.WriteLine(menu[menulength, 0] + "\t" + menu[menulength, 1] + "\t" + menu[menulength, 2]);
-            }
-            else if (editrbtn.IsChecked == true)
-            {
-                string[] empty = new string[0];
-                File.WriteAllLines(menufilepath, empty);
-                StreamWriter logfile = File.AppendText(menufilepath);
-                logfile.WriteLine("Name\tID\tVegetarian");
-                for (int i = 1; i <= menulength - 1; i++)
-                {
-                    logfile.WriteLine(menu[i, 0] + "\t" + menu[i, 1]+ "\t" + menu[i,2]);
-                }
-                logfile.Close();
-            }
-            else if (removerbtn.IsChecked == true)
-            {
-                string[] empty = new string[0];
-                File.WriteAllLines(menufilepath, empty);
-                StreamWriter logfile = File.AppendText(menufilepath);
-                logfile.WriteLine("Name\tID\tVegetarian");
-                for (int i = 1; i <= menulength - 2; i++)
-                {
-                    logfile.WriteLine(menu[i, 0] + "\t" + menu[i, 1] + "\t" + menu[i, 2]);
-                }
-                logfile.Close();
-            }
-            readin_menu();
-        }*/
-
-        /*private void writedrivers()     //writes driver changes to file
-        {
-            if (addrbtn.IsChecked == true)
-            {
-                using (StreamWriter logfile = File.AppendText(driverfilepath))
-                    logfile.WriteLine(driver[driverlength, 0] + "\t" + driver[driverlength, 1] + "\t" + driver[driverlength, 2]);
-            }
-            else if (editrbtn.IsChecked == true)
-            {
-                string[] empty = new string[0];
-                File.WriteAllLines(driverfilepath, empty);
-                StreamWriter logfile = File.AppendText(driverfilepath);
-                logfile.WriteLine("Name\tID\tCar Reg");
-                for (int i = 1; i <= driverlength - 1; i++)
-                {
-                    logfile.WriteLine(driver[i, 0] + "\t" + driver[i, 1] + "\t" + driver[i, 2]);
-                }
-                logfile.Close();
-            }
-            else if (removerbtn.IsChecked == true)
-            {
-                string[] empty = new string[0];
-                File.WriteAllLines(driverfilepath, empty);
-                StreamWriter logfile = File.AppendText(driverfilepath);
-                logfile.WriteLine("Name\tID\tCar Reg");
-                for (int i = 1; i <= driverlength - 2; i++)
-                {
-                    logfile.WriteLine(driver[i, 0] + "\t" + driver[i, 1] + "\t" + driver[i, 2]);
-                }
-                logfile.Close();
-            }
-            readinservers();
-        }*/
-
-        /*public void writesettings()
-        {
-            string[] empty = new string[0];
-            File.WriteAllLines(p.settingfilepath, empty);
-            StreamWriter logfile = File.AppendText(p.settingfilepath);
-            logfile.WriteLine("Title\tVariable");
-            for (int i = 1; i <= p.settinglength + 1; i++)
-            {
-                logfile.WriteLine(p.setting[i, 0] + "\t" + p.setting[i, 1]);
-            }
-            logfile.Close();
-        }*/
-
-        //test
-       /* private void write(string filepath, string[,] store, string title, int length )
-        {
-            if (addrbtn.IsChecked == true)
-            {
-                using (StreamWriter logfile = File.AppendText(filepath))
-                    logfile.WriteLine(store[length, 0] + "\t" + store[length, 1] + "\t" + store[length, 2]);
-            }
-            else if (editrbtn.IsChecked == true)
-            {
-                string[] empty = new string[0];
-                File.WriteAllLines(filepath, empty);
-                StreamWriter logfile = File.AppendText(filepath);
-                logfile.WriteLine(title);
-                for (int i = 1; i <= length - 1; i++)
-                {
-                    logfile.WriteLine(store[i, 0] + "\t" + store[i, 1] + "\t" + store[i, 2]);
-                }
-                logfile.Close();
-            }
-            else if (removerbtn.IsChecked == true)
-            {
-                string[] empty = new string[0];
-                File.WriteAllLines(filepath, empty);
-                StreamWriter logfile = File.AppendText(filepath);
-                logfile.WriteLine(title);
-                for (int i = 1; i <= driverlength - 2; i++)
-                {
-                    logfile.WriteLine(store[i, 0] + "\t" + store[i, 1] + "\t" + store[i, 2]);
-                }
-                logfile.Close();
-            }
-            readinservers();
-        }*/
 
         private void start()        //sets visibility for items on page
         {
@@ -470,7 +224,7 @@ namespace Menu_Program
             testlistbox.Items.Add("Menu Item     Amount");
             for( int i=1; i< rw.menulength; i++)
             {
-                testlistbox.Items.Add(rw.menu[i, 0] + " - " + count[i]);         //adds total amount of each item ordered to item box
+                testlistbox.Items.Add(rw.menu[i, 0] + " - " + rw.count[i]);         //adds total amount of each item ordered to item box
             }
         }
 
