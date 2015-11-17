@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Controls;
 
 namespace Menu_Program
 {
@@ -23,132 +22,34 @@ namespace Menu_Program
     {
         string sitin;
         string delivery;
-        string[,] sit = new string[100, 20];
-        string[,] deliver = new string[100, 20];
-        int[] count = new int[100];
-        int menulength;
-        int sitinlength;
-        int deliverylength;
         string sitin_orderpath = @"..\..\sitin_orderlog.ini";
         string delivery_orderpath = @"..\..\delivery_orderlog.ini";
-        string menufilepath;
-        string serverfilepath;
-        string driverfilepath;
-        int serverlength;
-        int driverlength;
         Password p = new Password();
         Setting s = new Setting();
-        List<Menu> menuitems = new List<Menu>();
         reader_writer rw = new reader_writer();
         
         public Managerwindow()
         {
-            InitializeComponent();
-            sitin = System.IO.Path.GetFullPath(sitin_orderpath);
-            delivery = System.IO.Path.GetFullPath(delivery_orderpath);
-            //menu = menuitems;
-            //menulength = length;
-            //serverlength = slength;
-            readin_delivery();
-            rw.sit = rw.readin_sitin;
-            statuslabel.Content = "Files loaded successfully";
-            vegetarianbox.MaxLength = 1;
-            start();
-            fontsize();
-        }
-        public Managerwindow(string[,] menuitems, int length, int slength)
-        {
-            InitializeComponent();
-            sitin = System.IO.Path.GetFullPath(sitin_orderpath);
-            delivery = System.IO.Path.GetFullPath(delivery_orderpath);
-            menulength = length;
-            serverlength = slength;
-            readin_delivery();
-            rw.sit = rw.readin_sitin;
-            statuslabel.Content = "Files loaded successfully";
-            vegetarianbox.MaxLength = 1;
-            start();
-            fontsize();
-        }
-
-        private void readin_delivery()      //reads in delivery orders from file
-        {
-            if (File.Exists(delivery))
+            try
             {
-                int filelength = 0;
-                using (StreamReader r = new StreamReader(delivery))
-                {
-                    while (r.ReadLine() != null) { filelength++; }
-                }
-                int i = 1;
-                string[] file = System.IO.File.ReadAllLines(delivery);
-                int len = file.Length;
-                while (i < (len))
-                {
-                    string[] column = file[i].Split('\t');
-                    int j = 0;
-                    while (j < (column.Length))
-                    {
-                        string buffer = column[j];
-                        deliver[i, j] = buffer;
-                        if (j > 2)
-                        {
-                            for (int m = 1; m <= rw.menulength; m++)
-                            {
-                                if (column[j] == rw.menu[m, 0])
-                                {
-                                    count[m]++;
-                                }
-                            }
-                        }
-                        j++;
-                    }
-                    i++;
-                }
-                deliverylength = filelength;
+                InitializeComponent();
+                sitin = System.IO.Path.GetFullPath(sitin_orderpath);
+                delivery = System.IO.Path.GetFullPath(delivery_orderpath);
+                rw.sit = rw.readin_sitin;
+                rw.deliver = rw.readin_delivery;
             }
-            else
-                return;
-        }
-        /*private void readin_sitin()     //reads in sit in orders from file
-        {
-            if (File.Exists(sitin))
+            catch (Exception excep)
             {
-                int filelength = 0;
-                using (StreamReader r = new StreamReader(sitin))
-                {
-                    while (r.ReadLine() != null) { filelength++; }
-                }
-                int i = 1;
-                string[] file = System.IO.File.ReadAllLines(sitin);
-                int len = file.Length;
-                while (i < (len))
-                {
-                    string[] column = file[i].Split('\t');
-                    int j = 0;
-                    while (j < (column.Length))
-                    {
-                        string buffer = column[j];
-                        sit[i, j] = buffer;
-                        if (j > 2)
-                        {
-                            for (int m = 1; m <= rw.menulength; m++)
-                            {
-                                if (column[j] == rw.menu[m, 0])
-                                {
-                                    count[m]++;
-                                }
-                            }
-                        }
-                        j++;
-                    }
-                    i++;
-                }
-                sitinlength = filelength;
+                MessageBox.Show(excep.Message);
             }
-            else
-                return;
-        }*/
+            finally
+            {
+                statuslabel.Content = "Files loaded successfully";
+                vegetarianbox.MaxLength = 1;
+                start();
+                fontsize();
+            }
+        }
 
         private void readinsettings()
         {
@@ -211,9 +112,9 @@ namespace Menu_Program
         {
             testlistbox.Items.Clear();
             testlistbox.Items.Add("Server\tTable\tAmount");
-            for (int i = 1; i <= sitinlength; i++)
+            for (int i = 1; i <= rw.sitinlength; i++)
             {
-                testlistbox.Items.Add(sit[i, 0] + "\t" + sit[i, 1] + "\t" + sit[i, 2]);       //adds sit in orders to item box
+                testlistbox.Items.Add(rw.sit[i, 0] + "\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2]);       //adds sit in orders to item box
             }
         }
 
@@ -232,9 +133,9 @@ namespace Menu_Program
         {
             testlistbox.Items.Clear();
             testlistbox.Items.Add("Server\tDriver\tCustomer\tAmount");
-            for (int i = 1; i <= deliverylength; i++)
+            for (int i = 1; i <= rw.deliverylength; i++)
             {
-                testlistbox.Items.Add(deliver[i, 0] + "\t" +deliver[i,1] +"\t"+ deliver[i, 2] + "\t\t" + deliver[i, 3]);       //adds delivery orders to item box
+                testlistbox.Items.Add(rw.deliver[i, 0] + "\t" +rw.deliver[i,1] +"\t"+ rw.deliver[i, 2] + "\t\t" + rw.deliver[i, 3]);       //adds delivery orders to item box
             }
         }
 
@@ -257,18 +158,18 @@ namespace Menu_Program
         {
             testlistbox.Items.Clear();
 
-            for (int i = 1; i <= sitinlength; i++)
+            for (int i = 1; i <= rw.sitinlength; i++)
             {
-                if (serverbox.SelectedItem.ToString() == sit[i, 0])
+                if (serverbox.SelectedItem.ToString() == rw.sit[i, 0])
                 {
-                    testlistbox.Items.Add(sit[i, 1] + " " + sit[i, 2]);
+                    testlistbox.Items.Add(rw.sit[i, 1] + " " + rw.sit[i, 2]);
                 }
             }
-                for (int j = 1; j <= deliverylength; j++)
+                for (int j = 1; j <= rw.deliverylength; j++)
                 {
-                    if (serverbox.SelectedItem.ToString() == deliver[j, 0])
+                    if (serverbox.SelectedItem.ToString() == rw.deliver[j, 0])
                 {
-                    testlistbox.Items.Add(deliver[j, 2] + " " + deliver[j, 3]);
+                    testlistbox.Items.Add(rw.deliver[j, 2] + " " + rw.deliver[j, 3]);
                 }
 
             }

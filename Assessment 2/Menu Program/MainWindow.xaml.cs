@@ -495,7 +495,7 @@ namespace Menu_Program
             password.ShowDialog();
             if (password.correct)
             {
-                Managerwindow manager = new Managerwindow(menu, menulength, serverlength);
+                Managerwindow manager = new Managerwindow();
                 manager.ShowDialog();
                 fontsize();
             }

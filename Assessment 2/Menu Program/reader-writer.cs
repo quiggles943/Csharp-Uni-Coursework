@@ -136,36 +136,6 @@ namespace Menu_Program
             }
             set
             {
-                /*if (addrbtn.IsChecked == true)
-                {
-                    using (StreamWriter logfile = File.AppendText(serverfilepath))
-                        logfile.WriteLine(servers[serverlength, 0] + "\t" + servers[serverlength, 1]);
-                }
-                else if (editrbtn.IsChecked == true)
-                {
-                    string[] empty = new string[0];
-                    File.WriteAllLines(serverfilepath, empty);
-                    StreamWriter logfile = File.AppendText(serverfilepath);
-                    logfile.WriteLine("Name\tID");
-                    for (int i = 1; i <= serverlength - 1; i++)
-                    {
-                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
-                    }
-                    logfile.Close();
-                }
-                else if (removerbtn.IsChecked == true)
-                {
-                    string[] empty = new string[0];
-                    File.WriteAllLines(serverfilepath, empty);
-                    StreamWriter logfile = File.AppendText(serverfilepath);
-                    logfile.WriteLine("Name\tID");
-                    for (int i = 1; i <= serverlength - 2; i++)
-                    {
-                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
-                    }
-                    logfile.Close();
-                }
-                //readinservers();*/
                 string[] empty = new string[0];
                 File.WriteAllLines(serverfilepath, empty);
                 StreamWriter logfile = File.AppendText(serverfilepath);
@@ -213,15 +183,15 @@ namespace Menu_Program
         {
             get
             {
-                if (File.Exists(sitin))
+                if (File.Exists(sitin_order_filepath))
                 {
                     int filelength = 0;
-                    using (StreamReader r = new StreamReader(sitin))
+                    using (StreamReader r = new StreamReader(sitin_order_filepath))
                     {
                         while (r.ReadLine() != null) { filelength++; }
                     }
                     int i = 1;
-                    string[] file = System.IO.File.ReadAllLines(sitin);
+                    string[] file = System.IO.File.ReadAllLines(sitin_order_filepath);
                     int len = file.Length;
                     while (i < (len))
                     {
@@ -257,15 +227,15 @@ namespace Menu_Program
         {
             get
             {
-                if (File.Exists(delivery))
+                if (File.Exists(delivery_order_filepath))
                 {
                     int filelength = 0;
-                    using (StreamReader r = new StreamReader(delivery))
+                    using (StreamReader r = new StreamReader(delivery_order_filepath))
                     {
                         while (r.ReadLine() != null) { filelength++; }
                     }
                     int i = 1;
-                    string[] file = System.IO.File.ReadAllLines(delivery);
+                    string[] file = System.IO.File.ReadAllLines(delivery_order_filepath);
                     int len = file.Length;
                     while (i < (len))
                     {
@@ -277,9 +247,9 @@ namespace Menu_Program
                             deliver[i, j] = buffer;
                             if (j > 2)
                             {
-                                for (int m = 1; m <= rw.menulength; m++)
+                                for (int m = 1; m <= menulength; m++)
                                 {
-                                    if (column[j] == rw.menu[m, 0])
+                                    if (column[j] == menu[m, 0])
                                     {
                                         count[m]++;
                                     }
@@ -290,9 +260,10 @@ namespace Menu_Program
                         i++;
                     }
                     deliverylength = filelength;
+                    return deliver;
                 }
                 else
-                    throw new ArgumentException("delivery log detected");
+                    throw new ArgumentException("No delivery log detected");
             }
         }
     }
