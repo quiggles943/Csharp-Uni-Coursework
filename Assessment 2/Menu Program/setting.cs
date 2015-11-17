@@ -11,7 +11,7 @@ namespace Menu_Program
     {
         private int fontsize;
         private string[,] setting = new string[100,2];
-        string settingpath = @"..\..\setting.txt";
+        string settingpath = @"..\..\setting.ini";
         public string settingfilepath;
         private int settinglength;
 
@@ -19,6 +19,7 @@ namespace Menu_Program
         {
             settingfilepath = System.IO.Path.GetFullPath(settingpath);
             setting = Settingreadwrite;
+            File.SetAttributes(settingfilepath, FileAttributes.ReadOnly | FileAttributes.Hidden);
         }
         public int Fontsize         //gets or sets the font size of the application
         {
@@ -59,8 +60,10 @@ namespace Menu_Program
 
         public string[,] Settingreadwrite
         {
+            
             get     //reads in the settings from file
             {
+                File.SetAttributes(settingfilepath, FileAttributes.Normal);
                 int filelength = 0;
                 using (StreamReader r = new StreamReader(settingfilepath))
                 {
@@ -85,11 +88,13 @@ namespace Menu_Program
                 }
                 settinglength = filelength;
                 filelength = 0;
+                File.SetAttributes(settingfilepath, FileAttributes.ReadOnly | FileAttributes.Hidden);
                 return setting;
                 
             }
             set     //writes any changes of settings to file
             {
+                File.SetAttributes(settingfilepath, FileAttributes.Normal);
                 string[] empty = new string[0];
                 File.WriteAllLines(settingfilepath, empty);
                 StreamWriter logfile = File.AppendText(settingfilepath);
@@ -99,6 +104,7 @@ namespace Menu_Program
                     logfile.WriteLine(setting[i, 0] + "\t" + setting[i, 1]);
                 }
                 logfile.Close();
+                File.SetAttributes(settingfilepath, FileAttributes.ReadOnly | FileAttributes.Hidden);
             }
         }
     }

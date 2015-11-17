@@ -25,11 +25,11 @@ namespace Menu_Program
         public string[,] menu = new string[100,5];
         public string[,] server = new string[100, 2];
         public string[,] driver = new string[100, 3];
-        string menupath = @"..\..\menu.txt";
-        string serverpath = @"..\..\server.txt";
-        string sitin_orderpath = @"..\..\sitin_orderlog.txt";
-        string delivery_orderpath = @"..\..\delivery_orderlog.txt";
-        string driverpath = @"..\..\driver.txt";
+        string menupath = @"..\..\menu.ini";
+        string serverpath = @"..\..\server.ini";
+        string sitin_orderpath = @"..\..\sitin_orderlog.ini";
+        string delivery_orderpath = @"..\..\delivery_orderlog.ini";
+        string driverpath = @"..\..\driver.ini";
         string menufilepath;
         string serverfilepath;
         string driverfilepath;
@@ -52,9 +52,11 @@ namespace Menu_Program
         bool detailsadded = false;
         //int denotes number of tables in restaraunt
         int tablenos = 20;
+        reader_writer rw = new reader_writer();
         
         public MainWindow()
         {
+
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
             driverfilepath = System.IO.Path.GetFullPath(driverpath);
@@ -78,37 +80,17 @@ namespace Menu_Program
             takeawayradbtn.IsEnabled = false;
             logoutbtn.IsEnabled = false;
             readinservers();
-            menureadin();
+            //menureadin();
             readindrivers();
             fontsize();
+            foreach(var item in rw.menuitems)
+            {
+                foodlistbox.Items.Add(item.Description);
+            }
             
         }
 
-        /*private void filesexist()
-        {
-            string menu;
-            string server;
-            string driver;
-            if(!File.Exists(menufilepath))
-                menu = "menu," ;
-            else
-                menu = "";
-
-            if (!File.Exists(serverfilepath))
-                server = "server,";
-            else
-                server = "";
-
-            if (!File.Exists(driverfilepath))
-                driver = "driver";
-            else
-                driver = "";
-
-            missingfiles = menu+ "  " +server+ "  "+ driver;
-
-        }*/
-
-        private void menureadin()
+        /*private void menureadin()
         {
             //read in menu text file
             using (StreamReader r = new StreamReader(menufilepath))
@@ -140,11 +122,11 @@ namespace Menu_Program
             }
             menulength = filelength;
             filelength = 0;
-        }
+        }*/
         public void readinservers()
         {
             //read in server text file
-            StreamReader r = new StreamReader(serverfilepath);
+            /*StreamReader r = new StreamReader(serverfilepath);
             using (r)
             {
                 while (r.ReadLine() != null) { filelength++; }
@@ -167,13 +149,17 @@ namespace Menu_Program
             }
             serverlength = filelength;
             filelength = 0;
-            //r.Close();
+            //r.Close();*/
+            for (int i = 1; i <= rw.serverlength; i++ )
+            {
+                serverlist.Items.Add(rw.server[i, 0]);
+            }
         }
 
         public void readindrivers()
         {
             //read in driver text file
-            StreamReader r = new StreamReader(driverfilepath);
+            /*StreamReader r = new StreamReader(driverfilepath);
             using (r)
             {
                 while (r.ReadLine() != null) { filelength++; }
@@ -196,7 +182,11 @@ namespace Menu_Program
             }
             driverlength = filelength;
             filelength = 0;
-            //r.Close();
+            //r.Close();*/
+            for (int i = 1; i <= rw.driverlength; i++)
+            {
+                driverbox.Items.Add(rw.driver[i, 0]);
+            }
         }
 
         public void fontsize()
@@ -288,15 +278,15 @@ namespace Menu_Program
             double buffer = 0;
             if (sitin)
             {
-                buffer = menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
+                buffer = rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
-                s.Dishes(menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
+                s.Dishes(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
             }
             else
             {
-                buffer = menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
+                buffer = rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
-                d.Dishes(menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
+                d.Dishes(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
             }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + Math.Round(buffer,2);
@@ -471,6 +461,7 @@ namespace Menu_Program
                 s.Paid = subtotal;
                 Window Bill = new Bill(s, sitin);
                 Bill.ShowDialog();
+                logoutbtn_Click(sender, e);
             }
             else
             {
@@ -479,6 +470,7 @@ namespace Menu_Program
                 writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal, items);
                 Window Bill = new Bill(d);
                 Bill.ShowDialog();
+                logoutbtn_Click(sender, e);
             }
             statuslabel.Content = "Bill printed";
             

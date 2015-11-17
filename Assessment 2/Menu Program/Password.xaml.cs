@@ -29,7 +29,7 @@ namespace Menu_Program
         public string[,] setting = new string[100, 2];
         public bool correct = false;
         Setting s = new Setting();
-        MainWindow main = new MainWindow();
+        //MainWindow main = new MainWindow();
         
 
         public Password()

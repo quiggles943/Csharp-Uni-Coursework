@@ -96,6 +96,16 @@ namespace Menu_Program
             {
                 Button_Click(sender, e);
             }
+                if (newPassword.Password == new2.Password && newPassword.Password != "")
+                {
+                    passwordmatch.Content = "Passwords match";
+                    correct = true;
+                }
+                else
+                {
+                    passwordmatch.Content = "Passwords do not match";
+                    correct = false;
+                }
         }
     }
 }
