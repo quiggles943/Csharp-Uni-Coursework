@@ -518,5 +518,10 @@ namespace Menu_Program
             Password password = new Password();
             password.ShowDialog();
         }
+
+        private void closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            System.Environment.Exit(1);
+        }
     }
 }
