@@ -299,7 +299,7 @@ namespace Menu_Program
             {
                 if (editrbtn.IsChecked == true)
                 {
-                    for (int i = 1; i <= rw.serverlength; i++)
+                    for (int i = 1; i <= rw.Serverlength; i++)
                     {
                         if (rw.server[i, 0] == item_selection.SelectedItem.ToString())
                         {
@@ -312,18 +312,20 @@ namespace Menu_Program
                 }
                 if (addrbtn.IsChecked == true)
                 {
-                    rw.server[rw.serverlength, 0] = namebox.Text;
-                    rw.server[rw.serverlength, 1] = Int32.Parse(staffidbox.Text).ToString();
-                    rw.serverlength = rw.serverlength + 1;
+                    //rw.serverlength ++;
+                    rw.server[rw.Serverlength, 0] = namebox.Text;
+                    rw.server[rw.Serverlength, 1] = Int32.Parse(staffidbox.Text).ToString();
+                    
+                    
                     rw.Server = rw.server;
                 }
                 if (removerbtn.IsChecked == true)
                 {
-                    for (int i = 1; i <= rw.serverlength; i++)
+                    for (int i = 1; i <= rw.Serverlength; i++)
                     {
                         if (rw.server[i, 0] == item_selection.SelectedItem.ToString())
                         {
-                            for (int j = i; j <= rw.serverlength; j++)
+                            for (int j = i; j <= rw.Serverlength; j++)
                             {
                                 rw.server[j, 0] = rw.server[j + 1, 0];
                                 rw.server[j, 1] = rw.server[j + 1, 1];
@@ -331,7 +333,7 @@ namespace Menu_Program
                         }
 
                     }
-                    rw.serverlength = rw.serverlength - 2;
+                    rw.Serverlength = (rw.serverlength - 1);
                     rw.Server = rw.server;
                 }
             }

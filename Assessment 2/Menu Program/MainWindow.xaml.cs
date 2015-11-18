@@ -80,18 +80,23 @@ namespace Menu_Program
             takeawayradbtn.IsEnabled = false;
             logoutbtn.IsEnabled = false;
             readinservers();
-            //menureadin();
+            readinmenu();
             readindrivers();
-            fontsize();
-            foreach(var item in rw.menuitems)
+            fontsize();           
+        }
+
+        public void readinmenu()
+        {
+            foodlistbox.Items.Clear();
+            foreach (var item in rw.menuitems)
             {
                 foodlistbox.Items.Add(item.Description);
             }
-            
         }
 
         public void readinservers()
         {
+            serverlist.Items.Clear();
             for (int i = 1; i <= rw.serverlength; i++ )
             {
                 serverlist.Items.Add(rw.server[i, 0]);
@@ -100,6 +105,7 @@ namespace Menu_Program
 
         public void readindrivers()
         {
+            driverbox.Items.Clear();
             for (int i = 1; i <= rw.driverlength; i++)
             {
                 driverbox.Items.Add(rw.driver[i, 0]);
@@ -415,6 +421,9 @@ namespace Menu_Program
                 Managerwindow manager = new Managerwindow();
                 manager.ShowDialog();
                 fontsize();
+                readindrivers();
+                readinservers();
+                readinmenu();
             }
             else
                 MessageBox.Show("Password incorrect", "error");

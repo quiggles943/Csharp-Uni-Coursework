@@ -147,6 +147,12 @@ namespace Menu_Program
                 logfile.Close();
             }
         }
+
+        public int Serverlength
+        {
+            get { return serverlength; }
+            set { serverlength = value; }
+        }
         public string[,] Driver
         {
             get
