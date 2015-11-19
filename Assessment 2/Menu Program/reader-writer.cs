@@ -28,7 +28,7 @@ namespace Menu_Program
 
         string sitin;
         string delivery;
-        public string[,] menu = new string[100, 5];
+        //public string[,] menu = new string[100, 5];
         public string[,] sit = new string[100, 20];
         public string[,] driver = new string[100, 3];
         public string[,] deliver = new string[100, 20];
@@ -69,16 +69,16 @@ namespace Menu_Program
                 while (j < (column.Length))
                 {
                     string buffer = column[j];
-                    menu[i, j] = buffer;
+                    //menu[i, j] = buffer;
                     j++;
                 }
                 bool theanswer = false;
-                switch (menu[i, 2])
+                switch (column[2])
                 {
                     case "Y": theanswer = true; break;
                     case "N": theanswer = false; break;
                 }
-                menuitems.Add(new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1])));
+                menuitems.Add(new Menu(column[0], theanswer, Int32.Parse(column[1])));
                 i++;
             }
             menulength = menuitems.Count;
@@ -188,19 +188,18 @@ namespace Menu_Program
             logfile.Close();
         }
 
-        public string[,] readin_sitin
-        {
-            get
+        public void readin_sitin()
             {
-                if (File.Exists(sitin))
+                bool complete = false;
+                if (File.Exists(sitin_order_filepath))
                 {
                     int filelength = 0;
-                    using (StreamReader r = new StreamReader(sitin))
+                    using (StreamReader r = new StreamReader(sitin_order_filepath))
                     {
                         while (r.ReadLine() != null) { filelength++; }
                     }
                     int i = 1;
-                    string[] file = System.IO.File.ReadAllLines(sitin);
+                    string[] file = System.IO.File.ReadAllLines(sitin_order_filepath);
                     int len = file.Length;
                     while (i < (len))
                     {
@@ -212,11 +211,16 @@ namespace Menu_Program
                             sit[i, j] = buffer;
                             if (j > 2)
                             {
-                                for (int m = 1; m <= menulength; m++)
+                                complete = false;
+                                for (int m = 0; m <= menuitems.Count; m++)
                                 {
-                                    if (column[j] == menu[m, 0])
+                                    if (complete == false)
                                     {
-                                        count[m]++;
+                                        if (column[j] == menuitems[m].Description)
+                                        {
+                                            menuitems[m].Count = (menuitems[m].Count + 1);
+                                            complete = true;
+                                        }
                                     }
                                 }
                             }
@@ -225,26 +229,25 @@ namespace Menu_Program
                         i++;
                     }
                     sitinlength = filelength;
-                    return sit;
                 }
                 else
                     throw new ArgumentException("No sitin log detected");
             }
-        }
 
         public string[,] readin_delivery
         {
             get
             {
-                if (File.Exists(delivery))
+                bool complete = false;
+                if (File.Exists(delivery_order_filepath))
                 {
                     int filelength = 0;
-                    using (StreamReader r = new StreamReader(delivery))
+                    using (StreamReader r = new StreamReader(delivery_order_filepath))
                     {
                         while (r.ReadLine() != null) { filelength++; }
                     }
                     int i = 1;
-                    string[] file = System.IO.File.ReadAllLines(delivery);
+                    string[] file = System.IO.File.ReadAllLines(delivery_order_filepath);
                     int len = file.Length;
                     while (i < (len))
                     {
@@ -254,13 +257,18 @@ namespace Menu_Program
                         {
                             string buffer = column[j];
                             deliver[i, j] = buffer;
-                            if (j > 2)
+                            if (j > 3)
                             {
-                                for (int m = 1; m <= menulength; m++)
+                                complete = false;
+                                for (int m = 0; m <= menuitems.Count; m++)
                                 {
-                                    if (column[j] == menu[m, 0])
+                                    if (complete == false)
                                     {
-                                        count[m]++;
+                                        if (column[j] == menuitems[m].Description)
+                                        {
+                                            menuitems[m].Count = (menuitems[m].Count + 1);
+                                            complete = true;
+                                        }
                                     }
                                 }
                             }

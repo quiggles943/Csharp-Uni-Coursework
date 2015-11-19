@@ -36,7 +36,7 @@ namespace Menu_Program
                 InitializeComponent();
                 sitin = System.IO.Path.GetFullPath(sitin_orderpath);
                 delivery = System.IO.Path.GetFullPath(delivery_orderpath);
-                rw.sit = rw.readin_sitin;
+                rw.readin_sitin();
                 rw.deliver = rw.readin_delivery;
             }
             catch (Exception excep)
@@ -124,10 +124,14 @@ namespace Menu_Program
         {
             testlistbox.Items.Clear();
             testlistbox.Items.Add("Menu Item     Amount");
-            for( int i=1; i< rw.menulength; i++)
+            foreach (var item in rw.menuitems)
             {
-                testlistbox.Items.Add(rw.menu[i, 0] + " - " + rw.count[i]);         //adds total amount of each item ordered to item box
+                testlistbox.Items.Add(item.Description + " - " + item.Count);       //adds total amount of each item ordered to item box
             }
+            /*for( int i=0; i< rw.menulength; i++)
+            {
+                testlistbox.Items.Add(rw.menu[i, 0] + " - " + rw.count[i]);         
+            }*/
         }
 
         private void deliverybtn_Click_1(object sender, RoutedEventArgs e)

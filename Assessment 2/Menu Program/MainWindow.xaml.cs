@@ -210,7 +210,10 @@ namespace Menu_Program
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + Math.Round(buffer,2);
             subtotallabel.Content = subtotal;
-            items = string.Join("\t", items, foodlistbox.SelectedItem.ToString());
+            if(itemsordered == 0)
+                items = foodlistbox.SelectedItem.ToString();
+            else
+                items = string.Join("\t", items, foodlistbox.SelectedItem.ToString());
             itemsordered++;
             statuslabel.Content = "Item added";
         }
