@@ -37,7 +37,7 @@ namespace Menu_Program
                 sitin = System.IO.Path.GetFullPath(sitin_orderpath);
                 delivery = System.IO.Path.GetFullPath(delivery_orderpath);
                 rw.readin_sitin();
-                rw.deliver = rw.readin_delivery;
+                rw.readin_delivery();
             }
             catch (Exception excep)
             {
@@ -50,34 +50,6 @@ namespace Menu_Program
                 start();
                 fontsize();
             }
-        }
-
-        private void readinsettings()
-        {
-            int filelength = 0;
-            using (StreamReader r = new StreamReader(p.settingfilepath))
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(p.settingfilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    string buffer2 = buffer;
-                    p.setting[i, j] = buffer2;
-                    j++;
-                }
-
-                i++;
-            }
-            p.settinglength = filelength;
-            filelength = 0;
         }
 
         private void start()        //sets visibility for items on page
@@ -96,10 +68,20 @@ namespace Menu_Program
             removerbtn.Visibility = Visibility.Hidden;
             item_selection.Visibility = Visibility.Hidden;
             edit_selection.SelectedIndex = -1;
+            server_combobox();
 
         }
 
-        public void fontsize()
+        public void server_combobox()       //updates the server selection combo box
+        {
+            serverbox.Items.Clear();
+            foreach(var item in rw.servers)
+            {
+                serverbox.Items.Add(item.name);
+            }
+        }
+
+        public void fontsize()      //reads in and sets font size
         {
             this.FontSize = s.Fontsize;
         }
@@ -128,10 +110,6 @@ namespace Menu_Program
             {
                 testlistbox.Items.Add(item.Description + " - " + item.Count);       //adds total amount of each item ordered to item box
             }
-            /*for( int i=0; i< rw.menulength; i++)
-            {
-                testlistbox.Items.Add(rw.menu[i, 0] + " - " + rw.count[i]);         
-            }*/
         }
 
         private void deliverybtn_Click_1(object sender, RoutedEventArgs e)

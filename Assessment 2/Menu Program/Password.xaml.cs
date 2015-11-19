@@ -55,6 +55,7 @@ namespace Menu_Program
             }
             else
                 MessageBox.Show("Password incorrect", "error");
+            passwordbox.Clear();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

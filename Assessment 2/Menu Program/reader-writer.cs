@@ -30,18 +30,18 @@ namespace Menu_Program
         string delivery;
         //public string[,] menu = new string[100, 5];
         public string[,] sit = new string[100, 20];
-        public string[,] driver = new string[100, 3];
+        //public string[,] driver = new string[100, 3];
         public string[,] deliver = new string[100, 20];
         public int[] count = new int[100];
-        public string[,] server = new string[100, 2];
+        //public string[,] server = new string[100, 2];
 
         
         //MainWindow main = new MainWindow();
-        public List<Menu> menuitems = new List<Menu>();
-        public List<Server> servers = new List<Server>();
-        public List<Driver> drivers = new List<Driver>();
-        Employee e = new Employee();
-        public reader_writer()
+        public List<Menu> menuitems = new List<Menu>();         //list of menu items
+        public List<Server> servers = new List<Server>();       //list of servers
+        public List<Driver> drivers = new List<Driver>();       //list of drivers
+        //Employee e = new Employee();
+        public reader_writer()      //initialises reader writer class
         {
             
             menufilepath = System.IO.Path.GetFullPath(menupath);
@@ -52,7 +52,7 @@ namespace Menu_Program
 
         }
 
-        public void MenuRead()
+        public void MenuRead()      //reads from menu file
         {
             int filelength = 0;
             using (StreamReader r = new StreamReader(menufilepath))
@@ -85,7 +85,7 @@ namespace Menu_Program
             filelength = 0;
         }
 
-        public void MenuWrite()
+        public void MenuWrite()     //writes to menu file
         {
             string[] blank = new string[0];
             File.WriteAllLines(menufilepath, blank);
@@ -98,7 +98,7 @@ namespace Menu_Program
             file.Close();
         }
         
-        public void ServerRead()
+        public void ServerRead()        //reads from server file
         {
                 //read in server text file
                 int filelength = 0;
@@ -117,10 +117,12 @@ namespace Menu_Program
                     while (j < (column.Length))
                     {
                         string buffer = column[j];
-                        server[i, j] = buffer;
+                        //server[i, j] = buffer;
+                        
                         j++;
                     }
-                    servers.Add(new Server(server[i, 0], Int32.Parse(server[i, 1])));
+                    servers.Add(new Server(column[0], Int32.Parse(column[1])));
+                    //servers.Add(new Server(server[i, 0], Int32.Parse(server[i, 1])));
                     i++;
                 }
                 serverlength = servers.Count;
@@ -128,7 +130,7 @@ namespace Menu_Program
                 //r.Close();
             }
 
-            public void ServerWrite()
+            public void ServerWrite()       //writes to server file
             {
                 var sortedservers = servers.OrderBy(x => x.ID);
                 servers = sortedservers.ToList();
@@ -144,7 +146,7 @@ namespace Menu_Program
             }
 
 
-        public void DriverRead()
+        public void DriverRead()        //reads from driver file
             {
             int filelength = 0;
                 StreamReader r = new StreamReader(driverfilepath);
@@ -162,10 +164,11 @@ namespace Menu_Program
                     while (j < (column.Length))
                     {
                         string buffer = column[j];
-                        driver[i, j] = buffer;
+                        //driver[i, j] = buffer;
                         j++;
                     }
-                    drivers.Add(new Driver(driver[i, 0], Int32.Parse(driver[i, 1]), driver[i, 2]));
+                    drivers.Add(new Driver(column[0], Int32.Parse(column[1]), column[2]));
+                    //drivers.Add(new Driver(column[0], Int32.Parse(column[1]), column[2]));
                     i++;
                 }
                 driverlength = drivers.Count;
@@ -173,7 +176,7 @@ namespace Menu_Program
                 //r.Close();
             }
 
-        public void DriverWrite()
+        public void DriverWrite()       //writes to driver file
         {
             var sorteddrivers = drivers.OrderBy(x => x.ID);
             drivers = sorteddrivers.ToList();
@@ -188,8 +191,10 @@ namespace Menu_Program
             logfile.Close();
         }
 
-        public void readin_sitin()
+        public void readin_sitin()      //reads in sit in orders
             {
+                File.SetAttributes(sitin_order_filepath, FileAttributes.ReadOnly);
+                
                 bool complete = false;
                 if (File.Exists(sitin_order_filepath))
                 {
@@ -229,15 +234,15 @@ namespace Menu_Program
                         i++;
                     }
                     sitinlength = filelength;
+                    File.SetAttributes(sitin_order_filepath, FileAttributes.Normal);
                 }
                 else
                     throw new ArgumentException("No sitin log detected");
             }
 
-        public string[,] readin_delivery
+        public void readin_delivery()       //reads in delivery orders
         {
-            get
-            {
+                File.SetAttributes(delivery_order_filepath, FileAttributes.ReadOnly);
                 bool complete = false;
                 if (File.Exists(delivery_order_filepath))
                 {
@@ -277,11 +282,11 @@ namespace Menu_Program
                         i++;
                     }
                     deliverylength = filelength;
-                    return deliver;
+                    File.SetAttributes(delivery_order_filepath, FileAttributes.Normal);
                 }
                 else
                     throw new ArgumentException("no delivery log detected");
-            }
+           
         }
     }
 }
