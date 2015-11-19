@@ -26,16 +26,17 @@ namespace Menu_Program
         string delivery_orderpath = @"..\..\delivery_orderlog.ini";
         Password p = new Password();
         Setting s = new Setting();
-        reader_writer rw = new reader_writer();
+        reader_writer rw;
         
-        public Managerwindow()
+        public Managerwindow(reader_writer r)
         {
             try
             {
+                rw = r;
                 InitializeComponent();
                 sitin = System.IO.Path.GetFullPath(sitin_orderpath);
                 delivery = System.IO.Path.GetFullPath(delivery_orderpath);
-                rw.sit = rw.readin_sitin;
+                rw.readin_sitin();
                 rw.deliver = rw.readin_delivery;
             }
             catch (Exception excep)
@@ -123,10 +124,14 @@ namespace Menu_Program
         {
             testlistbox.Items.Clear();
             testlistbox.Items.Add("Menu Item     Amount");
-            for( int i=1; i< rw.menulength; i++)
+            foreach (var item in rw.menuitems)
             {
-                testlistbox.Items.Add(rw.menu[i, 0] + " - " + rw.count[i]);         //adds total amount of each item ordered to item box
+                testlistbox.Items.Add(item.Description + " - " + item.Count);       //adds total amount of each item ordered to item box
             }
+            /*for( int i=0; i< rw.menulength; i++)
+            {
+                testlistbox.Items.Add(rw.menu[i, 0] + " - " + rw.count[i]);         
+            }*/
         }
 
         private void deliverybtn_Click_1(object sender, RoutedEventArgs e)
@@ -186,9 +191,9 @@ namespace Menu_Program
             }
             if (edit_selection.SelectedIndex == 0)      //Servers
             {
-                for (int i = 1; i <= (rw.serverlength); i++)
+                foreach (var item in rw.servers)
                 {
-                    item_selection.Items.Add(rw.server[i, 0]);
+                    item_selection.Items.Add(item.name);
                 }
                 staffidlabel.Content = "Staff Id";
                 vegetarianlabel.Visibility = Visibility.Hidden;
@@ -197,9 +202,9 @@ namespace Menu_Program
 
             if (edit_selection.SelectedIndex == 1)      //Drivers
             {
-                for (int i = 1; i <= (rw.driverlength); i++)
+                foreach (var item in rw.drivers)
                 {
-                    item_selection.Items.Add(rw.driver[i, 0]);
+                    item_selection.Items.Add(item.name);
                 }
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
@@ -210,10 +215,11 @@ namespace Menu_Program
             if(edit_selection.SelectedIndex == 2)       //Menu Items
             {
                 vegetarianbox.Clear();
-                for (int i = 1; i <= rw.menulength; i++)
+                foreach (var item in rw.menuitems)
                 {
-                    item_selection.Items.Add(rw.menu[i, 0]);
+                    item_selection.Items.Add(item.Description);
                 }
+            
                 staffidlabel.Content = "Price £";
                 vegetarianbox.MaxLength = 1;
                 vegetarianlabel.Content = "Vegetarian (Y/N):";
@@ -299,91 +305,86 @@ namespace Menu_Program
             {
                 if (editrbtn.IsChecked == true)
                 {
-                    for (int i = 1; i <= rw.Serverlength; i++)
-                    {
-                        if (rw.server[i, 0] == item_selection.SelectedItem.ToString())
-                        {
-                            rw.server[i, 0] = namebox.Text;
-                            rw.server[i, 1] = Int32.Parse(staffidbox.Text).ToString();
-                        }
-                    }                   
-                    rw.Server = rw.server;
+                    var edititem = rw.servers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
+                    rw.servers[edititem].name = namebox.Text;
+                    rw.servers[edititem].ID = Int32.Parse(staffidbox.Text);
+                    rw.ServerWrite();
 
                 }
                 if (addrbtn.IsChecked == true)
                 {
-                    //rw.serverlength ++;
-                    rw.server[rw.Serverlength, 0] = namebox.Text;
-                    rw.server[rw.Serverlength, 1] = Int32.Parse(staffidbox.Text).ToString();
-                    
-                    
-                    rw.Server = rw.server;
+                    rw.servers.Add(new Server(namebox.Text, Int32.Parse(staffidbox.Text)));
+                    rw.ServerWrite();
                 }
                 if (removerbtn.IsChecked == true)
                 {
-                    for (int i = 1; i <= rw.Serverlength; i++)
-                    {
-                        if (rw.server[i, 0] == item_selection.SelectedItem.ToString())
-                        {
-                            for (int j = i; j <= rw.Serverlength; j++)
-                            {
-                                rw.server[j, 0] = rw.server[j + 1, 0];
-                                rw.server[j, 1] = rw.server[j + 1, 1];
-                            }
-                        }
-
-                    }
-                    rw.Serverlength = (rw.serverlength - 1);
-                    rw.Server = rw.server;
+                    var removeitem = rw.servers.Single(x => x.name == item_selection.SelectedItem.ToString());
+                    rw.servers.Remove(removeitem);
+                    rw.ServerWrite();
                 }
             }
 
             else if (edit_selection.SelectedIndex == 1)     //Drivers
             {
-
-            }
-
-            else if (edit_selection.SelectedIndex == 2)     //Menu Items
-            {
                 if (editrbtn.IsChecked == true)
                 {
-                    for (int i = 1; i <= rw.menulength; i++)
-                    {
-                        if (rw.menu[i, 0] == item_selection.SelectedItem.ToString())
-                        {
-                            rw.menu[i, 0] = namebox.Text;
-                            rw.menu[i, 1] = Int32.Parse(staffidbox.Text).ToString();
-                            rw.menu[rw.menulength, 2] = vegetarianbox.Text;
-                        }
-                    }
-                    rw.Menu = rw.menu;
+                    var edititem = rw.drivers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
+                    rw.drivers[edititem].name = namebox.Text;
+                    rw.drivers[edititem].ID = Int32.Parse(staffidbox.Text);
+                    rw.drivers[edititem].name = vegetarianbox.Text;
+                    rw.DriverWrite();
 
                 }
                 if (addrbtn.IsChecked == true)
                 {
-                    rw.menu[rw.menulength+1, 0] = namebox.Text;
-                    rw.menu[rw.menulength+1, 1] = Int32.Parse(staffidbox.Text).ToString();
-                    rw.menu[rw.menulength+1, 2] = vegetarianbox.Text;
-                    rw.menulength = rw.menulength + 1;
-                    rw.Menu = rw.menu;
+                    rw.drivers.Add(new Driver(namebox.Text, Int32.Parse(staffidbox.Text), vegetarianbox.Text));
+                    rw.DriverWrite();
                 }
                 if (removerbtn.IsChecked == true)
                 {
-                    for (int i = 1; i <= rw.menulength; i++)
-                    {
-                        if (rw.menu[i, 0] == item_selection.SelectedItem.ToString())
-                        {
-                            for (int j = i; j <= rw.menulength; j++)
-                            {
-                                rw.menu[j, 0] = rw.menu[j + 1, 0];
-                                rw.menu[j, 1] = rw.menu[j + 1, 1];
-                                rw.menu[j, 2] = rw.menu[j + 1, 2];
-                            }
-                        }
+                    var removeitem = rw.drivers.Single(x => x.name == item_selection.SelectedItem.ToString());
+                    rw.drivers.Remove(removeitem);
+                    rw.DriverWrite();
+                }
+            }
 
+            else if (edit_selection.SelectedIndex == 2)     //Menu Items
+            {
+                bool veg = false; ;
+                switch (vegetarianbox.Text)
+                {
+                    case "Y": veg = true; break;
+                    case "N": veg = false; break;
+                    default: throw new ArgumentException("Vegetarian input not accepted");
+
+                }
+                if (editrbtn.IsChecked == true)
+                {
+                    
+                    try
+                    {
+                        var edititem = rw.servers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
+                        rw.menuitems[edititem].Description = namebox.Text;
+                        rw.menuitems[edititem].Price = Int32.Parse(staffidbox.Text);
+                        rw.menuitems[edititem].Vegetarian = veg;
+                        rw.MenuWrite();
                     }
-                    rw.menulength = rw.menulength - 1;
-                    rw.Menu = rw.menu;
+                    catch (Exception excep)
+                    {
+                        MessageBox.Show(excep.Message, "error");
+                    }
+
+                }
+                if (addrbtn.IsChecked == true)
+                {
+                    rw.menuitems.Add(new Menu(namebox.Text, veg, Int32.Parse(staffidbox.Text)));
+                    rw.MenuWrite();
+                }
+                if (removerbtn.IsChecked == true)
+                {
+                    var removeitem = rw.menuitems.Single(x => x.Description == item_selection.SelectedItem.ToString());
+                    rw.menuitems.Remove(removeitem);
+                    rw.MenuWrite();
                 }
             }
             start();

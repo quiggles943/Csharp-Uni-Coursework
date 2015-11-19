@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace Menu_Program
 {
     /// <summary>
@@ -80,35 +79,32 @@ namespace Menu_Program
             takeawayradbtn.IsEnabled = false;
             logoutbtn.IsEnabled = false;
             readinservers();
-            readinmenu();
+            //menureadin();
             readindrivers();
-            fontsize();           
-        }
-
-        public void readinmenu()
-        {
-            foodlistbox.Items.Clear();
-            foreach (var item in rw.menuitems)
+            fontsize();
+            rw.MenuRead();
+            foreach(var item in rw.menuitems)
             {
                 foodlistbox.Items.Add(item.Description);
             }
+            
         }
 
         public void readinservers()
         {
-            serverlist.Items.Clear();
-            for (int i = 1; i <= rw.serverlength; i++ )
+            rw.ServerRead();
+            foreach (var item in rw.servers)
             {
-                serverlist.Items.Add(rw.server[i, 0]);
+                serverlist.Items.Add(item.name);
             }
         }
 
         public void readindrivers()
         {
-            driverbox.Items.Clear();
-            for (int i = 1; i <= rw.driverlength; i++)
+            rw.DriverRead();
+            foreach (var item in rw.drivers)
             {
-                driverbox.Items.Add(rw.driver[i, 0]);
+                driverbox.Items.Add(item.name);
             }
         }
 
@@ -214,7 +210,10 @@ namespace Menu_Program
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + Math.Round(buffer,2);
             subtotallabel.Content = subtotal;
-            items = string.Join("\t", items, foodlistbox.SelectedItem.ToString());
+            if(itemsordered == 0)
+                items = foodlistbox.SelectedItem.ToString();
+            else
+                items = string.Join("\t", items, foodlistbox.SelectedItem.ToString());
             itemsordered++;
             statuslabel.Content = "Item added";
         }
@@ -418,12 +417,9 @@ namespace Menu_Program
             password.ShowDialog();
             if (password.correct)
             {
-                Managerwindow manager = new Managerwindow();
+                Managerwindow manager = new Managerwindow(rw);
                 manager.ShowDialog();
                 fontsize();
-                readindrivers();
-                readinservers();
-                readinmenu();
             }
             else
                 MessageBox.Show("Password incorrect", "error");
