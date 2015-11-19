@@ -38,7 +38,9 @@ namespace Menu_Program
         
         //MainWindow main = new MainWindow();
         public List<Menu> menuitems = new List<Menu>();
-        public List<string[,]> servers = new List<string[,]>();
+        public List<Server> servers = new List<Server>();
+        public List<Driver> drivers = new List<Driver>();
+        Employee e = new Employee();
         public reader_writer()
         {
             
@@ -127,6 +129,7 @@ namespace Menu_Program
                         server[i, j] = buffer;
                         j++;
                     }
+                    servers.Add(new Server(server[i, 0], Int32.Parse(server[i, 1])));
                     i++;
                 }
                 serverlength = filelength;
@@ -136,36 +139,6 @@ namespace Menu_Program
             }
             set
             {
-                /*if (addrbtn.IsChecked == true)
-                {
-                    using (StreamWriter logfile = File.AppendText(serverfilepath))
-                        logfile.WriteLine(servers[serverlength, 0] + "\t" + servers[serverlength, 1]);
-                }
-                else if (editrbtn.IsChecked == true)
-                {
-                    string[] empty = new string[0];
-                    File.WriteAllLines(serverfilepath, empty);
-                    StreamWriter logfile = File.AppendText(serverfilepath);
-                    logfile.WriteLine("Name\tID");
-                    for (int i = 1; i <= serverlength - 1; i++)
-                    {
-                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
-                    }
-                    logfile.Close();
-                }
-                else if (removerbtn.IsChecked == true)
-                {
-                    string[] empty = new string[0];
-                    File.WriteAllLines(serverfilepath, empty);
-                    StreamWriter logfile = File.AppendText(serverfilepath);
-                    logfile.WriteLine("Name\tID");
-                    for (int i = 1; i <= serverlength - 2; i++)
-                    {
-                        logfile.WriteLine(servers[i, 0] + "\t" + servers[i, 1]);
-                    }
-                    logfile.Close();
-                }
-                //readinservers();*/
                 string[] empty = new string[0];
                 File.WriteAllLines(serverfilepath, empty);
                 StreamWriter logfile = File.AppendText(serverfilepath);
@@ -200,6 +173,7 @@ namespace Menu_Program
                         driver[i, j] = buffer;
                         j++;
                     }
+                    drivers.Add(new Driver(driver[i, 0], Int32.Parse(driver[i, 1]), driver[i, 2]));
                     i++;
                 }
                 driverlength = filelength;
@@ -277,9 +251,9 @@ namespace Menu_Program
                             deliver[i, j] = buffer;
                             if (j > 2)
                             {
-                                for (int m = 1; m <= rw.menulength; m++)
+                                for (int m = 1; m <= menulength; m++)
                                 {
-                                    if (column[j] == rw.menu[m, 0])
+                                    if (column[j] == menu[m, 0])
                                     {
                                         count[m]++;
                                     }
@@ -290,9 +264,10 @@ namespace Menu_Program
                         i++;
                     }
                     deliverylength = filelength;
+                    return deliver;
                 }
                 else
-                    throw new ArgumentException("delivery log detected");
+                    throw new ArgumentException("no delivery log detected");
             }
         }
     }
