@@ -90,66 +90,8 @@ namespace Menu_Program
             
         }
 
-        /*private void menureadin()
-        {
-            //read in menu text file
-            using (StreamReader r = new StreamReader(menufilepath))
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(menufilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    menu[i, j] = buffer;
-                    j++;
-                }
-                bool theanswer = false;
-                switch (menu[i,2])
-                {
-                    case "Y": theanswer = true; break;
-                    case "N": theanswer = false; break;
-                }
-                menuitems.Add(new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1])));
-                foodlistbox.Items.Add(menu[i, 0]);
-                i++;
-            }
-            menulength = filelength;
-            filelength = 0;
-        }*/
         public void readinservers()
         {
-            //read in server text file
-            /*StreamReader r = new StreamReader(serverfilepath);
-            using (r)
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string [] file = System.IO.File.ReadAllLines(serverfilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    server[i, j] = buffer;
-                    j++;
-                }
-                serverlist.Items.Add(server[i, 0]);
-                i++;
-            }
-            serverlength = filelength;
-            filelength = 0;
-            //r.Close();*/
             for (int i = 1; i <= rw.serverlength; i++ )
             {
                 serverlist.Items.Add(rw.server[i, 0]);
@@ -158,31 +100,6 @@ namespace Menu_Program
 
         public void readindrivers()
         {
-            //read in driver text file
-            /*StreamReader r = new StreamReader(driverfilepath);
-            using (r)
-            {
-                while (r.ReadLine() != null) { filelength++; }
-            }
-            int i = 1;
-            string[] file = System.IO.File.ReadAllLines(driverfilepath);
-            int len = file.Length;
-            while (i < (len))
-            {
-                string[] column = file[i].Split('\t');
-                int j = 0;
-                while (j < (column.Length))
-                {
-                    string buffer = column[j];
-                    driver[i, j] = buffer;
-                    j++;
-                }
-                driverbox.Items.Add(driver[i, 0]);
-                i++;
-            }
-            driverlength = filelength;
-            filelength = 0;
-            //r.Close();*/
             for (int i = 1; i <= rw.driverlength; i++)
             {
                 driverbox.Items.Add(rw.driver[i, 0]);
@@ -495,7 +412,7 @@ namespace Menu_Program
             password.ShowDialog();
             if (password.correct)
             {
-                Managerwindow manager = new Managerwindow(menu, menulength, serverlength);
+                Managerwindow manager = new Managerwindow();
                 manager.ShowDialog();
                 fontsize();
             }
