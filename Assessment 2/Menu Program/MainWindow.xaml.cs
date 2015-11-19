@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace Menu_Program
 {
     /// <summary>
@@ -83,6 +82,7 @@ namespace Menu_Program
             //menureadin();
             readindrivers();
             fontsize();
+            rw.MenuRead();
             foreach(var item in rw.menuitems)
             {
                 foodlistbox.Items.Add(item.Description);
@@ -92,17 +92,19 @@ namespace Menu_Program
 
         public void readinservers()
         {
-            for (int i = 1; i <= rw.serverlength; i++ )
+            rw.ServerRead();
+            foreach (var item in rw.servers)
             {
-                serverlist.Items.Add(rw.server[i, 0]);
+                serverlist.Items.Add(item.name);
             }
         }
 
         public void readindrivers()
         {
-            for (int i = 1; i <= rw.driverlength; i++)
+            rw.DriverRead();
+            foreach (var item in rw.drivers)
             {
-                driverbox.Items.Add(rw.driver[i, 0]);
+                driverbox.Items.Add(item.name);
             }
         }
 
@@ -412,7 +414,7 @@ namespace Menu_Program
             password.ShowDialog();
             if (password.correct)
             {
-                Managerwindow manager = new Managerwindow();
+                Managerwindow manager = new Managerwindow(rw);
                 manager.ShowDialog();
                 fontsize();
             }

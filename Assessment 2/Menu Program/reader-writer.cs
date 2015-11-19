@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Menu_Program
 {
-    class reader_writer
+    public class reader_writer
     {
         string menupath = @"..\..\menu.ini";
         string serverpath = @"..\..\server.ini";
@@ -49,66 +49,57 @@ namespace Menu_Program
             driverfilepath = System.IO.Path.GetFullPath(driverpath);
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
-            menu = Menu;
-            server = Server;
-            driver = Driver;
 
         }
 
-        public string[,] Menu
+        public void MenuRead()
         {
-            get
+            int filelength = 0;
+            using (StreamReader r = new StreamReader(menufilepath))
             {
-                int filelength = 0;
-                using (StreamReader r = new StreamReader(menufilepath))
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(menufilepath);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int j = 0;
+                while (j < (column.Length))
                 {
-                    while (r.ReadLine() != null) { filelength++; }
+                    string buffer = column[j];
+                    menu[i, j] = buffer;
+                    j++;
                 }
-                int i = 1;
-                string[] file = System.IO.File.ReadAllLines(menufilepath);
-                int len = file.Length;
-                while (i < (len))
+                bool theanswer = false;
+                switch (menu[i, 2])
                 {
-                    string[] column = file[i].Split('\t');
-                    int j = 0;
-                    while (j < (column.Length))
-                    {
-                        string buffer = column[j];
-                        menu[i, j] = buffer;
-                        j++;
-                    }
-                    bool theanswer = false;
-                    switch (menu[i,2])
-                    {
-                        case "Y": theanswer = true; break;
-                        case "N": theanswer = false; break;
-                    }
+                    case "Y": theanswer = true; break;
+                    case "N": theanswer = false; break;
+                }
                 menuitems.Add(new Menu(menu[i, 0], theanswer, Int32.Parse(menu[i, 1])));
                 i++;
-                }
-                menulength = filelength;
-                filelength = 0;
-                return menu;
             }
-            set
+            menulength = menuitems.Count;
+            filelength = 0;
+        }
+
+        public void MenuWrite()
+        {
+            string[] blank = new string[0];
+            File.WriteAllLines(menufilepath, blank);
+            StreamWriter file = File.AppendText(menufilepath);
+            file.WriteLine("Name\tID\tVegetarian");
+            foreach (var item in menuitems)
             {
-                string[] blank = new string[0];
-                File.WriteAllLines(menufilepath, blank);
-                StreamWriter file = File.AppendText(menufilepath);
-                file.WriteLine("Name\tID\tVegetarian");
-                for (int i = 1; i <= menulength; i++)
-                {
-                    file.WriteLine(menu[i, 0] + "\t" + menu[i, 1] + "\t" + menu[i, 2]);
-                }
-                file.Close();
-            
+                file.WriteLine(item.Description + "\t" + item.Price + "\t" + item.Vegetarian);
             }
+            file.Close();
         }
         
-        public string[,] Server
+        public void ServerRead()
         {
-            get
-            {
                 //read in server text file
                 int filelength = 0;
                 StreamReader r = new StreamReader(serverfilepath);
@@ -132,29 +123,30 @@ namespace Menu_Program
                     servers.Add(new Server(server[i, 0], Int32.Parse(server[i, 1])));
                     i++;
                 }
-                serverlength = filelength;
+                serverlength = servers.Count;
                 filelength = 0;
                 //r.Close();
-                return server;
             }
-            set
+
+            public void ServerWrite()
             {
+                var sortedservers = servers.OrderBy(x => x.ID);
+                servers = sortedservers.ToList();
                 string[] empty = new string[0];
                 File.WriteAllLines(serverfilepath, empty);
                 StreamWriter logfile = File.AppendText(serverfilepath);
                 logfile.WriteLine("Name\tID");
-                for (int i = 1; i <= serverlength; i++)
+                foreach (var item in servers)
                 {
-                    logfile.WriteLine(server[i, 0] + "\t" + server[i, 1]);
+                    logfile.WriteLine(item.name + "\t" + item.ID);
                 }
                 logfile.Close();
             }
-        }
-        public string[,] Driver
-        {
-            get
+
+
+        public void DriverRead()
             {
-                int filelength = 0;
+            int filelength = 0;
                 StreamReader r = new StreamReader(driverfilepath);
                 using (r)
                 {
@@ -176,11 +168,24 @@ namespace Menu_Program
                     drivers.Add(new Driver(driver[i, 0], Int32.Parse(driver[i, 1]), driver[i, 2]));
                     i++;
                 }
-                driverlength = filelength;
+                driverlength = drivers.Count;
                 filelength = 0;
-                return driver;
                 //r.Close();
             }
+
+        public void DriverWrite()
+        {
+            var sorteddrivers = drivers.OrderBy(x => x.ID);
+            drivers = sorteddrivers.ToList();
+            string[] empty = new string[0];
+            File.WriteAllLines(driverfilepath, empty);
+            StreamWriter logfile = File.AppendText(driverfilepath);
+            logfile.WriteLine("Name\tID\tReg");
+            foreach (var item in drivers)
+            {
+                logfile.WriteLine(item.name + "\t" + item.ID + "\t" +item.reg);
+            }
+            logfile.Close();
         }
 
         public string[,] readin_sitin
