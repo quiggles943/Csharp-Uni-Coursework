@@ -30,26 +30,33 @@ namespace Menu_Program
         
         public Managerwindow(reader_writer r)
         {
-            try
-            {
+            /*try
+            {*/
                 rw = r;
                 InitializeComponent();
                 sitin = System.IO.Path.GetFullPath(sitin_orderpath);
                 delivery = System.IO.Path.GetFullPath(delivery_orderpath);
                 rw.readin_sitin();
                 rw.readin_delivery();
-            }
-            catch (Exception excep)
+            //}
+            /*catch (Exception excep)
             {
                 MessageBox.Show(excep.Message);
-            }
-            finally
-            {
-                statuslabel.Content = "Files loaded successfully";
+            }*/
+            /*finally
+            {*/
+                if (rw.sitinfound && rw.deliveryfound)
+                    statuslabel.Content = "Files loaded successfully";
+                if (rw.sitinfound == false)
+                    statuslabel.Content = "Sit-in log file missing";
+                if (rw.deliveryfound == false)
+                    statuslabel.Content = "Delivery log file missing";
+                if (rw.sitinfound == false && rw.deliveryfound == false)
+                    statuslabel.Content = "Log files not found";
                 vegetarianbox.MaxLength = 1;
                 start();
                 fontsize();
-            }
+            //}
         }
 
         private void start()        //sets visibility for items on page

@@ -25,6 +25,8 @@ namespace Menu_Program
         public int driverlength;
         public int sitinlength;
         public int deliverylength;
+        public bool sitinfound = false;
+        public bool deliveryfound = false;
 
         string sitin;
         string delivery;
@@ -193,12 +195,14 @@ namespace Menu_Program
 
         public void readin_sitin()      //reads in sit in orders
             {
-                File.SetAttributes(sitin_order_filepath, FileAttributes.ReadOnly);
+                
                 
                 bool complete = false;
                 if (File.Exists(sitin_order_filepath))
                 {
+                    File.SetAttributes(sitin_order_filepath, FileAttributes.ReadOnly);
                     int filelength = 0;
+                    sitinfound = true;
                     using (StreamReader r = new StreamReader(sitin_order_filepath))
                     {
                         while (r.ReadLine() != null) { filelength++; }
@@ -237,16 +241,20 @@ namespace Menu_Program
                     File.SetAttributes(sitin_order_filepath, FileAttributes.Normal);
                 }
                 else
-                    throw new ArgumentException("No sitin log detected");
+                {
+                    //throw new ArgumentException("No sitin log detected");
+                }
             }
 
         public void readin_delivery()       //reads in delivery orders
         {
-                File.SetAttributes(delivery_order_filepath, FileAttributes.ReadOnly);
+                
                 bool complete = false;
                 if (File.Exists(delivery_order_filepath))
                 {
+                    File.SetAttributes(delivery_order_filepath, FileAttributes.ReadOnly);
                     int filelength = 0;
+                    deliveryfound = true;
                     using (StreamReader r = new StreamReader(delivery_order_filepath))
                     {
                         while (r.ReadLine() != null) { filelength++; }
@@ -284,8 +292,8 @@ namespace Menu_Program
                     deliverylength = filelength;
                     File.SetAttributes(delivery_order_filepath, FileAttributes.Normal);
                 }
-                else
-                    throw new ArgumentException("no delivery log detected");
+                //else
+                    //throw new ArgumentException("no delivery log detected");
            
         }
     }
