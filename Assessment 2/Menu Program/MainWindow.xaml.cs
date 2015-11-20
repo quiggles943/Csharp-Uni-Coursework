@@ -135,19 +135,20 @@ namespace Menu_Program
         {
             if (File.Exists(sitin_order_filepath))
             {
-
+                DateTime time = DateTime.Now;             // Use current time.
                 using (StreamWriter logfile = File.AppendText(sitin_order_filepath))
                 {
 
-                    logfile.WriteLine(server + "\t" + table + "\t£" + paid+"\t"+items);
+                    logfile.WriteLine(time.ToString("g") + "\t" + server + "\t" + table + "\t£" + paid + "\t" + items);
                 }
             }
             else
             {
                 using (StreamWriter logfile = File.CreateText (sitin_order_filepath))
                 {
+                    DateTime time = DateTime.Now;
                     logfile.WriteLine("Server\tTable\tAmountpaid");
-                    logfile.WriteLine(server + "\t" + table + "\t£" + paid+"\t"+items);
+                    logfile.WriteLine(time.ToString("g") + "\t" + server + "\t" + table + "\t£" + paid + "\t" + items);
                 }
             }
 
@@ -159,16 +160,17 @@ namespace Menu_Program
 
                 using (StreamWriter logfile = File.AppendText(delivery_order_filepath))
                 {
-
-                    logfile.WriteLine(server + "\t" + driver + "\t" + name + "\t£" + paid + "\t" + items);
+                    DateTime time = DateTime.Now;
+                    logfile.WriteLine(time.ToString("g") + "\t" + server + "\t" + driver + "\t" + name + "\t£" + paid + "\t" + items);
                 }
             }
             else
             {
                 using (StreamWriter logfile = File.CreateText(delivery_order_filepath))
                 {
+                    DateTime time = DateTime.Now;
                     logfile.WriteLine("Server\tDriver\tCust Name\tAmountpaid");
-                    logfile.WriteLine(server + "\t" + driver + "\t" + name + "\t£" + paid + "\t" + items);
+                    logfile.WriteLine(time.ToString("g") + "\t" + server + "\t" + driver + "\t" + name + "\t£" + paid + "\t" + items);
                 }
             }
 

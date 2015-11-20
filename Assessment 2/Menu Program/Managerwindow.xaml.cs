@@ -100,11 +100,13 @@ namespace Menu_Program
 
         private void sitinbtn_Click(object sender, RoutedEventArgs e)
         {
+            DateTime dt;
             testlistbox.Items.Clear();
-            testlistbox.Items.Add("Server\tTable\tAmount");
-            for (int i = 1; i <= rw.sitinlength; i++)
+            testlistbox.Items.Add("Time\tServer\tTable\tAmount");
+            for (int i = 1; i <= rw.sitinlength-1; i++)
             {
-                testlistbox.Items.Add(rw.sit[i, 0] + "\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2]);       //adds sit in orders to item box
+                dt = Convert.ToDateTime(rw.sit[i, 0]);
+                testlistbox.Items.Add(dt.ToShortTimeString() + "\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);       //adds sit in orders to item box
             }
         }
 
@@ -122,10 +124,10 @@ namespace Menu_Program
         private void deliverybtn_Click_1(object sender, RoutedEventArgs e)
         {
             testlistbox.Items.Clear();
-            testlistbox.Items.Add("Server\tDriver\tCustomer\tAmount");
+            testlistbox.Items.Add("Time\tServer\tDriver\tCustomer\tAmount");
             for (int i = 1; i <= rw.deliverylength; i++)
             {
-                testlistbox.Items.Add(rw.deliver[i, 0] + "\t" +rw.deliver[i,1] +"\t"+ rw.deliver[i, 2] + "\t\t" + rw.deliver[i, 3]);       //adds delivery orders to item box
+                testlistbox.Items.Add(rw.deliver[i, 0] + "\t" +rw.deliver[i,1] +"\t"+ rw.deliver[i, 2] + "\t\t" + rw.deliver[i, 3] + "\t" + rw.deliver[i, 3]);       //adds delivery orders to item box
             }
         }
 

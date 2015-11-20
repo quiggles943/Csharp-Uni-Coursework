@@ -218,7 +218,7 @@ namespace Menu_Program
                         {
                             string buffer = column[j];
                             sit[i, j] = buffer;
-                            if (j > 2)
+                            if (j > 3)
                             {
                                 complete = false;
                                 for (int m = 0; m <= menuitems.Count; m++)
@@ -270,7 +270,7 @@ namespace Menu_Program
                         {
                             string buffer = column[j];
                             deliver[i, j] = buffer;
-                            if (j > 3)
+                            if (j > 4)
                             {
                                 complete = false;
                                 for (int m = 0; m <= menuitems.Count; m++)
