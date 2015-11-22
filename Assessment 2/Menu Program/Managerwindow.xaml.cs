@@ -31,7 +31,7 @@ namespace Menu_Program
         public Managerwindow(reader_writer r)
         {
             /*try
-            {*/
+            {*/               
                 rw = r;
                 InitializeComponent();
                 sitin = System.IO.Path.GetFullPath(sitin_orderpath);
@@ -101,12 +101,38 @@ namespace Menu_Program
         private void sitinbtn_Click(object sender, RoutedEventArgs e)
         {
             DateTime dt;
+            DateTime Today = DateTime.Today;
             testlistbox.Items.Clear();
-            testlistbox.Items.Add("Time\tServer\tTable\tAmount");
+            testlistbox.Items.Add("Date/Time\tServer\tTable\tAmount");
             for (int i = 1; i <= rw.sitinlength-1; i++)
             {
                 dt = Convert.ToDateTime(rw.sit[i, 0]);
-                testlistbox.Items.Add(dt.ToShortTimeString() + "\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);       //adds sit in orders to item box
+                if (orderdatebox.SelectedIndex == 0)
+                {
+                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                }
+                if(orderdatebox.SelectedIndex == 1)
+                {
+                    if (dt.Date == Today)
+                    {
+                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 2)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                    {
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 3)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
+                    {
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                    }
+                }
+
             }
         }
 
@@ -123,11 +149,39 @@ namespace Menu_Program
 
         private void deliverybtn_Click_1(object sender, RoutedEventArgs e)
         {
+            DateTime dt;
+            DateTime Today = DateTime.Today;
             testlistbox.Items.Clear();
-            testlistbox.Items.Add("Time\tServer\tDriver\tCustomer\tAmount");
-            for (int i = 1; i <= rw.deliverylength; i++)
+            testlistbox.Items.Add("Date/Time\tServer\tDriver\tCustomer\tAmount");
+            for (int i = 1; i <= rw.deliverylength - 1; i++)
             {
-                testlistbox.Items.Add(rw.deliver[i, 0] + "\t" +rw.deliver[i,1] +"\t"+ rw.deliver[i, 2] + "\t\t" + rw.deliver[i, 3] + "\t" + rw.deliver[i, 3]);       //adds delivery orders to item box
+                dt = Convert.ToDateTime(rw.deliver[i, 0]);
+                if (orderdatebox.SelectedIndex == 0)
+                {
+                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                }
+                if (orderdatebox.SelectedIndex == 1)
+                {
+                    if (dt.Date == Today)
+                    {
+                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 2)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                    {
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 3)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
+                    {
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                    }
+                }
+
             }
         }
 
@@ -148,23 +202,82 @@ namespace Menu_Program
 
         private void serverbtn_Click(object sender, RoutedEventArgs e)
         {
+             DateTime dt;
+            DateTime Today = DateTime.Today;
             testlistbox.Items.Clear();
+            testlistbox.Items.Add("Date/Time\tServer\tTable\tAmount");
+                for (int j = 1; j <= rw.sitinlength - 1; j++)
+                {
+                    dt = Convert.ToDateTime(rw.sit[j, 0]);
+                    if (rw.sit[j, 1] == serverbox.SelectedItem.ToString())
+                    {
+                        if (orderdatebox.SelectedIndex == 0)
+                        {
+                            testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                        }
+                        if (orderdatebox.SelectedIndex == 1)
+                        {
+                            if (dt.Date == Today)
+                            {
+                                testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                            }
+                        }
+                        if (orderdatebox.SelectedIndex == 2)
+                        {
+                            if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                            {
+                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                            }
+                        }
+                        if (orderdatebox.SelectedIndex == 3)
+                        {
+                            if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
+                            {
+                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                            }
+                        }
+                    }
 
-            for (int i = 1; i <= rw.sitinlength; i++)
-            {
-                if (serverbox.SelectedItem.ToString() == rw.sit[i, 0])
-                {
-                    testlistbox.Items.Add(rw.sit[i, 1] + " " + rw.sit[i, 2]);
                 }
-            }
-                for (int j = 1; j <= rw.deliverylength; j++)
-                {
-                    if (serverbox.SelectedItem.ToString() == rw.deliver[j, 0])
-                {
-                    testlistbox.Items.Add(rw.deliver[j, 2] + " " + rw.deliver[j, 3]);
-                }
+                string dash = "-";
+                for (int k = 0; k <= rw.longsitin+32; k++)
+                    dash = string.Concat(dash, "-");
+                testlistbox.Items.Add(dash);
+                testlistbox.Items.Add("Date/Time\tServer\tDriver\tCustomer\tAmount");
+                    for (int i = 1; i <= rw.deliverylength - 1; i++)
+                    {
+                        dt = Convert.ToDateTime(rw.deliver[i, 0]);
+                        if (rw.deliver[i, 1] == serverbox.SelectedItem.ToString())
+                        {
+                            if (orderdatebox.SelectedIndex == 0)
+                            {
+                                testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                            }
+                            if (orderdatebox.SelectedIndex == 1)
+                            {
+                                if (dt.Date == Today)
+                                {
+                                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                                }
+                            }
+                            if (orderdatebox.SelectedIndex == 2)
+                            {
+                                if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                                {
+                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                                }
+                            }
+                            if (orderdatebox.SelectedIndex == 3)
+                            {
+                                if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
+                                {
+                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                                }
+                            }
+                        }
 
-            }
+                    }
+
         }
 
         private void edit_selection_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -411,6 +524,16 @@ namespace Menu_Program
             s.Fontsize = 15;
             //p.setting[2, 1] = s.Fontsize.ToString();
             this.FontSize = s.Fontsize;
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void orderdatebox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
     }

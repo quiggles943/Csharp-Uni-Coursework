@@ -114,7 +114,7 @@ namespace Menu_Program
         }
         public void readinservers()
         {
-            rw.ServerRead();
+            //rw.ServerRead();
             foreach (var item in rw.servers)
             {
                 serverlist.Items.Add(item.name);

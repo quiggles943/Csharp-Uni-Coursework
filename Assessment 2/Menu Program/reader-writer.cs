@@ -30,12 +30,12 @@ namespace Menu_Program
 
         string sitin;
         string delivery;
-        //public string[,] menu = new string[100, 5];
         public string[,] sit = new string[100, 20];
-        //public string[,] driver = new string[100, 3];
         public string[,] deliver = new string[100, 20];
         public int[] count = new int[100];
-        //public string[,] server = new string[100, 2];
+
+        public int longsitin = 0;
+        int longdeliver;
 
         
         //MainWindow main = new MainWindow();
@@ -235,6 +235,13 @@ namespace Menu_Program
                             }
                             j++;
                         }
+                        int count = 0;
+                        for (int k = 0; k <= 3; k++)
+                        {
+                            count = count + column[k].Length;
+                        }
+                        if (count > longsitin)
+                            longsitin = count;
                         i++;
                     }
                     sitinlength = filelength;
@@ -287,6 +294,8 @@ namespace Menu_Program
                             }
                             j++;
                         }
+                        if (file.Length > longdeliver)
+                            longdeliver = file.Length;
                         i++;
                     }
                     deliverylength = filelength;

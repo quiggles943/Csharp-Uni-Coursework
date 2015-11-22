@@ -29,7 +29,7 @@
         <Button x:Name="logoutbtn" Content="Logout" HorizontalAlignment="Left" Margin="364,25,0,0" VerticalAlignment="Top" Width="75" Click="logoutbtn_Click" ToolTip="Logs out of system"/>
         <Button x:Name="managerbtn" Content="Manager" HorizontalAlignment="Left" Margin="186,370,0,0" VerticalAlignment="Top" Width="75" Click="managerbtn_Click"/>
         <ComboBox x:Name="driverbox" HorizontalAlignment="Left" Margin="210,104,0,0" VerticalAlignment="Top" Width="138"/>
-        <StatusBar HorizontalAlignment="Left" Height="25" Margin="0,417,0,0" VerticalAlignment="Top" Width="581">
+        <StatusBar Height="25" VerticalAlignment="Bottom">
             <ListBoxItem Content="Server:"/>
             <ListBoxItem x:Name="serverstatusbox" Content="name" RenderTransformOrigin="0.5,0.5">
                 <ListBoxItem.RenderTransform>
