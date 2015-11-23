@@ -310,9 +310,9 @@ namespace Menu_Program
                 }
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
-                vegetarianlabel.Content = "               Car Reg:";
+                vegetarianlabel.Content = "             Car Reg:";
                 vegetarianbox.MaxLength = 8;
-                vegetarianbox.Width = 64;
+                vegetarianbox.Width = 68;
             }
             if(edit_selection.SelectedIndex == 2)       //Menu Items
             {

@@ -42,6 +42,26 @@
                     </TransformGroup>
                 </ListBoxItem.RenderTransform>
             </ListBoxItem>
+            <ListBoxItem Content="Time:" RenderTransformOrigin="0.5,0.5">
+                <ListBoxItem.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="530"/>
+                    </TransformGroup>
+                </ListBoxItem.RenderTransform>
+            </ListBoxItem>
+            <ListBoxItem x:Name="time" Content="00:00" RenderTransformOrigin="0.5,0.5">
+                <ListBoxItem.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="530"/>
+                    </TransformGroup>
+                </ListBoxItem.RenderTransform>
+            </ListBoxItem>
             <ListBoxItem Content="Status:" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Right">
                 <ListBoxItem.RenderTransform>
                     <TransformGroup>
@@ -62,26 +82,7 @@
                     </TransformGroup>
                 </ListBoxItem.RenderTransform>
             </ListBoxItem>
-            <ListBoxItem Content="Time:" RenderTransformOrigin="0.5,0.5">
-                <ListBoxItem.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform X="380"/>
-                    </TransformGroup>
-                </ListBoxItem.RenderTransform>
-            </ListBoxItem>
-            <ListBoxItem x:Name="time" Content="00:00" RenderTransformOrigin="0.5,0.5">
-                <ListBoxItem.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform X="380"/>
-                    </TransformGroup>
-                </ListBoxItem.RenderTransform>
-            </ListBoxItem>
+            
         </StatusBar>
         <Button x:Name="passwordbtn" Content="Change Password" HorizontalAlignment="Left" Margin="182,327,0,0" VerticalAlignment="Top" Width="122" Click="passwordbtn_Click"/>
         <Button x:Name="size12" Content="Normal" HorizontalAlignment="Left" Margin="23,296,0,0" VerticalAlignment="Top" Width="72" Click="size12_Click"/>

@@ -86,7 +86,6 @@ namespace Menu_Program
             //menureadin();
             //readindrivers();
             fontsize();
-            
         }
 
 
@@ -224,6 +223,8 @@ namespace Menu_Program
                 logonbtn.IsEnabled = false;
                 selectbtn.IsEnabled = true;
                 statuslabel.Content = "Logged on";
+                managerbtn.IsEnabled = true;
+                selectbtn.IsEnabled = true;
             }
             else
                 return;
@@ -284,7 +285,10 @@ namespace Menu_Program
 
         private void selectbtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if(sitinradbtn.IsChecked == false && takeawayradbtn.IsChecked == false)
+            {
+                return;
+            }
             if (sitin)
             {
                 addtablebtn.Visibility = Visibility.Visible;
@@ -465,6 +469,12 @@ namespace Menu_Program
             logoutbtn.IsEnabled = false;
             logonbtn.IsEnabled = true;
             statuslabel.Content = "Logged out";
+            managerbtn.IsEnabled = false;
+            sitinradbtn.IsChecked = false;
+            takeawayradbtn.IsChecked = false;
+            serverlist.SelectedIndex = -1;
+            selectbtn.IsEnabled = false;
+            serverstatusbox.Content = "";
         }
 
         public void managerbtn_Click(object sender, RoutedEventArgs e)
