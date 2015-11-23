@@ -47,7 +47,7 @@
                         <ScaleTransform/>
                         <SkewTransform/>
                         <RotateTransform/>
-                        <TranslateTransform X="290"/>
+                        <TranslateTransform X="100"/>
                     </TransformGroup>
                 </ListBoxItem.RenderTransform>
             </ListBoxItem>
@@ -57,12 +57,33 @@
                         <ScaleTransform/>
                         <SkewTransform/>
                         <RotateTransform/>
-                        <TranslateTransform X="285"/>
+                        <TranslateTransform X="95"/>
+                    </TransformGroup>
+                </ListBoxItem.RenderTransform>
+            </ListBoxItem>
+            <ListBoxItem Content="Time" RenderTransformOrigin="0.5,0.5">
+                <ListBoxItem.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="303"/>
+                    </TransformGroup>
+                </ListBoxItem.RenderTransform>
+            </ListBoxItem>
+            <ListBoxItem x:Name="time" Content="00:00" RenderTransformOrigin="0.5,0.5">
+                <ListBoxItem.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="300"/>
                     </TransformGroup>
                 </ListBoxItem.RenderTransform>
             </ListBoxItem>
         </StatusBar>
         <Button x:Name="removeitembtn" Content="&lt; - Remove from Order" HorizontalAlignment="Left" Margin="210,287,0,0" VerticalAlignment="Top" Width="138" Click="removeitembtn_Click"/>
+        <Label x:Name="test" Content="Label" HorizontalAlignment="Left" Margin="296,385,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

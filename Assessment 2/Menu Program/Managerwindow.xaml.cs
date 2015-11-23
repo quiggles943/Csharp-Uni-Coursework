@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Menu_Program
 {
@@ -31,7 +32,8 @@ namespace Menu_Program
         public Managerwindow(reader_writer r)
         {
             /*try
-            {*/               
+            {*/
+                Time();
                 rw = r;
                 InitializeComponent();
                 sitin = System.IO.Path.GetFullPath(sitin_orderpath);
@@ -536,5 +538,17 @@ namespace Menu_Program
 
         }
 
+        public void Time()
+        {
+            var timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1.0)
+            };
+            timer.Tick += (o, e) =>
+            {
+                time.Content = DateTime.Now.ToString("HH:mm");
+            };
+            timer.Start();
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 namespace Menu_Program
 {
     /// <summary>
@@ -56,7 +57,7 @@ namespace Menu_Program
         
         public MainWindow()
         {
-
+            Time();
             menufilepath = System.IO.Path.GetFullPath(menupath);
             serverfilepath = System.IO.Path.GetFullPath(serverpath);
             driverfilepath = System.IO.Path.GetFullPath(driverpath);
@@ -88,6 +89,19 @@ namespace Menu_Program
             
         }
 
+
+        public void Time()
+        {
+            var timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1.0)
+            };
+            timer.Tick += (o, e) =>
+            {
+                time.Content = DateTime.Now.ToString("HH:mm");
+            };
+            timer.Start();
+        }
         public void readin()
         {
             rw.MenuRead();
