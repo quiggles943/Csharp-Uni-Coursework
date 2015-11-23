@@ -10,8 +10,6 @@ namespace Menu_Program
     public class Order
     {
         public List<Menu> items = new List<Menu>();
-        
-        public List<Order> deliveryorders = new List<Order>();
         private string server;
         public string driver;
         public string name;
@@ -27,24 +25,6 @@ namespace Menu_Program
         public void Clear()
         {
             items.Clear();
-        }
-        public void Details(List<Order> sitinorders, string s, int t, double p )
-        {
-            int i;
-            i = sitinorders.Count;
-            sitinorders.Add( new Order { Server = s, Table = t, Paid = p, Index = index});
-            index++;
-            sitincount = sitinorders.Count;
-        }
-        public void Details(string s, string d, string n, double p)
-        {
-            int i;
-            i = deliveryorders.Count;
-            deliveryorders.Add(new Order { Server = s, Driver = d, name = n, paid = p });
-        }
-        public int sitinCount()
-        {
-            return sitincount;
         }
         public string Server
         {
@@ -75,18 +55,6 @@ namespace Menu_Program
             set { paid = value; }
         }
 
-        public int Index
-        {
-            get { return index; }
-            set { index++; }
-        }
-    }
-    public class SitinOrder : Order
-    {
-        public SitinOrder()
-        {
-
-        }
 
         public void Dishes(Menu item)
         {
@@ -96,6 +64,13 @@ namespace Menu_Program
         public void removeDish(Menu item)
         {
             items.Remove(item);
+        }
+    }
+    public class SitinOrder : Order
+    {
+        public SitinOrder()
+        {
+
         }
     }
     public class deliveryOrder : Order
@@ -136,15 +111,6 @@ namespace Menu_Program
         public void Dishes(Menu item)
         {
             items.Add(item);
-
-        }
-        public void removeDish(Menu item)
-        {
-            items.Remove(item);
-        }
-
-        public void Display(int i)
-        {
 
         }
     }

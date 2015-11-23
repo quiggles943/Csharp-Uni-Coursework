@@ -48,6 +48,7 @@ namespace Menu_Program
         SitinOrder s = new SitinOrder();
         Setting setting = new Setting();
         public List<Order> sitinorders = new List<Order>();
+        List<Menu> orderedItems = new List<Menu>();
         bool detailsadded = false;
         //int denotes number of tables in restaraunt
         int tablenos = 20;
@@ -131,8 +132,16 @@ namespace Menu_Program
             this.FontSize = setting.Fontsize;
         }
 
-        private void writetofile(string server, int table, double paid, string items)     //writes to sit in order log 
+        private void writetofile(string server, int table, double paid)     //writes to sit in order log 
         {
+            string items = "";
+            for(int i =0; i<= itemsordered-1; i++)
+            {
+            if(i == 0)
+                items = s.items[i].Description;
+            else
+                items = string.Join("\t", items, s.items[i].Description);
+            }
             if (File.Exists(sitin_order_filepath))
             {
                 DateTime time = DateTime.Now;             // Use current time.
@@ -144,17 +153,25 @@ namespace Menu_Program
             }
             else
             {
-                using (StreamWriter logfile = File.CreateText (sitin_order_filepath))
+                using (StreamWriter logfile = File.CreateText(sitin_order_filepath))
                 {
                     DateTime time = DateTime.Now;
                     logfile.WriteLine("Server\tTable\tAmountpaid");
                     logfile.WriteLine(time.ToString("g") + "\t" + server + "\t" + table + "\t£" + paid + "\t" + items);
                 }
             }
-
+            
         }
-        private void writetofile(string server, string driver, string name, double paid, string items)        //writes to delivery order log 
+        private void writetofile(string server, string driver, string name, double paid)        //writes to delivery order log 
         {
+            string items = "";
+            for (int i = 0; i <= itemsordered - 1; i++)
+            {
+                if (i == 0)
+                    items = d.items[i].Description;
+                else
+                    items = string.Join("\t", items, d.items[i].Description);
+            }
             if (File.Exists(delivery_order_filepath))
             {
 
@@ -230,10 +247,7 @@ namespace Menu_Program
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + Math.Round(buffer,2);
             subtotallabel.Content = subtotal;
-            if(itemsordered == 0)
-                items = foodlistbox.SelectedItem.ToString();
-            else
-                items = string.Join("\t", items, foodlistbox.SelectedItem.ToString());
+            //orderedItems.Add(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
             itemsordered++;
             statuslabel.Content = "Item added";
         }
@@ -396,22 +410,30 @@ namespace Menu_Program
 
         private void billbtn_Click(object sender, RoutedEventArgs e)
         {
+            if(itemsordered == 0)
+            {
+                statuslabel.Content = "No items in order";
+                return;
+            }
             totalbtn_Click(sender, e);
             if (sitin)
             {
-                writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items);
+                //writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items);
+                writetofile(serverlist.SelectedItem.ToString(), table, subtotal);
                 s.Paid = subtotal;
                 Window Bill = new Bill(s, sitin);
                 Bill.ShowDialog();
+                orderedItems.Clear();
                 logoutbtn_Click(sender, e);
             }
             else
             {
                 string driver = driverbox.SelectedItem.ToString();
                 d.Paid = subtotal;
-                writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal, items);
+                writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal);
                 Window Bill = new Bill(d);
                 Bill.ShowDialog();
+                orderedItems.Clear();
                 logoutbtn_Click(sender, e);
             }
             statuslabel.Content = "Bill printed";
@@ -465,6 +487,36 @@ namespace Menu_Program
         private void foodlistbox_doubleclick(object sender, MouseButtonEventArgs e)
         {
             addtobtn_Click(sender, e);
+        }
+
+        private void removeitembtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (orderlistbox.SelectedIndex == -1)
+                return;
+            double buffer = 0;
+            if (sitin)
+            {
+                buffer = rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()).Price;
+                buffer = (buffer / 100);
+                s.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
+            }
+            else
+            {
+                buffer = rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()).Price;
+                buffer = (buffer / 100);
+                d.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
+            }
+            orderlistbox.Items.Remove(orderlistbox.SelectedItem);
+            subtotal = subtotal - Math.Round(buffer, 2);
+            subtotallabel.Content = subtotal;
+            //orderedItems.Remove(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
+            itemsordered--;
+            statuslabel.Content = "Item Removed";
+        }
+
+        private void Order_doubleClick(object sender, MouseButtonEventArgs e)
+        {
+            removeitembtn_Click(sender, e);
         }
     }
 }

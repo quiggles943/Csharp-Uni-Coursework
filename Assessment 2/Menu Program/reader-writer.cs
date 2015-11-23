@@ -28,8 +28,6 @@ namespace Menu_Program
         public bool sitinfound = false;
         public bool deliveryfound = false;
 
-        string sitin;
-        string delivery;
         public string[,] sit = new string[100, 20];
         public string[,] deliver = new string[100, 20];
         public int[] count = new int[100];

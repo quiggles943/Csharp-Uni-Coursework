@@ -7,8 +7,8 @@
         <Label Content="Select Server:" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="109"/>
         <Button x:Name="logonbtn" Content="Logon" HorizontalAlignment="Left" Margin="273,25,0,0" VerticalAlignment="Top" Width="75" Click="logonbtn_Click" ToolTip="Logs on to system"/>
         <ListBox x:Name="foodlistbox" HorizontalAlignment="Left" Height="147" Margin="22,210,0,0" VerticalAlignment="Top" Width="135" IsEnabled="False" SelectionChanged="foodlistbox_SelectionChanged" ToolTip="Menu items" MouseDoubleClick="foodlistbox_doubleclick"/>
-        <ListBox x:Name="orderlistbox" HorizontalAlignment="Left" Height="177" Margin="399,126,0,0" VerticalAlignment="Top" Width="135" ToolTip="Menu items in order"/>
-        <Button x:Name="addtobtn" Content="Add to Order -&gt;" HorizontalAlignment="Left" Height="26" Margin="221,253,0,0" VerticalAlignment="Top" Width="127" Click="addtobtn_Click" ToolTip="Adds item to order"/>
+        <ListBox x:Name="orderlistbox" HorizontalAlignment="Left" Height="177" Margin="399,126,0,0" VerticalAlignment="Top" Width="135" ToolTip="Menu items in order" MouseDoubleClick="Order_doubleClick"/>
+        <Button x:Name="addtobtn" Content="Add to Order -&gt;" HorizontalAlignment="Left" Height="26" Margin="210,246,0,0" VerticalAlignment="Top" Width="138" Click="addtobtn_Click" ToolTip="Adds item to order"/>
         <RadioButton x:Name="sitinradbtn" Content="Sit-in" HorizontalAlignment="Left" Margin="49,69,0,0" VerticalAlignment="Top" Checked="sitinradbtn_Checked"/>
         <RadioButton x:Name="takeawayradbtn" Content="Take-away" HorizontalAlignment="Left" Margin="174,69,0,0" VerticalAlignment="Top" Checked="takeawayradbtn_Checked"/>
         <Label x:Name="subtotallabel" Content="0.00" HorizontalAlignment="Left" Margin="502,314,0,0" VerticalAlignment="Top"/>
@@ -62,6 +62,7 @@
                 </ListBoxItem.RenderTransform>
             </ListBoxItem>
         </StatusBar>
+        <Button x:Name="removeitembtn" Content="&lt; - Remove from Order" HorizontalAlignment="Left" Margin="210,287,0,0" VerticalAlignment="Top" Width="138" Click="removeitembtn_Click"/>
 
     </Grid>
 </Window>
