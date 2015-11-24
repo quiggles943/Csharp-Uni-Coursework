@@ -7,8 +7,8 @@
         <Label Content="Select Server:" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="109"/>
         <Button x:Name="logonbtn" Content="Logon" HorizontalAlignment="Left" Margin="273,25,0,0" VerticalAlignment="Top" Width="75" Click="logonbtn_Click" ToolTip="Logs on to system"/>
         <ListBox x:Name="foodlistbox" HorizontalAlignment="Left" Height="142" Margin="22,198,0,0" VerticalAlignment="Top" Width="135" IsEnabled="False" SelectionChanged="foodlistbox_SelectionChanged" ToolTip="Menu items" MouseDoubleClick="foodlistbox_doubleclick"/>
-        <ListBox x:Name="orderlistbox" HorizontalAlignment="Left" Height="144" Margin="388,196,0,0" VerticalAlignment="Top" Width="150" ToolTip="Menu items in order" MouseDoubleClick="Order_doubleClick"/>
-        <Button x:Name="addtobtn" Content="Add to Order -&gt;" HorizontalAlignment="Left" Height="26" Margin="210,246,0,0" VerticalAlignment="Top" Width="138" Click="addtobtn_Click" ToolTip="Adds item to order"/>
+        <ListBox x:Name="orderlistbox" HorizontalAlignment="Left" Height="144" Margin="388,196,0,0" VerticalAlignment="Top" Width="150" ToolTip="Menu items in order" MouseDoubleClick="Order_doubleClick" SelectionChanged="orderlistbox_SelectionChanged"/>
+        <Button x:Name="addtobtn" Content="Add to Order -&gt;" HorizontalAlignment="Left" Height="26" Margin="208,233,0,0" VerticalAlignment="Top" Width="138" Click="addtobtn_Click" ToolTip="Adds item to order"/>
         <RadioButton x:Name="sitinradbtn" Content="Sit-in" HorizontalAlignment="Left" Margin="49,69,0,0" VerticalAlignment="Top" Checked="sitinradbtn_Checked"/>
         <RadioButton x:Name="takeawayradbtn" Content="Take-away" HorizontalAlignment="Left" Margin="174,69,0,0" VerticalAlignment="Top" Checked="takeawayradbtn_Checked"/>
         <Label x:Name="subtotallabel" Content="0.00" HorizontalAlignment="Left" Margin="506,348,0,0" VerticalAlignment="Top"/>
@@ -22,13 +22,13 @@
         <Button x:Name="clearbtn" Content="Clear" HorizontalAlignment="Left" Margin="38,370,0,0" VerticalAlignment="Top" Width="75" Click="clearbtn_Click" ToolTip="Clears the order"/>
         <TextBox x:Name="nametxtbox" HorizontalAlignment="Left" Height="23" Margin="210,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138" TextChanged="nametxtbox_TextChanged"/>
         <TextBox x:Name="addresstxtbox" HorizontalAlignment="Left" Height="23" Margin="210,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138"/>
-        <Label x:Name="namelabel" Content="Name" HorizontalAlignment="Left" Margin="152,138,0,0" VerticalAlignment="Top" Width="54"/>
-        <Label x:Name="addresslabel" Content="Address" HorizontalAlignment="Left" Margin="138,166,0,0" VerticalAlignment="Top" Width="72"/>
+        <Label x:Name="namelabel" Content="Name:" HorizontalAlignment="Left" Margin="167,140,0,0" VerticalAlignment="Top" Width="43"/>
+        <Label x:Name="addresslabel" Content="Address:" HorizontalAlignment="Left" Margin="155,166,0,0" VerticalAlignment="Top" Width="55"/>
         <Button x:Name="detailsbtn" Content="Add details" HorizontalAlignment="Left" Margin="230,196,0,0" VerticalAlignment="Top" Width="94" Click="detailsbtn_Click" ToolTip="Adds delivery details"/>
         <Button x:Name="billbtn" Content="Create Bill" HorizontalAlignment="Left" Margin="421,379,0,0" VerticalAlignment="Top" Width="93" Click="billbtn_Click" ToolTip="Generates the bill Note: order is unchangable from this point"/>
         <Button x:Name="logoutbtn" Content="Logout" HorizontalAlignment="Left" Margin="364,25,0,0" VerticalAlignment="Top" Width="75" Click="logoutbtn_Click" ToolTip="Logs out of system"/>
         <Button x:Name="managerbtn" Content="Manager" HorizontalAlignment="Left" Margin="475,25,0,0" VerticalAlignment="Top" Width="75" Click="managerbtn_Click" IsEnabled="False"/>
-        <ComboBox x:Name="driverbox" HorizontalAlignment="Left" Margin="210,104,0,0" VerticalAlignment="Top" Width="138"/>
+        <ComboBox x:Name="driverbox" HorizontalAlignment="Left" Margin="238,113,0,0" VerticalAlignment="Top" Width="110"/>
         <StatusBar Height="25" VerticalAlignment="Bottom">
             <ListBoxItem Content="Server:"/>
             <ListBoxItem x:Name="serverstatusbox" Content="name" RenderTransformOrigin="0.5,0.5">
@@ -83,8 +83,12 @@
             </ListBoxItem>
 
         </StatusBar>
-        <Button x:Name="removeitembtn" Content="&lt; - Remove from Order" HorizontalAlignment="Left" Margin="196,287,0,0" VerticalAlignment="Top" Width="166" Click="removeitembtn_Click"/>
+        <Button x:Name="removeitembtn" Content="&lt; - Remove from Order" HorizontalAlignment="Left" Margin="194,274,0,0" VerticalAlignment="Top" Width="166" Click="removeitembtn_Click"/>
         <Image Margin="364,69,17,283" Source="logoimage.png" Stretch="Fill"/>
+        <Label x:Name="driverlabel" Content="Driver:" HorizontalAlignment="Left" Margin="194,111,0,0" VerticalAlignment="Top"/>
+        <Label Content="Notes:" HorizontalAlignment="Left" Margin="174,315,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="notesbox" HorizontalAlignment="Left" Height="74" Margin="218,318,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" ToolTip="Adds extra information about an order"/>
+        <Button x:Name="notebtn" Content="add to Item" HorizontalAlignment="Left" Margin="255,397,0,0" VerticalAlignment="Top" Width="75" Click="notebtn_Click"/>
 
     </Grid>
 </Window>

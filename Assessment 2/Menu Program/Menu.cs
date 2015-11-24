@@ -16,6 +16,7 @@ namespace Menu_Program
         private Boolean veg;
         private int price;
         private int count;
+        private string note;
         public Menu()
         {
 
@@ -25,6 +26,7 @@ namespace Menu_Program
             Description = desc;
             Vegetarian = veg;
             Price = price;
+            note = "none";
         }
         public string Description
         {
@@ -45,6 +47,11 @@ namespace Menu_Program
         {
             get { return count; }
             set { count = value;}
+        }
+        public string Note
+        {
+            get { return note; }
+            set { note = value; }
         }
     }
 

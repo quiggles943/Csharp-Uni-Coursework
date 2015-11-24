@@ -322,7 +322,7 @@ namespace Menu_Program
                     item_selection.Items.Add(item.Description);
                 }
             
-                staffidlabel.Content = "Price £";
+                staffidlabel.Content = "  Price £";
                 vegetarianbox.MaxLength = 1;
                 vegetarianlabel.Content = "Vegetarian (Y/N):";
                 vegetarianbox.Width = 16;
@@ -529,11 +529,6 @@ namespace Menu_Program
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void orderdatebox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

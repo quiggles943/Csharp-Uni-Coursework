@@ -76,6 +76,7 @@ namespace Menu_Program
             namelabel.Visibility = Visibility.Hidden;
             addresslabel.Visibility = Visibility.Hidden;
             driverbox.Visibility = Visibility.Hidden;
+            driverlabel.Visibility = Visibility.Hidden;
             orderlistbox.IsEnabled = false;
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
@@ -120,24 +121,6 @@ namespace Menu_Program
             {
                 driverbox.Items.Add(item.name);
             }
-        }
-
-        public void readinmenuitems()
-        {
-            
-        }
-        public void readinservers()
-        {
-            //rw.ServerRead();
-            foreach (var item in rw.servers)
-            {
-                serverlist.Items.Add(item.name);
-            }
-        }
-
-        public void readindrivers()
-        {
-            
         }
 
         public void fontsize()
@@ -315,6 +298,7 @@ namespace Menu_Program
                 namelabel.Visibility = Visibility.Visible;
                 addresslabel.Visibility = Visibility.Visible;
                 driverbox.Visibility = Visibility.Visible;
+                driverlabel.Visibility = Visibility.Visible;
                 nametxtbox.IsEnabled = true;
                 addresstxtbox.IsEnabled = true;
                 statuslabel.Content = "Delivery selected";
@@ -376,6 +360,7 @@ namespace Menu_Program
             d.Clear();
             s.Clear();
             driverbox.Visibility = Visibility.Hidden;
+            driverlabel.Visibility = Visibility.Hidden;
             driverbox.SelectedIndex = -1;
             statuslabel.Content = "Order cleared";
 
@@ -455,7 +440,7 @@ namespace Menu_Program
                 logoutbtn_Click(sender, e);
             }
             statuslabel.Content = "Bill printed";
-            
+            itemsordered = 0;
 
         }
 
@@ -491,9 +476,9 @@ namespace Menu_Program
             else
                 MessageBox.Show("Password incorrect", "error");
             fontsize();
-            readinmenuitems();
-            readindrivers();
-            readinservers();
+            //readinmenuitems();
+            //readindrivers();
+            //readinservers();
 
         }
 
@@ -522,15 +507,17 @@ namespace Menu_Program
             {
                 buffer = rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
-                s.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
+                s.items.RemoveAt(orderlistbox.SelectedIndex);
+                //s.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
             }
             else
             {
                 buffer = rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
-                d.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
+                d.items.RemoveAt(orderlistbox.SelectedIndex);
+                //d.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
             }
-            orderlistbox.Items.Remove(orderlistbox.SelectedItem);
+            orderlistbox.Items.RemoveAt(orderlistbox.SelectedIndex);
             subtotal = subtotal - Math.Round(buffer, 2);
             subtotallabel.Content = subtotal;
             //orderedItems.Remove(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
@@ -541,6 +528,26 @@ namespace Menu_Program
         private void Order_doubleClick(object sender, MouseButtonEventArgs e)
         {
             removeitembtn_Click(sender, e);
+        }
+
+        private void notebtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (orderlistbox.SelectedIndex == -1)
+                return;
+            if(sitin)
+                s.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
+            else
+                d.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
+        }
+
+        private void orderlistbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (orderlistbox.SelectedIndex == -1)
+                return;
+            if (sitin)
+                notesbox.Text = s.items[orderlistbox.SelectedIndex].Note;
+            else
+                notesbox.Text = d.items[orderlistbox.SelectedIndex].Note;
         }
     }
 }

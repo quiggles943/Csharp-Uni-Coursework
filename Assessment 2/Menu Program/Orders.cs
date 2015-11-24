@@ -18,6 +18,7 @@ namespace Menu_Program
         int sitincount;
         string[] orders = new string[10];
         int index =0;
+
         public Order()
         {
 

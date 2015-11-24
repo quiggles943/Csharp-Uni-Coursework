@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Menu_Program.Managerwindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Management" Height="421.333" Width="742.368" ResizeMode="NoResize">
+        Title="Management" Height="421.333" Width="782.368" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="closebtn" Content="Close" HorizontalAlignment="Left" Margin="323,327,0,0" VerticalAlignment="Top" Width="74" Click="closebtn_Click"/>
         <ListBox x:Name="testlistbox" HorizontalAlignment="Left" Height="263" Margin="258,43,0,0" VerticalAlignment="Top" Width="271">
@@ -22,7 +22,7 @@
         <RadioButton x:Name="removerbtn" Content="Remove" HorizontalAlignment="Left" Margin="667,82,0,0" VerticalAlignment="Top" Checked="removerbtn_Checked"/>
         <Label x:Name="namelabel" Content="Name:" HorizontalAlignment="Left" Margin="547,144,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="namebox" HorizontalAlignment="Left" Height="24" Margin="591,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="staffidbox" HorizontalAlignment="Left" Height="24" Margin="591,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="staffidbox" HorizontalAlignment="Left" Height="24" Margin="591,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
         <Label x:Name="staffidlabel" Content="Staff Id:" HorizontalAlignment="Left" Margin="541,172,0,0" VerticalAlignment="Top"/>
         <Label x:Name="vegetarianlabel" Content="Vegetarian (Y/N):" HorizontalAlignment="Left" Margin="541,203,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="item_selection" HorizontalAlignment="Left" Margin="591,110,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="item_selection_SelectionChanged"/>
@@ -89,7 +89,7 @@
         <Button x:Name="size14" Content="Enhanced" HorizontalAlignment="Left" Margin="19,323,0,0" VerticalAlignment="Top" Width="80" Click="size14_Click"/>
         <Label Content="Text size" HorizontalAlignment="Left" Margin="19,264,0,0" VerticalAlignment="Top"/>
         <Label Content="View orders&#xD;&#xA;From:" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="48" Width="77"/>
-        <ListBox x:Name="orderdatebox" HorizontalAlignment="Left" Height="79" Margin="10,90,0,0" VerticalAlignment="Top" Width="77" SelectedIndex="0" SelectionChanged="orderdatebox_SelectionChanged" ScrollViewer.CanContentScroll="False">
+        <ListBox x:Name="orderdatebox" HorizontalAlignment="Left" Height="79" Margin="10,90,0,0" VerticalAlignment="Top" Width="77" SelectedIndex="0" ScrollViewer.CanContentScroll="False">
             <ListBoxItem Content="All Time"/>
             <ListBoxItem Content="Today"/>
             <ListBoxItem Content="This Week"/>
