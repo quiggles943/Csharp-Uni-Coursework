@@ -46,7 +46,7 @@ namespace Menu_Program
         List<Menu> menuitems = new List<Menu>();
         //Order o = new Order();
         deliveryOrder d = new deliveryOrder();
-        SitinOrder s = new SitinOrder();
+        sitinOrder s = new sitinOrder();
         Setting setting = new Setting();
         public List<Order> sitinorders = new List<Order>();
         List<Menu> orderedItems = new List<Menu>();
@@ -326,6 +326,7 @@ namespace Menu_Program
                 statuslabel.Content = "Table selected";
                 foodlistbox.IsEnabled = true;
                 addtablebtn.IsEnabled = false;
+                s.Table = table;
             }
             catch (Exception excep)
             {
@@ -397,7 +398,7 @@ namespace Menu_Program
                 d.Name = nametxtbox.Text;
                 d.Address = addresstxtbox.Text;
                 destinationlabel.Content = "Name";
-                tabletxt.Content = nametxtbox.Text;
+                tabletxt.Content = d.Name;
                 nametxtbox.IsEnabled = false;
                 addresstxtbox.IsEnabled = false;
                 detailsadded = true;

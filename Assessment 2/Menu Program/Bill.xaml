@@ -11,8 +11,12 @@
         <Label x:Name="deliv_chargelabel" Content="00.00" HorizontalAlignment="Left" Margin="116,199,0,0" VerticalAlignment="Top" Width="58"/>
         <Label Content="Total: £" HorizontalAlignment="Left" Margin="76,220,0,0" VerticalAlignment="Top"/>
         <Label x:Name="totallabel" Content="00.00" HorizontalAlignment="Left" Margin="116,220,0,0" VerticalAlignment="Top" Width="58"/>
-        <Label Content="Server:" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="serverlabel" Content="Label" HorizontalAlignment="Left" Margin="50,303,0,0" VerticalAlignment="Top"/>
+        <Label Content="Server:" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="serverlabel" Content="Label" HorizontalAlignment="Left" Margin="50,297,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="name_tablelabel" Content="Name:" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="name_tablecontentlabel" Content="Label" HorizontalAlignment="Left" Margin="74,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="addresslabel" Content="Address:" HorizontalAlignment="Left" Margin="19,36,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="addresstxt" Content="Label" HorizontalAlignment="Left" Margin="74,36,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

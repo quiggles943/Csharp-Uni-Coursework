@@ -19,7 +19,7 @@ namespace Menu_Program
     /// </summary>
     public partial class Bill : Window
     {
-        public Bill(Order d)
+        public Bill(deliveryOrder d)
         {
             InitializeComponent();
             int total = d.items.Count;
@@ -31,8 +31,11 @@ namespace Menu_Program
             deliv_chargelabel.Content = Math.Round((d.Paid * 0.15),2);
             totallabel.Content = Math.Round((d.Paid + (d.Paid * 0.15)),2);
             serverlabel.Content = d.Server;
+            name_tablelabel.Content = "Name:";
+            name_tablecontentlabel.Content = d.name;
+            addresstxt.Content = d.Address;
         }
-        public Bill(Order s, bool sitin)
+        public Bill(sitinOrder s, bool sitin)
         {
             InitializeComponent();
             deliv_chargelabel.Visibility = Visibility.Hidden;
@@ -46,6 +49,8 @@ namespace Menu_Program
             deliv_chargelabel.Content = "0";
             totallabel.Content = Math.Round(s.Paid,2);
             serverlabel.Content = s.Server;
+            name_tablelabel.Content = "Table:";
+            name_tablecontentlabel.Content = s.Table;
         }
 
         private void closebtn_Click(object sender, RoutedEventArgs e)

@@ -105,13 +105,14 @@ namespace Menu_Program
             DateTime dt;
             DateTime Today = DateTime.Today;
             testlistbox.Items.Clear();
+            testlistbox.Items.Add("Sit In Orders");
             testlistbox.Items.Add("Date/Time\tServer\tTable\tAmount");
             for (int i = 1; i <= rw.sitinlength-1; i++)
             {
                 dt = Convert.ToDateTime(rw.sit[i, 0]);
                 if (orderdatebox.SelectedIndex == 0)
                 {
-                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                 }
                 if(orderdatebox.SelectedIndex == 1)
                 {
@@ -154,13 +155,14 @@ namespace Menu_Program
             DateTime dt;
             DateTime Today = DateTime.Today;
             testlistbox.Items.Clear();
+            testlistbox.Items.Add("Delivery Orders");
             testlistbox.Items.Add("Date/Time\tServer\tDriver\tCustomer\tAmount");
             for (int i = 1; i <= rw.deliverylength - 1; i++)
             {
                 dt = Convert.ToDateTime(rw.deliver[i, 0]);
                 if (orderdatebox.SelectedIndex == 0)
                 {
-                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
                 }
                 if (orderdatebox.SelectedIndex == 1)
                 {
@@ -207,6 +209,7 @@ namespace Menu_Program
              DateTime dt;
             DateTime Today = DateTime.Today;
             testlistbox.Items.Clear();
+            testlistbox.Items.Add("Sit In Orders for " + serverbox.SelectedItem.ToString());
             testlistbox.Items.Add("Date/Time\tServer\tTable\tAmount");
                 for (int j = 1; j <= rw.sitinlength - 1; j++)
                 {
@@ -215,7 +218,7 @@ namespace Menu_Program
                     {
                         if (orderdatebox.SelectedIndex == 0)
                         {
-                            testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                            testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
                         }
                         if (orderdatebox.SelectedIndex == 1)
                         {
@@ -245,6 +248,7 @@ namespace Menu_Program
                 for (int k = 0; k <= rw.longsitin+32; k++)
                     dash = string.Concat(dash, "-");
                 testlistbox.Items.Add(dash);
+                testlistbox.Items.Add("Delivery Orders for " + serverbox.SelectedItem.ToString());
                 testlistbox.Items.Add("Date/Time\tServer\tDriver\tCustomer\tAmount");
                     for (int i = 1; i <= rw.deliverylength - 1; i++)
                     {
@@ -253,7 +257,7 @@ namespace Menu_Program
                         {
                             if (orderdatebox.SelectedIndex == 0)
                             {
-                                testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
                             }
                             if (orderdatebox.SelectedIndex == 1)
                             {
@@ -544,6 +548,11 @@ namespace Menu_Program
                 time.Content = DateTime.Now.ToString("HH:mm");
             };
             timer.Start();
+        }
+
+        private void testlistbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

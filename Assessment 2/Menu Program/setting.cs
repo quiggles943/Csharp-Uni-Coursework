@@ -99,7 +99,7 @@ namespace Menu_Program
                 File.WriteAllLines(settingfilepath, empty);
                 StreamWriter logfile = File.AppendText(settingfilepath);
                 logfile.WriteLine("hello\tVariable");
-                for (int i = 1; i <= settinglength + 1; i++)
+                for (int i = 1; i <= 2; i++)
                 {
                     logfile.WriteLine(setting[i, 0] + "\t" + setting[i, 1]);
                 }

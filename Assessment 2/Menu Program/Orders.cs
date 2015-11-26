@@ -85,9 +85,9 @@ namespace Menu_Program
             items.Remove(item);
         }
     }
-    public class SitinOrder : Order
+    public class sitinOrder : Order
     {
-        public SitinOrder()
+        public sitinOrder()
         {
 
         }
