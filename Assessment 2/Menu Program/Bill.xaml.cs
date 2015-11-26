@@ -23,9 +23,16 @@ namespace Menu_Program
         {
             InitializeComponent();
             int total = d.items.Count;
+            int i = 0;
             foreach (Menu m in d.items)
             {
-                billlist.Items.Add(m.Description) ;
+                string item;
+                if (d.readNote(i) != "none")
+                    item = string.Join(" - ", m.Description, d.readNote(i));
+                else
+                    item = m.Description;
+                billlist.Items.Add(item) ;
+                i++;
             }
             subtotallabel.Content = Math.Round(d.Paid,2);
             deliv_chargelabel.Content = Math.Round((d.Paid * 0.15),2);
@@ -41,9 +48,16 @@ namespace Menu_Program
             deliv_chargelabel.Visibility = Visibility.Hidden;
             deliverychargelabel.Visibility = Visibility.Hidden;
             int total = s.items.Count;
+            int i = 0;
             foreach (Menu m in s.items)
             {
-                billlist.Items.Add(m.Description);
+                string item;
+                if (s.readNote(i) != "none")
+                    item = string.Join(" - ", m.Description, s.readNote(i));
+                else
+                    item = m.Description;
+                billlist.Items.Add(item);
+                i++;
             }
             subtotallabel.Content = Math.Round(s.Paid,2);
             deliv_chargelabel.Content = "0";

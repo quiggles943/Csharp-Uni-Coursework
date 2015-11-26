@@ -21,7 +21,6 @@ namespace Menu_Program
     /// </summary>
     public partial class MainWindow : Window
     {
-        int filelength = 0;
         public string[,] menu = new string[100,5];
         public string[,] server = new string[100, 2];
         public string[,] driver = new string[100, 3];
@@ -36,9 +35,6 @@ namespace Menu_Program
         string sitin_order_filepath;
         string delivery_order_filepath;
         string items;
-        int menulength;
-        int serverlength;
-        int driverlength;
         bool sitin;
         double subtotal;
         int table;
@@ -64,6 +60,7 @@ namespace Menu_Program
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
             InitializeComponent();
+            //sets initial visibility 
             tablebox.Visibility = Visibility.Hidden;
             tabletxt.Visibility = Visibility.Hidden;
             addtablebtn.Visibility = Visibility.Hidden;
@@ -81,11 +78,10 @@ namespace Menu_Program
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
             logoutbtn.IsEnabled = false;
+            notesbox.IsEnabled = false;
+            notebtn.IsEnabled = false;
+            removeitembtn.IsEnabled = false;
             readin();
-            //readinmenuitems();
-            //readinservers();
-            //menureadin();
-            //readindrivers();
             fontsize();
         }
 
@@ -327,6 +323,9 @@ namespace Menu_Program
                 foodlistbox.IsEnabled = true;
                 addtablebtn.IsEnabled = false;
                 s.Table = table;
+                notesbox.IsEnabled = true;
+                notebtn.IsEnabled = true;
+                removeitembtn.IsEnabled = true;
             }
             catch (Exception excep)
             {
@@ -367,6 +366,10 @@ namespace Menu_Program
             driverbox.Visibility = Visibility.Hidden;
             driverlabel.Visibility = Visibility.Hidden;
             driverbox.SelectedIndex = -1;
+            notesbox.Clear();
+            notesbox.IsEnabled = false;
+            notebtn.IsEnabled = false;
+            removeitembtn.IsEnabled = false;
             statuslabel.Content = "Order cleared";
 
         }
@@ -402,6 +405,9 @@ namespace Menu_Program
                 nametxtbox.IsEnabled = false;
                 addresstxtbox.IsEnabled = false;
                 detailsadded = true;
+                notesbox.IsEnabled = true;
+                notebtn.IsEnabled = true;
+                removeitembtn.IsEnabled = true;
                 statuslabel.Content = "Details added";
             }
             catch (Exception excep)
