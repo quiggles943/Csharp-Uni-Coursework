@@ -30,7 +30,7 @@ namespace Menu_Program
             subtotallabel.Content = Math.Round(d.Paid,2);
             deliv_chargelabel.Content = Math.Round((d.Paid * 0.15),2);
             totallabel.Content = Math.Round((d.Paid + (d.Paid * 0.15)),2);
-
+            serverlabel.Content = d.Server;
         }
         public Bill(Order s, bool sitin)
         {
@@ -45,7 +45,7 @@ namespace Menu_Program
             subtotallabel.Content = Math.Round(s.Paid,2);
             deliv_chargelabel.Content = "0";
             totallabel.Content = Math.Round(s.Paid,2);
-
+            serverlabel.Content = s.Server;
         }
 
         private void closebtn_Click(object sender, RoutedEventArgs e)

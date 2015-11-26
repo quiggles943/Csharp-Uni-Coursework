@@ -164,7 +164,7 @@ namespace Menu_Program
             for (int i = 0; i <= itemsordered - 1; i++)
             {
                 if (i == 0)
-                    items = d.items[i].Description;
+                    items =  d.items[i].Description;
                 else
                     items = string.Join("\t", items, d.items[i].Description);
             }
@@ -235,12 +235,14 @@ namespace Menu_Program
                 buffer = rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
                 s.Dishes(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
+                s.Note("none");
             }
             else
             {
                 buffer = rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
                 d.Dishes(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
+                d.Note("none");
             }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
             subtotal  = subtotal + Math.Round(buffer,2);
@@ -287,6 +289,7 @@ namespace Menu_Program
                 tabletxt.Visibility = Visibility.Visible;
                 destinationlabel.Visibility = Visibility.Visible;
                 destinationlabel.Content = "Table:";
+                s.Server = serverlist.SelectedItem.ToString();
                 
                 
             }
@@ -302,6 +305,7 @@ namespace Menu_Program
                 nametxtbox.IsEnabled = true;
                 addresstxtbox.IsEnabled = true;
                 statuslabel.Content = "Delivery selected";
+                d.Server = serverlist.SelectedItem.ToString();
 
             }
             destinationlabel.Visibility = Visibility.Visible;
@@ -508,6 +512,7 @@ namespace Menu_Program
                 buffer = rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
                 s.items.RemoveAt(orderlistbox.SelectedIndex);
+                s.removeNote(orderlistbox.SelectedIndex);
                 //s.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
             }
             else
@@ -515,6 +520,7 @@ namespace Menu_Program
                 buffer = rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
                 d.items.RemoveAt(orderlistbox.SelectedIndex);
+                d.removeNote(orderlistbox.SelectedIndex);
                 //d.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
             }
             orderlistbox.Items.RemoveAt(orderlistbox.SelectedIndex);
@@ -534,10 +540,12 @@ namespace Menu_Program
         {
             if (orderlistbox.SelectedIndex == -1)
                 return;
-            if(sitin)
-                s.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
+            if (sitin)
+                s.addNote(orderlistbox.SelectedIndex, notesbox.Text);
+            //s.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
             else
-                d.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
+                d.addNote(orderlistbox.SelectedIndex, notesbox.Text);
+                //d.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
         }
 
         private void orderlistbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -545,9 +553,9 @@ namespace Menu_Program
             if (orderlistbox.SelectedIndex == -1)
                 return;
             if (sitin)
-                notesbox.Text = s.items[orderlistbox.SelectedIndex].Note;
+                notesbox.Text = s.readNote(orderlistbox.SelectedIndex);
             else
-                notesbox.Text = d.items[orderlistbox.SelectedIndex].Note;
+                notesbox.Text = d.readNote(orderlistbox.SelectedIndex);
         }
     }
 }

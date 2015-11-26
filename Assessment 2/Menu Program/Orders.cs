@@ -15,10 +15,8 @@ namespace Menu_Program
         public string name;
         private int table;
         private double paid;
-        int sitincount;
         string[] orders = new string[10];
-        int index =0;
-
+        List<string> notes = new List<string>();
         public Order()
         {
 
@@ -56,6 +54,26 @@ namespace Menu_Program
             set { paid = value; }
         }
 
+        public void Note(string note)
+        {
+            notes.Add(note);
+        }
+
+        public void addNote(int index, string note)
+        {
+            notes.RemoveAt(index);
+            notes.Insert(index, note);
+        }
+
+        public void removeNote(int index)
+        {
+            notes.RemoveAt(index);
+        }
+
+        public string readNote(int index)
+        {
+            return notes[index];
+        }
 
         public void Dishes(Menu item)
         {
