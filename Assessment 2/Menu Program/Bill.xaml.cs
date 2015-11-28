@@ -22,6 +22,8 @@ namespace Menu_Program
         public Bill(deliveryOrder d)
         {
             InitializeComponent();
+            addresslabel.Visibility = Visibility.Visible;
+            addresstxt.Visibility = Visibility.Visible;
             int total = d.items.Count;
             int i = 0;
             foreach (Menu m in d.items)
@@ -47,6 +49,8 @@ namespace Menu_Program
             InitializeComponent();
             deliv_chargelabel.Visibility = Visibility.Hidden;
             deliverychargelabel.Visibility = Visibility.Hidden;
+            addresslabel.Visibility = Visibility.Hidden;
+            addresstxt.Visibility = Visibility.Hidden;
             int total = s.items.Count;
             int i = 0;
             foreach (Menu m in s.items)

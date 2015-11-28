@@ -83,6 +83,7 @@ namespace Menu_Program
             removeitembtn.IsEnabled = false;
             readin();
             fontsize();
+            
         }
 
 
