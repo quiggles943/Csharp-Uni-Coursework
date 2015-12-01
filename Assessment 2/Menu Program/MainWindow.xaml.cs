@@ -101,6 +101,9 @@ namespace Menu_Program
         }
         public void readin()
         {
+            foodlistbox.Items.Clear();
+            serverlist.Items.Clear();
+            driverbox.Items.Clear();
             rw.MenuRead();
             rw.ServerRead();
             rw.DriverRead();
@@ -480,7 +483,7 @@ namespace Menu_Program
             password.ShowDialog();
             if (password.correct)
             {
-                Managerwindow manager = new Managerwindow(rw);
+                Managerwindow manager = new Managerwindow(rw, serverlist.SelectedItem.ToString());
                 manager.ShowDialog();
                 //fontsize();
                 
@@ -488,10 +491,6 @@ namespace Menu_Program
             else
                 MessageBox.Show("Password incorrect", "error");
             fontsize();
-            //readinmenuitems();
-            //readindrivers();
-            //readinservers();
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -521,7 +520,6 @@ namespace Menu_Program
                 buffer = (buffer / 100);
                 s.items.RemoveAt(orderlistbox.SelectedIndex);
                 s.removeNote(orderlistbox.SelectedIndex);
-                //s.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
             }
             else
             {
@@ -529,12 +527,10 @@ namespace Menu_Program
                 buffer = (buffer / 100);
                 d.items.RemoveAt(orderlistbox.SelectedIndex);
                 d.removeNote(orderlistbox.SelectedIndex);
-                //d.removeDish(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
             }
             orderlistbox.Items.RemoveAt(orderlistbox.SelectedIndex);
             subtotal = subtotal - Math.Round(buffer, 2);
             subtotallabel.Content = subtotal;
-            //orderedItems.Remove(rw.menuitems.Find(x => x.Description == orderlistbox.SelectedItem.ToString()));
             itemsordered--;
             statuslabel.Content = "Item Removed";
         }
@@ -550,10 +546,8 @@ namespace Menu_Program
                 return;
             if (sitin)
                 s.addNote(orderlistbox.SelectedIndex, notesbox.Text);
-            //s.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
             else
                 d.addNote(orderlistbox.SelectedIndex, notesbox.Text);
-                //d.items[orderlistbox.SelectedIndex].Note = notesbox.Text;
         }
 
         private void orderlistbox_SelectionChanged(object sender, SelectionChangedEventArgs e)

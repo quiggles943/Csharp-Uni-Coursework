@@ -23,42 +23,35 @@ namespace Menu_Program
     {
         string sitin;
         string delivery;
+        string server;
         string sitin_orderpath = @"..\..\sitin_orderlog.ini";
         string delivery_orderpath = @"..\..\delivery_orderlog.ini";
         Password p = new Password();
         Setting s = new Setting();
         reader_writer rw;
-        
-        public Managerwindow(reader_writer r)
+
+        public Managerwindow(reader_writer r, string s)
         {
-            /*try
-            {*/
-                Time();
-                rw = r;
-                InitializeComponent();
-                sitin = System.IO.Path.GetFullPath(sitin_orderpath);
-                delivery = System.IO.Path.GetFullPath(delivery_orderpath);
-                rw.readin_sitin();
-                rw.readin_delivery();
-            //}
-            /*catch (Exception excep)
-            {
-                MessageBox.Show(excep.Message);
-            }*/
-            /*finally
-            {*/
-                if (rw.sitinfound && rw.deliveryfound)
-                    statuslabel.Content = "Files loaded successfully";
-                if (rw.sitinfound == false)
-                    statuslabel.Content = "Sit-in log file missing";
-                if (rw.deliveryfound == false)
-                    statuslabel.Content = "Delivery log file missing";
-                if (rw.sitinfound == false && rw.deliveryfound == false)
-                    statuslabel.Content = "Log files not found";
-                vegetarianbox.MaxLength = 1;
-                start();
-                fontsize();
-            //}
+            Time();
+            rw = r;
+            server = s;
+            InitializeComponent();
+            sitin = System.IO.Path.GetFullPath(sitin_orderpath);
+            delivery = System.IO.Path.GetFullPath(delivery_orderpath);
+            rw.readin_sitin();
+            rw.readin_delivery();
+            if (rw.sitinfound && rw.deliveryfound)
+                statuslabel.Content = "Files loaded successfully";
+            if (rw.sitinfound == false)
+                statuslabel.Content = "Sit-in log file missing";
+            if (rw.deliveryfound == false)
+                statuslabel.Content = "Delivery log file missing";
+            if (rw.sitinfound == false && rw.deliveryfound == false)
+                statuslabel.Content = "Log files not found";
+            vegetarianbox.MaxLength = 1;
+            start();
+            fontsize();
+            serverstatusbox.Content = server;
         }
 
         private void start()        //sets visibility for items on page
@@ -360,12 +353,14 @@ namespace Menu_Program
                 vegetarianlabel.Visibility = Visibility.Visible;
                 vegetarianbox.Visibility = Visibility.Visible;
             }
+            addbtn.Content = ("Add " + edit_selection.SelectionBoxItem.ToString());
         }
 
         private void editrbtn_Checked(object sender, RoutedEventArgs e)
         {
-            namebox.Text = "";
-            staffidbox.Text = "";
+            /*var edititem = rw.servers.FindIndex(x => x.name == edit_selection.SelectedItem.ToString());
+            namebox.Text = rw.servers[edititem].name;
+            staffidbox.Text = rw.servers[edititem].ID.ToString();*/
             item_selection.Visibility = Visibility.Visible;
             namelabel.Visibility = Visibility.Visible;
             namebox.Visibility = Visibility.Visible;
@@ -381,6 +376,7 @@ namespace Menu_Program
                 vegetarianlabel.Visibility = Visibility.Visible;
                 vegetarianbox.Visibility = Visibility.Visible;
             }
+            addbtn.Content = ("Edit " + edit_selection.SelectionBoxItem.ToString());
         }
 
         private void removerbtn_Checked(object sender, RoutedEventArgs e)
@@ -402,6 +398,7 @@ namespace Menu_Program
                 vegetarianlabel.Visibility = Visibility.Visible;
                 vegetarianbox.Visibility = Visibility.Visible;
             }
+            addbtn.Content = ("Remove " + edit_selection.SelectionBoxItem.ToString());
         }
 
 
@@ -414,19 +411,19 @@ namespace Menu_Program
                     var edititem = rw.servers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
                     rw.servers[edititem].name = namebox.Text;
                     rw.servers[edititem].ID = Int32.Parse(staffidbox.Text);
-                    rw.ServerWrite();
+                    rw.ServerWrite();       //writes changes to file
 
                 }
                 if (addrbtn.IsChecked == true)
                 {
                     rw.servers.Add(new Server(namebox.Text, Int32.Parse(staffidbox.Text)));
-                    rw.ServerWrite();
+                    rw.ServerWrite();       //writes changes to file
                 }
                 if (removerbtn.IsChecked == true)
                 {
                     var removeitem = rw.servers.Single(x => x.name == item_selection.SelectedItem.ToString());
                     rw.servers.Remove(removeitem);
-                    rw.ServerWrite();
+                    rw.ServerWrite();       //writes changes to file
                 }
             }
 
@@ -438,19 +435,19 @@ namespace Menu_Program
                     rw.drivers[edititem].name = namebox.Text;
                     rw.drivers[edititem].ID = Int32.Parse(staffidbox.Text);
                     rw.drivers[edititem].name = vegetarianbox.Text;
-                    rw.DriverWrite();
+                    rw.DriverWrite();       //writes changes to file
 
                 }
                 if (addrbtn.IsChecked == true)
                 {
                     rw.drivers.Add(new Driver(namebox.Text, Int32.Parse(staffidbox.Text), vegetarianbox.Text));
-                    rw.DriverWrite();
+                    rw.DriverWrite();       //writes changes to file
                 }
                 if (removerbtn.IsChecked == true)
                 {
                     var removeitem = rw.drivers.Single(x => x.name == item_selection.SelectedItem.ToString());
                     rw.drivers.Remove(removeitem);
-                    rw.DriverWrite();
+                    rw.DriverWrite();       //writes changes to file
                 }
             }
 
@@ -462,7 +459,6 @@ namespace Menu_Program
                     case "Y": veg = true; break;
                     case "N": veg = false; break;
                     default: throw new ArgumentException("Vegetarian input not accepted");
-
                 }
                 if (editrbtn.IsChecked == true)
                 {
@@ -473,7 +469,7 @@ namespace Menu_Program
                         rw.menuitems[edititem].Description = namebox.Text;
                         rw.menuitems[edititem].Price = Int32.Parse(staffidbox.Text);
                         rw.menuitems[edititem].Vegetarian = veg;
-                        rw.MenuWrite();
+                        rw.MenuWrite();     //writes changes to file
                     }
                     catch (Exception excep)
                     {
@@ -484,13 +480,13 @@ namespace Menu_Program
                 if (addrbtn.IsChecked == true)
                 {
                     rw.menuitems.Add(new Menu(namebox.Text, veg, Int32.Parse(staffidbox.Text)));
-                    rw.MenuWrite();
+                    rw.MenuWrite();     //writes changes to file
                 }
                 if (removerbtn.IsChecked == true)
                 {
                     var removeitem = rw.menuitems.Single(x => x.Description == item_selection.SelectedItem.ToString());
                     rw.menuitems.Remove(removeitem);
-                    rw.MenuWrite();
+                    rw.MenuWrite();     //writes changes to file
                 }
             }
             start();

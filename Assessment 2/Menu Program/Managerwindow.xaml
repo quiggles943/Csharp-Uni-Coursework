@@ -26,7 +26,7 @@
         <Label x:Name="staffidlabel" Content="Staff Id:" HorizontalAlignment="Left" Margin="541,172,0,0" VerticalAlignment="Top"/>
         <Label x:Name="vegetarianlabel" Content="Vegetarian (Y/N):" HorizontalAlignment="Left" Margin="541,203,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="item_selection" HorizontalAlignment="Left" Margin="591,110,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="item_selection_SelectionChanged"/>
-        <Button Content="Accept" HorizontalAlignment="Left" Margin="609,238,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
+        <Button x:Name="addbtn" Content="Accept" HorizontalAlignment="Left" Margin="600,238,0,0" VerticalAlignment="Top" Width="111" Click="Button_Click"/>
         <TextBox x:Name="vegetarianbox" HorizontalAlignment="Left" Height="24" Margin="643,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16"/>
         <Label Content="Order Options" HorizontalAlignment="Left" Margin="119,10,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label Content="Editing Options" HorizontalAlignment="Left" Margin="591,12,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -86,7 +86,7 @@
         </StatusBar>
         <Button x:Name="passwordbtn" Content="Change Password" HorizontalAlignment="Left" Margin="182,327,0,0" VerticalAlignment="Top" Width="122" Click="passwordbtn_Click"/>
         <Button x:Name="size12" Content="Normal" HorizontalAlignment="Left" Margin="547,325,0,0" VerticalAlignment="Top" Width="72" Click="size12_Click"/>
-        <Button x:Name="size14" Content="Enhanced" HorizontalAlignment="Left" Margin="631,327,0,0" VerticalAlignment="Top" Width="80" Click="size14_Click"/>
+        <Button x:Name="size14" Content="Enhanced" HorizontalAlignment="Left" Margin="631,325,0,0" VerticalAlignment="Top" Width="80" Click="size14_Click"/>
         <Label Content="Text size" HorizontalAlignment="Left" Margin="483,323,0,0" VerticalAlignment="Top"/>
         <Label Content="View orders&#xD;&#xA;From:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="48" Width="77"/>
         <ListBox x:Name="orderdatebox" HorizontalAlignment="Left" Height="84" Margin="10,53,0,0" VerticalAlignment="Top" Width="102" SelectedIndex="0" ScrollViewer.CanContentScroll="False">
