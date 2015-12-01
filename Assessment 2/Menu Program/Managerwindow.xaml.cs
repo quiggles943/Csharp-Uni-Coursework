@@ -105,27 +105,27 @@ namespace Menu_Program
                 dt = Convert.ToDateTime(rw.sit[i, 0]);
                 if (orderdatebox.SelectedIndex == 0)
                 {
-                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                 }
                 if(orderdatebox.SelectedIndex == 1)
                 {
                     if (dt.Date == Today)
                     {
-                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                     }
                 }
                 if (orderdatebox.SelectedIndex == 2)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
                     {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                     }
                 }
                 if (orderdatebox.SelectedIndex == 3)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
                     {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[i, 1] + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                     }
                 }
 
@@ -155,27 +155,27 @@ namespace Menu_Program
                 dt = Convert.ToDateTime(rw.deliver[i, 0]);
                 if (orderdatebox.SelectedIndex == 0)
                 {
-                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
                 }
                 if (orderdatebox.SelectedIndex == 1)
                 {
                     if (dt.Date == Today)
                     {
-                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
                     }
                 }
                 if (orderdatebox.SelectedIndex == 2)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
                     {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
                     }
                 }
                 if (orderdatebox.SelectedIndex == 3)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
                     {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
                     }
                 }
 
@@ -207,31 +207,31 @@ namespace Menu_Program
                 for (int j = 1; j <= rw.sitinlength - 1; j++)
                 {
                     dt = Convert.ToDateTime(rw.sit[j, 0]);
-                    if (rw.sit[j, 1] == serverbox.SelectedItem.ToString())
+                    if (rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name == serverbox.SelectedItem.ToString())
                     {
                         if (orderdatebox.SelectedIndex == 0)
                         {
-                            testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                            testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
                         }
                         if (orderdatebox.SelectedIndex == 1)
                         {
                             if (dt.Date == Today)
                             {
-                                testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                                testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
                             }
                         }
                         if (orderdatebox.SelectedIndex == 2)
                         {
                             if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
                             {
-                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
                             }
                         }
                         if (orderdatebox.SelectedIndex == 3)
                         {
                             if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
                             {
-                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.sit[j, 1] + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
+                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
                             }
                         }
                     }
@@ -246,31 +246,31 @@ namespace Menu_Program
                     for (int i = 1; i <= rw.deliverylength - 1; i++)
                     {
                         dt = Convert.ToDateTime(rw.deliver[i, 0]);
-                        if (rw.deliver[i, 1] == serverbox.SelectedItem.ToString())
+                        if (rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name == serverbox.SelectedItem.ToString())
                         {
                             if (orderdatebox.SelectedIndex == 0)
                             {
-                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
                             }
                             if (orderdatebox.SelectedIndex == 1)
                             {
                                 if (dt.Date == Today)
                                 {
-                                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
+                                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
                                 }
                             }
                             if (orderdatebox.SelectedIndex == 2)
                             {
                                 if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
                                 {
-                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
                                 }
                             }
                             if (orderdatebox.SelectedIndex == 3)
                             {
                                 if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
                                 {
-                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.deliver[i, 1] + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
+                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
                                 }
                             }
                         }

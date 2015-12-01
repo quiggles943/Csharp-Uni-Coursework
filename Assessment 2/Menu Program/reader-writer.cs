@@ -36,11 +36,9 @@ namespace Menu_Program
         int longdeliver;
 
         
-        //MainWindow main = new MainWindow();
         public List<Menu> menuitems = new List<Menu>();         //list of menu items
         public List<Server> servers = new List<Server>();       //list of servers
         public List<Driver> drivers = new List<Driver>();       //list of drivers
-        //Employee e = new Employee();
         public reader_writer()      //initialises reader writer class
         {
             
@@ -69,7 +67,6 @@ namespace Menu_Program
                 while (j < (column.Length))
                 {
                     string buffer = column[j];
-                    //menu[i, j] = buffer;
                     j++;
                 }
                 bool theanswer = false;
@@ -117,17 +114,14 @@ namespace Menu_Program
                     while (j < (column.Length))
                     {
                         string buffer = column[j];
-                        //server[i, j] = buffer;
                         
                         j++;
                     }
                     servers.Add(new Server(column[0], Int32.Parse(column[1])));
-                    //servers.Add(new Server(server[i, 0], Int32.Parse(server[i, 1])));
                     i++;
                 }
                 serverlength = servers.Count;
                 filelength = 0;
-                //r.Close();
             }
 
             public void ServerWrite()       //writes to server file

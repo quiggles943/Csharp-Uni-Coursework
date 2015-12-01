@@ -128,7 +128,7 @@ namespace Menu_Program
             this.FontSize = setting.Fontsize;
         }
 
-        private void writetofile(string server, int table, double paid)     //writes to sit in order log 
+        private void writetofile(int server, int table, double paid)     //writes to sit in order log 
         {
             string items = "";
             for(int i =0; i<= itemsordered-1; i++)
@@ -158,7 +158,7 @@ namespace Menu_Program
             }
             
         }
-        private void writetofile(string server, string driver, string name, double paid)        //writes to delivery order log 
+        private void writetofile(int server, string driver, string name, double paid)        //writes to delivery order log 
         {
             string items = "";
             for (int i = 0; i <= itemsordered - 1; i++)
@@ -437,7 +437,7 @@ namespace Menu_Program
             if (sitin)
             {
                 //writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items);
-                writetofile(serverlist.SelectedItem.ToString(), table, subtotal);
+                writetofile(rw.servers[serverlist.SelectedIndex].ID, table, subtotal);
                 s.Paid = subtotal;
                 Window Bill = new Bill(s, sitin);
                 Bill.ShowDialog();
@@ -448,7 +448,7 @@ namespace Menu_Program
             {
                 string driver = driverbox.SelectedItem.ToString();
                 d.Paid = subtotal;
-                writetofile(serverlist.SelectedItem.ToString(), driver,  nametxtbox.Text, subtotal);
+                writetofile(rw.servers[serverlist.SelectedIndex].ID, driver, nametxtbox.Text, subtotal);
                 Window Bill = new Bill(d);
                 Bill.ShowDialog();
                 orderedItems.Clear();
