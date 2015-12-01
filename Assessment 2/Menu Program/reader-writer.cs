@@ -14,17 +14,20 @@ namespace Menu_Program
         string sitin_orderpath = @"..\..\sitin_orderlog.ini";
         string delivery_orderpath = @"..\..\delivery_orderlog.ini";
         string driverpath = @"..\..\driver.ini";
+        string idpath = @"..\..\used_ids.ini";
         string menufilepath;
         string serverfilepath;
         string driverfilepath;
         string sitin_order_filepath;
         string delivery_order_filepath;
+        string idlistfilepath;
 
         public int menulength;
         public int serverlength;
         public int driverlength;
         public int sitinlength;
         public int deliverylength;
+        public int usedidlength;
         public bool sitinfound = false;
         public bool deliveryfound = false;
 
@@ -39,6 +42,7 @@ namespace Menu_Program
         public List<Menu> menuitems = new List<Menu>();         //list of menu items
         public List<Server> servers = new List<Server>();       //list of servers
         public List<Driver> drivers = new List<Driver>();       //list of drivers
+        public List<int> used_ids = new List<int>();       //list of used ids
         public reader_writer()      //initialises reader writer class
         {
             
@@ -47,7 +51,7 @@ namespace Menu_Program
             driverfilepath = System.IO.Path.GetFullPath(driverpath);
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
-
+            idlistfilepath = System.IO.Path.GetFullPath(idpath);
         }
 
         public void MenuRead()      //reads from menu file
@@ -296,6 +300,48 @@ namespace Menu_Program
                 //else
                     //throw new ArgumentException("no delivery log detected");
            
+        }
+        public void IdListRead()        //reads from Id list file
+        {
+            int filelength = 0;
+            StreamReader r = new StreamReader(idlistfilepath);
+            using (r)
+            {
+                while (r.ReadLine() != null) { filelength++; }
+            }
+            int i = 1;
+            string[] file = System.IO.File.ReadAllLines(idlistfilepath);
+            int len = file.Length;
+            while (i < (len))
+            {
+                string[] column = file[i].Split('\t');
+                int value = Int32.Parse(file[i]);
+                int j = 0;
+                while (j < (column.Length))
+                {
+                    string buffer = column[j];
+                    j++;
+                }
+                used_ids.Add(value);
+                i++;
+            }
+            usedidlength = used_ids.Count;
+            filelength = 0;
+            //r.Close();
+        }
+        public void IdListWrite()       //writes to driver file
+        {
+            used_ids.Sort();
+            //used_ids = sortedids.ToList();
+            string[] empty = new string[0];
+            File.WriteAllLines(idlistfilepath, empty);
+            StreamWriter logfile = File.AppendText(idlistfilepath);
+            logfile.WriteLine("Used Ids");
+            foreach (var item in used_ids)
+            {
+                logfile.WriteLine(item);
+            }
+            logfile.Close();
         }
     }
 }
