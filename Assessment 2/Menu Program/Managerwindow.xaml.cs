@@ -29,7 +29,8 @@ namespace Menu_Program
         Password p = new Password();
         Setting s = new Setting();
         reader_writer rw;
-
+        List<sitinOrder> sitinorders = new List<sitinOrder>();
+        List<deliveryOrder> deliveryorders = new List<deliveryOrder>();
         public Managerwindow(reader_writer r, string s)
         {
             Time();
@@ -53,6 +54,7 @@ namespace Menu_Program
             start();
             fontsize();
             serverstatusbox.Content = server;
+            listsetup();
         }
 
         private void start()        //sets visibility for items on page
@@ -94,93 +96,35 @@ namespace Menu_Program
             this.Close();
         }
 
-        private void sitinbtn_Click(object sender, RoutedEventArgs e)
-        {
-            DateTime dt;
-            DateTime Today = DateTime.Today;
-            testlistbox.Items.Clear();
-            testlistbox.Items.Add("Sit In Orders");
-            testlistbox.Items.Add("Date/Time\tServer\tTable\tAmount");
-            for (int i = 1; i <= rw.sitinlength-1; i++)
-            {
-                dt = Convert.ToDateTime(rw.sit[i, 0]);
-                if (orderdatebox.SelectedIndex == 0)
-                {
-                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
-                }
-                if(orderdatebox.SelectedIndex == 1)
-                {
-                    if (dt.Date == Today)
-                    {
-                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
-                    }
-                }
-                if (orderdatebox.SelectedIndex == 2)
-                {
-                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
-                    {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
-                    }
-                }
-                if (orderdatebox.SelectedIndex == 3)
-                {
-                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
-                    {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
-                    }
-                }
-
-            }
-        }
 
 
         private void total_itemsbtn_Click(object sender, RoutedEventArgs e)
         {
-            testlistbox.Items.Clear();
-            testlistbox.Items.Add("Menu Item     Amount");
+            sitin_label.Content = "Total items ordered";
+            delivery_label.Content = "";
+            deliverylistview.ItemsSource = "";
+            List<Menu> menuitems = new List<Menu>();
+            orderlistview.ItemsSource = "";
+            var gridView = new GridView();
+            ListView listview = new ListView();
+            listview = orderlistview;
+            listview.View = gridView;
+
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Item",
+                DisplayMemberBinding = new Binding("Description")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Amount",
+                DisplayMemberBinding = new Binding("Count")
+            });
             foreach (var item in rw.menuitems)
             {
-                testlistbox.Items.Add(item.Description + " - " + item.Count);       //adds total amount of each item ordered to item box
+                menuitems.Add(new Menu() { Description = item.Description, Count = item.Count });
             }
-        }
-
-        private void deliverybtn_Click_1(object sender, RoutedEventArgs e)
-        {
-            DateTime dt;
-            DateTime Today = DateTime.Today;
-            testlistbox.Items.Clear();
-            testlistbox.Items.Add("Delivery Orders");
-            testlistbox.Items.Add("Date/Time\tServer\tDriver\tCustomer\tAmount");
-            for (int i = 1; i <= rw.deliverylength - 1; i++)
-            {
-                dt = Convert.ToDateTime(rw.deliver[i, 0]);
-                if (orderdatebox.SelectedIndex == 0)
-                {
-                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
-                }
-                if (orderdatebox.SelectedIndex == 1)
-                {
-                    if (dt.Date == Today)
-                    {
-                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
-                    }
-                }
-                if (orderdatebox.SelectedIndex == 2)
-                {
-                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
-                    {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
-                    }
-                }
-                if (orderdatebox.SelectedIndex == 3)
-                {
-                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
-                    {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
-                    }
-                }
-
-            }
+            orderlistview.ItemsSource = menuitems;
         }
 
         private void serverbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -200,83 +144,33 @@ namespace Menu_Program
 
         private void serverbtn_Click(object sender, RoutedEventArgs e)
         {
-             DateTime dt;
+            sitin_label.Content = "Sitin Orders";
+            delivery_label.Content = "Delivery Orders";
+            listsetup();
+            DateTime dt;
             DateTime Today = DateTime.Today;
-            testlistbox.Items.Clear();
-            testlistbox.Items.Add("Sit In Orders for " + serverbox.SelectedItem.ToString());
-            testlistbox.Items.Add("Date/Time\tServer\tTable\tAmount");
                 for (int j = 1; j <= rw.sitinlength - 1; j++)
                 {
+                    
                     dt = Convert.ToDateTime(rw.sit[j, 0]);
                     if (rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name == serverbox.SelectedItem.ToString())
                     {
-                        if (orderdatebox.SelectedIndex == 0)
-                        {
-                            testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
-                        }
-                        if (orderdatebox.SelectedIndex == 1)
-                        {
-                            if (dt.Date == Today)
-                            {
-                                testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
-                            }
-                        }
-                        if (orderdatebox.SelectedIndex == 2)
-                        {
-                            if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
-                            {
-                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
-                            }
-                        }
-                        if (orderdatebox.SelectedIndex == 3)
-                        {
-                            if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
-                            {
-                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name + "\t" + rw.sit[j, 2] + "\t" + rw.sit[j, 3]);
-                            }
-                        }
-                    }
-
+                        loadsitin(j);                       
+                    }                  
                 }
+                orderlistview.ItemsSource = sitinorders;
                 string dash = "-";
                 for (int k = 0; k <= rw.longsitin+32; k++)
                     dash = string.Concat(dash, "-");
-                testlistbox.Items.Add(dash);
-                testlistbox.Items.Add("Delivery Orders for " + serverbox.SelectedItem.ToString());
-                testlistbox.Items.Add("Date/Time\tServer\tDriver\tCustomer\tAmount");
                     for (int i = 1; i <= rw.deliverylength - 1; i++)
                     {
                         dt = Convert.ToDateTime(rw.deliver[i, 0]);
                         if (rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name == serverbox.SelectedItem.ToString())
                         {
-                            if (orderdatebox.SelectedIndex == 0)
-                            {
-                                testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
-                            }
-                            if (orderdatebox.SelectedIndex == 1)
-                            {
-                                if (dt.Date == Today)
-                                {
-                                    testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4]/* + "\t" + rw.deliver[i, 4]*/);
-                                }
-                            }
-                            if (orderdatebox.SelectedIndex == 2)
-                            {
-                                if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
-                                {
-                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
-                                }
-                            }
-                            if (orderdatebox.SelectedIndex == 3)
-                            {
-                                if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
-                                {
-                                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name + "\t" + rw.deliver[i, 2] + "\t" + rw.deliver[i, 3] + "\t\t" + rw.deliver[i, 4] + "\t" /*+ rw.deliver[i, 4]*/);
-                                }
-                            }
+                            loaddelivery(i);
                         }
-
                     }
+                    deliverylistview.ItemsSource = deliveryorders;
 
         }
 
@@ -579,10 +473,6 @@ namespace Menu_Program
             timer.Start();
         }
 
-        private void testlistbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void autofill()
         {
@@ -610,6 +500,158 @@ namespace Menu_Program
                     staffidbox.Text = rw.drivers[edititem].ID.ToString();
                 }
             }
+        }
+
+        private void loadorders_Click(object sender, RoutedEventArgs e)
+        {
+            sitin_label.Content = "Sitin Orders";
+            delivery_label.Content = "Delivery Orders";
+            serverbox.SelectedIndex = -1;
+            serverbtn.Content = "Please select server";
+            listsetup();
+            for (int i = 1; i <= rw.sitinlength - 1; i++)
+            {
+                loadsitin(i);
+            }
+            orderlistview.ItemsSource = sitinorders;
+            for (int i = 1; i <= rw.deliverylength - 1; i++)
+            {
+                loaddelivery(i);
+            }
+            deliverylistview.ItemsSource = deliveryorders;
+        }
+
+        private void loadsitin(int i)
+        {
+
+
+            DateTime dt;
+            DateTime Today = DateTime.Today;
+                dt = Convert.ToDateTime(rw.sit[i, 0]);
+                if (orderdatebox.SelectedIndex == 0)
+                {
+                    sitinorders.Add(new sitinOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                }
+                if(orderdatebox.SelectedIndex == 1)
+                {
+                    if (dt.Date == Today)
+                    {
+                        sitinorders.Add(new sitinOrder() { Date = dt.ToShortTimeString(), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 2)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                    {
+                        sitinorders.Add(new sitinOrder() { Date = dt.ToString("ddd HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 3)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
+                    {
+                        sitinorders.Add(new sitinOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                    }
+                }              
+            
+        }
+        private void loaddelivery(int i)
+        {
+            DateTime dt;
+            DateTime Today = DateTime.Today;
+                dt = Convert.ToDateTime(rw.deliver[i, 0]);
+                if (orderdatebox.SelectedIndex == 0)
+                {
+                    deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                   
+                }
+                if (orderdatebox.SelectedIndex == 1)
+                {
+                    if (dt.Date == Today)
+                    {
+                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToShortTimeString(), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 2)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                    {
+                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                    }
+                }
+                if (orderdatebox.SelectedIndex == 3)
+                {
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
+                    {
+                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                    }
+                }
+
+            
+        }
+
+        private void listsetup()
+        {
+            sitinorders.Clear();
+            orderlistview.ItemsSource = "";
+            var gridView = new GridView();
+            ListView listview = new ListView();
+            listview = orderlistview;
+            listview.View = gridView;
+
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Date/Time",
+                DisplayMemberBinding = new Binding("Date")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Server",
+                DisplayMemberBinding = new Binding("Server")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Table",
+                DisplayMemberBinding = new Binding("Table")
+            });
+            gridView.Columns.Add(new GridViewColumn
+            {
+                Header = "Paid",
+                DisplayMemberBinding = new Binding("Paid")
+            });
+
+            deliveryorders.Clear();
+            deliverylistview.ItemsSource = "";
+            var gridView2 = new GridView();
+            ListView listview2 = new ListView();
+            listview2 = deliverylistview;
+            listview2.View = gridView2;
+
+            gridView2.Columns.Add(new GridViewColumn
+            {
+                Header = "Date/Time",
+                DisplayMemberBinding = new Binding("Date")
+            });
+            gridView2.Columns.Add(new GridViewColumn
+            {
+                Header = "Server",
+                DisplayMemberBinding = new Binding("Server")
+            });
+            gridView2.Columns.Add(new GridViewColumn
+            {
+                Header = "Driver",
+                DisplayMemberBinding = new Binding("Driver")
+            });
+            gridView2.Columns.Add(new GridViewColumn
+            {
+                Header = "Customer",
+                DisplayMemberBinding = new Binding("Name")
+            });
+            gridView2.Columns.Add(new GridViewColumn
+            {
+                Header = "Paid",
+                DisplayMemberBinding = new Binding("Paid")
+            });
         }
     }
 }

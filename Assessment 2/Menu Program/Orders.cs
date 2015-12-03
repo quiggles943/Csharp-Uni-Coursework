@@ -11,10 +11,11 @@ namespace Menu_Program
     {
         public List<Menu> items = new List<Menu>();
         private string server;
-        public string driver;
+        private string date;
         public string name;
-        private int table;
+        
         private double paid;
+        private string itemstring;
         string[] orders = new string[10];
         List<string> notes = new List<string>();
         public Order()
@@ -30,24 +31,13 @@ namespace Menu_Program
             get { return server; }
             set { server = value; }
         }
-        public string Driver
+        public string Date
         {
-            get { return driver; }
-            set 
-            {
-                if (value == "")
-                {
-                    throw new ArgumentException("No name entered");
-                }
-                else
-                driver = value; 
-            }
+            get { return date; }
+            set { date = value; }
         }
-        public int Table
-        {
-            get { return table; }
-            set { table = value; }
-        }
+        
+        
         public double Paid
         {
             get { return paid; }
@@ -84,21 +74,47 @@ namespace Menu_Program
         {
             items.Remove(item);
         }
+
+        public string Items
+        {
+            get { return itemstring; }
+            set { itemstring = value; }
+        }
     }
-    public class sitinOrder : Order
+    public class sitinOrder: Order
     {
+        private int table;
         public sitinOrder()
         {
 
+        }
+        public int Table
+        {
+            get { return table; }
+            set { table = value; }
         }
     }
     public class deliveryOrder : Order
     {
         
         private string address;
+        public string driver;
         public deliveryOrder()
         {
 
+        }
+        public string Driver
+        {
+            get { return driver; }
+            set
+            {
+                if (value == "")
+                {
+                    throw new ArgumentException("No name entered");
+                }
+                else
+                    driver = value;
+            }
         }
         public string Name
         {
@@ -132,5 +148,7 @@ namespace Menu_Program
             items.Add(item);
 
         }
+
+        
     }
 }
