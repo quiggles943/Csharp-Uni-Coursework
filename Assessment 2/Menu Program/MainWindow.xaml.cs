@@ -21,7 +21,7 @@ namespace Menu_Program
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string[,] menu = new string[100,5];
+        public string[,] menu = new string[100, 5];
         public string[,] server = new string[100, 2];
         public string[,] driver = new string[100, 3];
         string menupath = @"..\..\menu.ini";
@@ -34,23 +34,23 @@ namespace Menu_Program
         string driverfilepath;
         string sitin_order_filepath;
         string delivery_order_filepath;
-        string items;
         bool sitin;
         double subtotal;
         int table;
         int itemsordered = 0;
         List<Menu> menuitems = new List<Menu>();
-        //Order o = new Order();
         deliveryOrder d = new deliveryOrder();
         sitinOrder s = new sitinOrder();
         Setting setting = new Setting();
         public List<Order> sitinorders = new List<Order>();
         List<Menu> orderedItems = new List<Menu>();
         bool detailsadded = false;
+
         //int denotes number of tables in restaraunt
         int tablenos = 20;
+
         reader_writer rw = new reader_writer();
-        
+
         public MainWindow()
         {
             Time();
@@ -60,6 +60,7 @@ namespace Menu_Program
             sitin_order_filepath = System.IO.Path.GetFullPath(sitin_orderpath);
             delivery_order_filepath = System.IO.Path.GetFullPath(delivery_orderpath);
             InitializeComponent();
+
             //sets initial visibility 
             tablebox.Visibility = Visibility.Hidden;
             tabletxt.Visibility = Visibility.Hidden;
@@ -74,6 +75,7 @@ namespace Menu_Program
             addresslabel.Visibility = Visibility.Hidden;
             driverbox.Visibility = Visibility.Hidden;
             driverlabel.Visibility = Visibility.Hidden;
+
             orderlistbox.IsEnabled = false;
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
@@ -83,7 +85,7 @@ namespace Menu_Program
             removeitembtn.IsEnabled = false;
             readin();
             fontsize();
-            
+
         }
 
 
@@ -111,12 +113,12 @@ namespace Menu_Program
             {
                 foodlistbox.Items.Add(item.Description);
             }
-            
+
             foreach (var item in rw.servers)
             {
                 serverlist.Items.Add(item.name);
             }
-            
+
             foreach (var item in rw.drivers)
             {
                 driverbox.Items.Add(item.name);
@@ -131,12 +133,12 @@ namespace Menu_Program
         private void writetofile(int server, int table, double paid)     //writes to sit in order log 
         {
             string items = "";
-            for(int i =0; i<= itemsordered-1; i++)
+            for (int i = 0; i <= itemsordered - 1; i++)
             {
-            if(i == 0)
-                items = s.items[i].Description;
-            else
-                items = string.Join("\t", items, s.items[i].Description);
+                if (i == 0)
+                    items = s.items[i].Description;
+                else
+                    items = string.Join("\t", items, s.items[i].Description);
             }
             if (File.Exists(sitin_order_filepath))
             {
@@ -156,7 +158,7 @@ namespace Menu_Program
                     logfile.WriteLine(time.ToString("g") + "\t" + server + "\t" + table + "\t£" + paid + "\t" + items);
                 }
             }
-            
+
         }
         private void writetofile(int server, string driver, string name, double paid)        //writes to delivery order log 
         {
@@ -164,7 +166,7 @@ namespace Menu_Program
             for (int i = 0; i <= itemsordered - 1; i++)
             {
                 if (i == 0)
-                    items =  d.items[i].Description;
+                    items = d.items[i].Description;
                 else
                     items = string.Join("\t", items, d.items[i].Description);
             }
@@ -191,7 +193,7 @@ namespace Menu_Program
 
         private void serverlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void logonbtn_Click(object sender, RoutedEventArgs e)
@@ -245,16 +247,15 @@ namespace Menu_Program
                 d.Note("none");
             }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
-            subtotal  = subtotal + Math.Round(buffer,2);
+            subtotal = subtotal + Math.Round(buffer, 2);
             subtotallabel.Content = subtotal;
-            //orderedItems.Add(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
             itemsordered++;
             statuslabel.Content = "Item added";
         }
 
         private void sitinradbtn_Checked(object sender, RoutedEventArgs e)
         {
-            sitin = true;   
+            sitin = true;
         }
 
         private void takeawayradbtn_Checked(object sender, RoutedEventArgs e)
@@ -264,13 +265,13 @@ namespace Menu_Program
             tabletxt.Visibility = Visibility.Hidden;
             tabletxt.Content = "";
             destinationlabel.Content = "";
-            
-            
+
+
         }
 
         private void selectbtn_Click(object sender, RoutedEventArgs e)
         {
-            if(sitinradbtn.IsChecked == false && takeawayradbtn.IsChecked == false)
+            if (sitinradbtn.IsChecked == false && takeawayradbtn.IsChecked == false)
             {
                 return;
             }
@@ -290,8 +291,8 @@ namespace Menu_Program
                 destinationlabel.Visibility = Visibility.Visible;
                 destinationlabel.Content = "Table:";
                 s.Server = serverlist.SelectedItem.ToString();
-                
-                
+
+
             }
             else
             {
@@ -312,7 +313,7 @@ namespace Menu_Program
             addtobtn.IsEnabled = true;
             sitinradbtn.IsEnabled = false;
             takeawayradbtn.IsEnabled = false;
-            
+
         }
 
         private void addtablebtn_Click(object sender, RoutedEventArgs e)
@@ -352,7 +353,6 @@ namespace Menu_Program
             addtablebtn.IsEnabled = true;
             sitinradbtn.IsEnabled = true;
             takeawayradbtn.IsEnabled = true;
-            //foodlistbox.Items.Clear();
             foodlistbox.IsEnabled = false;
             orderlistbox.Items.Clear();
             nametxtbox.Visibility = Visibility.Hidden;
@@ -393,7 +393,7 @@ namespace Menu_Program
                 return;
             try
             {
-                if(driverbox.SelectedIndex == -1)
+                if (driverbox.SelectedIndex == -1)
                     throw new ArgumentException("No driver selected");
                 d.Driver = driverbox.SelectedItem.ToString();
                 d.Name = nametxtbox.Text;
@@ -428,7 +428,7 @@ namespace Menu_Program
 
         private void billbtn_Click(object sender, RoutedEventArgs e)
         {
-            if(itemsordered == 0)
+            if (itemsordered == 0)
             {
                 statuslabel.Content = "No items in order";
                 return;
@@ -436,7 +436,6 @@ namespace Menu_Program
             totalbtn_Click(sender, e);
             if (sitin)
             {
-                //writetofile(serverlist.SelectedItem.ToString(), table, subtotal, items);
                 writetofile(rw.servers[serverlist.SelectedIndex].ID, table, subtotal);
                 s.Paid = subtotal;
                 Window Bill = new Bill(s, sitin);
@@ -485,8 +484,7 @@ namespace Menu_Program
             {
                 Managerwindow manager = new Managerwindow(rw, serverlist.SelectedItem.ToString());
                 manager.ShowDialog();
-                //fontsize();
-                
+
             }
             else
                 MessageBox.Show("Password incorrect", "error");

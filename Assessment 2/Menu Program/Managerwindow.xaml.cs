@@ -21,25 +21,19 @@ namespace Menu_Program
     /// </summary>
     public partial class Managerwindow : Window
     {
-        string sitin;
-        string delivery;
         string server;
-        string sitin_orderpath = @"..\..\sitin_orderlog.ini";
-        string delivery_orderpath = @"..\..\delivery_orderlog.ini";
         Password p = new Password();
         Setting s = new Setting();
         reader_writer rw;
-        List<sitinOrder> sitinorders = new List<sitinOrder>();
-        List<deliveryOrder> deliveryorders = new List<deliveryOrder>();
+        List<sitinOrder> sitinorders = new List<sitinOrder>();      //list of sitin orders
+        List<deliveryOrder> deliveryorders = new List<deliveryOrder>();     //list of delivery orders
         public Managerwindow(reader_writer r, string s)
         {
             Time();
             rw = r;
             server = s;
             InitializeComponent();
-            sitin = System.IO.Path.GetFullPath(sitin_orderpath);
-            delivery = System.IO.Path.GetFullPath(delivery_orderpath);
-            rw.readin_sitin();
+            rw.readin_sitin();      //reads in sitin 
             rw.readin_delivery();
             rw.IdListRead();
             if (rw.sitinfound && rw.deliveryfound)
@@ -96,13 +90,32 @@ namespace Menu_Program
             this.Close();
         }
 
-
+        private void loadorders_Click(object sender, RoutedEventArgs e)
+        {
+            deliverylistview.Visibility = Visibility.Visible;
+            sitin_label.Content = "Sitin Orders";
+            delivery_label.Content = "Delivery Orders";
+            serverbox.SelectedIndex = -1;
+            serverbtn.Content = "Please select server";
+            listsetup();
+            for (int i = 1; i <= rw.sitinlength - 1; i++)
+            {
+                loadsitin(i);
+            }
+            orderlistview.ItemsSource = sitinorders;
+            for (int i = 1; i <= rw.deliverylength - 1; i++)
+            {
+                loaddelivery(i);
+            }
+            deliverylistview.ItemsSource = deliveryorders;
+        }
 
         private void total_itemsbtn_Click(object sender, RoutedEventArgs e)
         {
             sitin_label.Content = "Total items ordered";
             delivery_label.Content = "";
             deliverylistview.ItemsSource = "";
+            deliverylistview.Visibility = Visibility.Hidden;
             List<Menu> menuitems = new List<Menu>();
             orderlistview.ItemsSource = "";
             var gridView = new GridView();
@@ -144,6 +157,7 @@ namespace Menu_Program
 
         private void serverbtn_Click(object sender, RoutedEventArgs e)
         {
+            deliverylistview.Visibility = Visibility.Visible;
             sitin_label.Content = "Sitin Orders";
             delivery_label.Content = "Delivery Orders";
             listsetup();
@@ -502,24 +516,6 @@ namespace Menu_Program
             }
         }
 
-        private void loadorders_Click(object sender, RoutedEventArgs e)
-        {
-            sitin_label.Content = "Sitin Orders";
-            delivery_label.Content = "Delivery Orders";
-            serverbox.SelectedIndex = -1;
-            serverbtn.Content = "Please select server";
-            listsetup();
-            for (int i = 1; i <= rw.sitinlength - 1; i++)
-            {
-                loadsitin(i);
-            }
-            orderlistview.ItemsSource = sitinorders;
-            for (int i = 1; i <= rw.deliverylength - 1; i++)
-            {
-                loaddelivery(i);
-            }
-            deliverylistview.ItemsSource = deliveryorders;
-        }
 
         private void loadsitin(int i)
         {
@@ -541,7 +537,7 @@ namespace Menu_Program
                 }
                 if (orderdatebox.SelectedIndex == 2)
                 {
-                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-6))
                     {
                         sitinorders.Add(new sitinOrder() { Date = dt.ToString("ddd HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
                     }
@@ -574,7 +570,7 @@ namespace Menu_Program
                 }
                 if (orderdatebox.SelectedIndex == 2)
                 {
-                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
+                    if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-6))
                     {
                         deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
                     }
