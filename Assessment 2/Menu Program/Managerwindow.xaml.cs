@@ -103,30 +103,35 @@ namespace Menu_Program
             testlistbox.Items.Add("Date/Time\tServer\tTable\tAmount");
             for (int i = 1; i <= rw.sitinlength-1; i++)
             {
+                string server;
+                if (rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).Equals(null))
+                    server = "N/A";
+                else
+                server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name;
                 dt = Convert.ToDateTime(rw.sit[i, 0]);
                 if (orderdatebox.SelectedIndex == 0)
                 {
-                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                    testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + server + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                 }
                 if(orderdatebox.SelectedIndex == 1)
                 {
                     if (dt.Date == Today)
                     {
-                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                        testlistbox.Items.Add(dt.ToShortTimeString() + "\t\t" + server + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                     }
                 }
                 if (orderdatebox.SelectedIndex == 2)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-7))
                     {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + server + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                     }
                 }
                 if (orderdatebox.SelectedIndex == 3)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
                     {
-                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
+                        testlistbox.Items.Add(dt.ToString("dd HH:mm") + "\t\t" + server + "\t" + rw.sit[i, 2] + "\t" + rw.sit[i, 3]);
                     }
                 }
 
