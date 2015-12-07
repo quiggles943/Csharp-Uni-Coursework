@@ -66,6 +66,7 @@ namespace Menu_Program
             editrbtn.Visibility = Visibility.Hidden;
             removerbtn.Visibility = Visibility.Hidden;
             item_selection.Visibility = Visibility.Hidden;
+            pence_label.Visibility = Visibility.Hidden;
             edit_selection.SelectedIndex = -1;
             server_combobox();
 
@@ -206,6 +207,7 @@ namespace Menu_Program
                 staffidlabel.Content = "Staff Id";
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
+                pence_label.Visibility = Visibility.Hidden;
             }
 
             if (edit_selection.SelectedIndex == 1)      //Drivers
@@ -216,6 +218,7 @@ namespace Menu_Program
                 }
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
+                pence_label.Visibility = Visibility.Hidden;
                 vegetarianlabel.Content = "             Car Reg:";
                 vegetarianbox.MaxLength = 8;
                 vegetarianbox.Width = 68;
@@ -228,8 +231,8 @@ namespace Menu_Program
                 {
                     item_selection.Items.Add(item.Description);
                 }
-            
-                staffidlabel.Content = "  Price £";
+                //pence_label.Visibility = Visibility.Visible;
+                staffidlabel.Content = "  Price :";
                 vegetarianbox.MaxLength = 1;
                 vegetarianlabel.Content = "Vegetarian (Y/N):";
                 vegetarianbox.Width = 16;
@@ -238,6 +241,7 @@ namespace Menu_Program
             {
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
+                pence_label.Visibility = Visibility.Hidden;
                 staffidlabel.Content = "Staff Id:";
             }
             addrbtn.IsChecked = false;
@@ -249,6 +253,7 @@ namespace Menu_Program
         private void addrbtn_Checked(object sender, RoutedEventArgs e)
         {
             staffidbox.IsEnabled = true;
+            vegetarianbox.IsEnabled = true;
             namelabel.Visibility = Visibility.Visible;
             namebox.Visibility = Visibility.Visible;
             staffidlabel.Visibility = Visibility.Visible;
@@ -263,6 +268,14 @@ namespace Menu_Program
             {
                 vegetarianlabel.Visibility = Visibility.Visible;
                 vegetarianbox.Visibility = Visibility.Visible;
+            }
+            if (edit_selection.SelectedIndex == 2)
+            {
+                pence_label.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                pence_label.Visibility = Visibility.Hidden;
             }
             addbtn.Content = ("Add " + edit_selection.SelectionBoxItem.ToString());
         }
@@ -290,6 +303,14 @@ namespace Menu_Program
                 vegetarianlabel.Visibility = Visibility.Visible;
                 vegetarianbox.Visibility = Visibility.Visible;
             }
+            if (edit_selection.SelectedIndex == 2)
+            {
+                pence_label.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                pence_label.Visibility = Visibility.Hidden;
+            }
             addbtn.Content = ("Edit " + edit_selection.SelectionBoxItem.ToString());
         }
 
@@ -303,16 +324,16 @@ namespace Menu_Program
             namebox.Text = "";
             staffidbox.Text = "";
             item_selection.Visibility = Visibility.Visible;
-            if (edit_selection.SelectedIndex == 0)
-            {
+            //if (edit_selection.SelectedIndex == 0)
+            //{
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
-            }
-            else
+            //}
+           /* else
             {
                 vegetarianlabel.Visibility = Visibility.Visible;
                 vegetarianbox.Visibility = Visibility.Visible;
-            }
+            }*/
             addbtn.Content = ("Remove " + edit_selection.SelectionBoxItem.ToString());
         }
 
@@ -385,12 +406,7 @@ namespace Menu_Program
                 else if (edit_selection.SelectedIndex == 2)     //Menu Items
                 {
                     bool veg = false; ;
-                    switch (vegetarianbox.Text)
-                    {
-                        case "Y": veg = true; break;
-                        case "N": veg = false; break;
-                        default: throw new ArgumentException("Vegetarian input not accepted");
-                    }
+                    
                     if (editrbtn.IsChecked == true)
                     {
 
@@ -410,6 +426,12 @@ namespace Menu_Program
                     }
                     if (addrbtn.IsChecked == true)
                     {
+                        switch (vegetarianbox.Text)
+                        {
+                            case "Y": veg = true; break;
+                            case "N": veg = false; break;
+                            default: throw new ArgumentException("Vegetarian input not accepted");
+                        }
                         rw.menuitems.Add(new Menu(namebox.Text, veg, Int32.Parse(staffidbox.Text)));
                         rw.MenuWrite();     //writes changes to file
                     }
@@ -420,7 +442,8 @@ namespace Menu_Program
                         rw.MenuWrite();     //writes changes to file
                     }
                 }
-                start();
+                change();
+                start();               
             }
             catch(Exception excp)
             {
@@ -435,7 +458,7 @@ namespace Menu_Program
             vegetarianbox.Clear();
             autofill();
 
-            if (edit_selection.SelectedIndex == 0)     //Servers
+            /*if (edit_selection.SelectedIndex == 0)     //Servers
             {
                 
                 vegetarianlabel.Visibility = Visibility.Hidden;
@@ -445,7 +468,7 @@ namespace Menu_Program
             {
                 vegetarianlabel.Visibility = Visibility.Visible;
                 vegetarianbox.Visibility = Visibility.Visible;
-            }
+            }*/
         }
 
         private void passwordbtn_Click(object sender, RoutedEventArgs e)
@@ -648,6 +671,52 @@ namespace Menu_Program
                 Header = "Paid",
                 DisplayMemberBinding = new Binding("Paid")
             });
+        }
+
+        private void change()
+        {
+            string buffer = " ";
+            /*if (staffidbox.Text != "")
+                staffbox = Int32.Parse(staffidbox.Text);
+            else
+                return;*/
+            if (item_selection.SelectedIndex == 1)
+            {
+                buffer = " with Reg " + vegetarianbox.Text;
+            }
+            else if (item_selection.SelectedIndex == 2)
+            {
+                buffer = ". Is vegetarian?  " + vegetarianbox.Text;
+            }
+
+            if(item_selection.SelectedIndex == 2)
+            {
+                buffer = " £";
+            }
+            else
+            {
+                buffer = " ";
+            }
+            if (addrbtn.IsChecked == true)
+            {   
+                change_label.Text = ("Addded " + namebox.Text + " to " + edit_selection.SelectionBoxItem + " with " + staffidlabel.Content + buffer + staffidbox.Text);
+            }
+            if(editrbtn.IsChecked == true)
+            {
+                change_label.Text = ("Changed " + item_selection.SelectionBoxItem + " to " + namebox.Text + " " + buffer);
+            }
+            if (removerbtn.IsChecked == true)
+            {
+                change_label.Text = ("Removed " + item_selection.SelectionBoxItem + " From " + edit_selection.SelectionBoxItem);
+            }
+
+
+
+        }
+
+        private void editingkey(object sender, KeyEventArgs e)
+        {
+            
         }
     }
 }
