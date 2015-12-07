@@ -4,14 +4,9 @@
         Title="Management" Height="421.333" Width="782.368" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="closebtn" Content="Close" HorizontalAlignment="Left" Margin="323,327,0,0" VerticalAlignment="Top" Width="74" Click="closebtn_Click"/>
-        <ListBox x:Name="testlistbox" HorizontalAlignment="Left" Height="181" Margin="10,142,0,0" VerticalAlignment="Top" Width="495" SelectionChanged="testlistbox_SelectionChanged">
-            <StackPanel Height="100" Width="100"/>
-        </ListBox>
-        <Button x:Name="sitinbtn" Content="Sit-in orders" HorizontalAlignment="Left" Margin="117,53,0,0" VerticalAlignment="Top" Width="84" Click="sitinbtn_Click" Height="24" FontSize="13"/>
-        <Button x:Name="total_itemsbtn" Content="Total items ordered" HorizontalAlignment="Left" Margin="323,53,0,0" VerticalAlignment="Top" Width="121" Click="total_itemsbtn_Click" Height="24" FontSize="13"/>
-        <Button x:Name="deliverybtn" Content="Take Away Orders" HorizontalAlignment="Left" Margin="206,53,0,0" VerticalAlignment="Top" Width="112" Click="deliverybtn_Click_1" Height="24" FontSize="13"/>
-        <ComboBox x:Name="serverbox" HorizontalAlignment="Left" Margin="128,115,0,0" VerticalAlignment="Top" Width="121" ToolTip="List of servers " SelectionChanged="serverbox_SelectionChanged"/>
-        <Button x:Name="serverbtn" Content="Please select server" HorizontalAlignment="Left" Margin="254,115,0,0" VerticalAlignment="Top" Width="160" IsEnabled="False" Click="serverbtn_Click"/>
+        <Button x:Name="total_itemsbtn" Content="Total items ordered" HorizontalAlignment="Left" Margin="233,53,0,0" VerticalAlignment="Top" Width="121" Click="total_itemsbtn_Click" Height="24" FontSize="13"/>
+        <ComboBox x:Name="serverbox" HorizontalAlignment="Left" Margin="117,98,0,0" VerticalAlignment="Top" Width="121" ToolTip="List of servers " SelectionChanged="serverbox_SelectionChanged"/>
+        <Button x:Name="serverbtn" Content="Please select server" HorizontalAlignment="Left" Margin="249,98,0,0" VerticalAlignment="Top" Width="160" IsEnabled="False" Click="serverbtn_Click"/>
         <ComboBox x:Name="edit_selection" HorizontalAlignment="Left" Margin="591,42,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="edit_selection_SelectionChanged">
             <ComboBoxItem Content="Servers"/>
             <ComboBoxItem Content="Drivers"/>
@@ -95,6 +90,22 @@
             <ListBoxItem Content="This Week"/>
             <ListBoxItem Content="This Month"/>
         </ListBox>
+        <ListView x:Name="orderlistview" HorizontalAlignment="Left" Height="151" Margin="10,156,0,0" VerticalAlignment="Top" Width="228">
+            <ListView.View>
+                <GridView>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="deliverylistview" HorizontalAlignment="Left" Height="151" Margin="238,156,0,0" VerticalAlignment="Top" Width="298">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="loadorders" Content="Load Orders" HorizontalAlignment="Left" Margin="117,55,0,0" VerticalAlignment="Top" Width="90" Click="loadorders_Click"/>
+        <Label x:Name="sitin_label" Content="Sitin Orders" HorizontalAlignment="Left" Margin="81,130,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="delivery_label" Content="Delivery Orders" HorizontalAlignment="Left" Margin="344,130,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
