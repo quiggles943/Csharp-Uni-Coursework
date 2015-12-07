@@ -12,17 +12,17 @@
             <ComboBoxItem Content="Drivers"/>
             <ComboBoxItem Content="Menu Items"/>
         </ComboBox>
-        <RadioButton x:Name="addrbtn" Content="Add" HorizontalAlignment="Left" Margin="569,82,0,0" VerticalAlignment="Top" Checked="addrbtn_Checked"/>
-        <RadioButton x:Name="editrbtn" Content="Edit" HorizontalAlignment="Left" Margin="619,82,0,0" VerticalAlignment="Top" Checked="editrbtn_Checked"/>
-        <RadioButton x:Name="removerbtn" Content="Remove" HorizontalAlignment="Left" Margin="667,82,0,0" VerticalAlignment="Top" Checked="removerbtn_Checked"/>
-        <Label x:Name="namelabel" Content="Name:" HorizontalAlignment="Left" Margin="547,144,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="namebox" HorizontalAlignment="Left" Height="24" Margin="591,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="staffidbox" HorizontalAlignment="Left" Height="24" Margin="591,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
-        <Label x:Name="staffidlabel" Content="Staff Id:" HorizontalAlignment="Left" Margin="541,172,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="vegetarianlabel" Content="Vegetarian (Y/N):" HorizontalAlignment="Left" Margin="541,203,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="item_selection" HorizontalAlignment="Left" Margin="591,110,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="item_selection_SelectionChanged"/>
-        <Button x:Name="addbtn" Content="Accept" HorizontalAlignment="Left" Margin="600,238,0,0" VerticalAlignment="Top" Width="111" Click="Button_Click"/>
-        <TextBox x:Name="vegetarianbox" HorizontalAlignment="Left" Height="24" Margin="643,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16"/>
+        <RadioButton x:Name="addrbtn" Content="Add" HorizontalAlignment="Left" Margin="569,75,0,0" VerticalAlignment="Top" Checked="addrbtn_Checked"/>
+        <RadioButton x:Name="editrbtn" Content="Edit" HorizontalAlignment="Left" Margin="619,75,0,0" VerticalAlignment="Top" Checked="editrbtn_Checked"/>
+        <RadioButton x:Name="removerbtn" Content="Remove" HorizontalAlignment="Left" Margin="667,75,0,0" VerticalAlignment="Top" Checked="removerbtn_Checked"/>
+        <Label x:Name="namelabel" Content="Name:" HorizontalAlignment="Left" Margin="547,129,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="namebox" HorizontalAlignment="Left" Height="24" Margin="591,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="editingkey"/>
+        <TextBox x:Name="staffidbox" HorizontalAlignment="Left" Height="24" Margin="591,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" KeyDown="editingkey"/>
+        <Label x:Name="staffidlabel" Content="Staff Id:" HorizontalAlignment="Left" Margin="541,157,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="vegetarianlabel" Content="Vegetarian (Y/N):" HorizontalAlignment="Left" Margin="541,188,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="item_selection" HorizontalAlignment="Left" Margin="591,98,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="item_selection_SelectionChanged"/>
+        <Button x:Name="addbtn" Content="Accept" HorizontalAlignment="Left" Margin="600,285,0,0" VerticalAlignment="Top" Width="111" Click="Button_Click"/>
+        <TextBox x:Name="vegetarianbox" HorizontalAlignment="Left" Height="24" Margin="643,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="16" KeyDown="editingkey"/>
         <Label Content="Order Options" HorizontalAlignment="Left" Margin="119,10,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label Content="Editing Options" HorizontalAlignment="Left" Margin="591,12,0,0" VerticalAlignment="Top" FontSize="16"/>
         <StatusBar Margin="1,0,0,0" Height="25" VerticalAlignment="Bottom">
@@ -106,6 +106,13 @@
         <Button x:Name="loadorders" Content="Load Orders" HorizontalAlignment="Left" Margin="117,55,0,0" VerticalAlignment="Top" Width="90" Click="loadorders_Click"/>
         <Label x:Name="sitin_label" Content="Sitin Orders" HorizontalAlignment="Left" Margin="81,130,0,0" VerticalAlignment="Top"/>
         <Label x:Name="delivery_label" Content="Delivery Orders" HorizontalAlignment="Left" Margin="344,130,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="pence_label" Content="p" HorizontalAlignment="Left" Margin="638,159,0,0" VerticalAlignment="Top"/>
+        <Label HorizontalAlignment="Left" Margin="547,219,0,0" VerticalAlignment="Top" BorderThickness="1" Height="61" Width="179">
+            <Label.BorderBrush>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Label.BorderBrush>
+            <TextBlock x:Name="change_label" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="167" Height="49"/>
+        </Label>
 
     </Grid>
 </Window>
