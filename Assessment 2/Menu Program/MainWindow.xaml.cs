@@ -35,7 +35,6 @@ namespace Menu_Program
         string sitin_order_filepath;
         string delivery_order_filepath;
         bool sitin;
-        double subtotal;
         int table;
         int itemsordered = 0;
         List<Menu> menuitems = new List<Menu>();
@@ -238,6 +237,7 @@ namespace Menu_Program
                 buffer = (buffer / 100);
                 s.Dishes(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
                 s.Note("none");
+                subtotallabel.Content = Math.Round((s.total()/100),2);
             }
             else
             {
@@ -245,10 +245,9 @@ namespace Menu_Program
                 buffer = (buffer / 100);
                 d.Dishes(rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()));
                 d.Note("none");
+                subtotallabel.Content = Math.Round((d.total() / 100), 2);
             }
             orderlistbox.Items.Add(foodlistbox.SelectedItem);
-            subtotal = subtotal + Math.Round(buffer, 2);
-            subtotallabel.Content = subtotal;
             itemsordered++;
             statuslabel.Content = "Item added";
         }
@@ -341,7 +340,7 @@ namespace Menu_Program
         internal void clearbtn_Click(object sender, RoutedEventArgs e)
         {
             tablebox.Clear();
-            subtotal = 0;
+            //subtotal = 0;
             subtotallabel.Content = "0.00";
             table = 0;
             tabletxt.Content = "";
@@ -436,8 +435,8 @@ namespace Menu_Program
             totalbtn_Click(sender, e);
             if (sitin)
             {
-                writetofile(rw.servers[serverlist.SelectedIndex].ID, table, subtotal);
-                s.Paid = subtotal;
+                writetofile(rw.servers[serverlist.SelectedIndex].ID, table, Math.Round((s.total() / 100), 2));
+                s.Paid = Math.Round((s.total() / 100), 2);
                 Window Bill = new Bill(s, sitin);
                 Bill.ShowDialog();
                 orderedItems.Clear();
@@ -446,8 +445,8 @@ namespace Menu_Program
             else
             {
                 string driver = driverbox.SelectedItem.ToString();
-                d.Paid = subtotal;
-                writetofile(rw.servers[serverlist.SelectedIndex].ID, driver, nametxtbox.Text, subtotal);
+                d.Paid = Math.Round((d.total() / 100), 2);
+                writetofile(rw.servers[serverlist.SelectedIndex].ID, driver, nametxtbox.Text, Math.Round((d.total() / 100), 2));
                 Window Bill = new Bill(d);
                 Bill.ShowDialog();
                 orderedItems.Clear();
@@ -489,6 +488,7 @@ namespace Menu_Program
             else
                 MessageBox.Show("Password incorrect", "error");
             fontsize();
+            readin();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -518,6 +518,7 @@ namespace Menu_Program
                 buffer = (buffer / 100);
                 s.items.RemoveAt(orderlistbox.SelectedIndex);
                 s.removeNote(orderlistbox.SelectedIndex);
+                subtotallabel.Content = Math.Round((s.total() / 100), 2);
             }
             else
             {
@@ -525,10 +526,9 @@ namespace Menu_Program
                 buffer = (buffer / 100);
                 d.items.RemoveAt(orderlistbox.SelectedIndex);
                 d.removeNote(orderlistbox.SelectedIndex);
+                subtotallabel.Content = Math.Round((d.total() / 100), 2);
             }
             orderlistbox.Items.RemoveAt(orderlistbox.SelectedIndex);
-            subtotal = subtotal - Math.Round(buffer, 2);
-            subtotallabel.Content = subtotal;
             itemsordered--;
             statuslabel.Content = "Item Removed";
         }

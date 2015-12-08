@@ -12,11 +12,9 @@ namespace Menu_Program
         public List<Menu> items = new List<Menu>();
         private string server;
         private string date;
-        public string name;
-        
+        public string name;        
         private double paid;
         private string itemstring;
-        string[] orders = new string[10];
         List<string> notes = new List<string>();
         public Order()
         {
@@ -79,6 +77,16 @@ namespace Menu_Program
         {
             get { return itemstring; }
             set { itemstring = value; }
+        }
+
+        public double total()
+        {
+            double total = 0;
+            foreach(var item in items)
+            {
+                total = total + item.Price;
+            }
+            return total;
         }
     }
     public class sitinOrder: Order
@@ -143,11 +151,11 @@ namespace Menu_Program
             }
         }
 
-        public void Dishes(Menu item)
+        /*public void Dishes(Menu item)
         {
             items.Add(item);
 
-        }
+        }*/
 
         
     }

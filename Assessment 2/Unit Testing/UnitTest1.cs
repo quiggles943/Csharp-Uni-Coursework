@@ -8,6 +8,9 @@ namespace Unit_Testing
     [TestClass]
     public class UnitTest1
     {
+        Menu item1 = new Menu("Tomato Pizza", true, 350);
+        Menu item2 = new Menu("Peperoni Pizza", false, 500);
+        Menu item3 = new Menu("Spaghetti Bolonaise", false, 600);
         [TestMethod]
         public void ServerTest()
         {
@@ -21,7 +24,32 @@ namespace Unit_Testing
 
             string actual = servers.Find(x => x.ID == 8).name;
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual,true,"Incorrect server selected");
+        }
+
+        [TestMethod]
+        public void MenuTest()
+        {
+            int expected = 950;
+            List<Menu> items = new List<Menu>();
+            items.Add(item1);
+            items.Add(item2);
+            items.Add(item3);
+            int actual = items[0].Price + items[2].Price;
+
+            Assert.AreEqual(expected, actual, 0.001);
+
+        }
+
+        [TestMethod]
+        public void SitinTest()
+        {
+            sitinOrder s = new sitinOrder();
+            int expected = 1000;
+            s.Dishes(item2);
+            s.Dishes(item2);
+            int total = s.total();
+            Assert.AreEqual(expected, total, 0.001);
         }
     }
 }

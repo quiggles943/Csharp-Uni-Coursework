@@ -384,7 +384,7 @@ namespace Menu_Program
                         var edititem = rw.drivers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
                         rw.drivers[edititem].name = namebox.Text;
                         rw.drivers[edititem].ID = Int32.Parse(staffidbox.Text);
-                        rw.drivers[edititem].name = vegetarianbox.Text;
+                        rw.drivers[edititem].reg = vegetarianbox.Text;
                         rw.DriverWrite();       //writes changes to file
 
                     }
@@ -535,6 +535,7 @@ namespace Menu_Program
                     var edititem = rw.drivers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
                     namebox.Text = rw.drivers[edititem].name;
                     staffidbox.Text = rw.drivers[edititem].ID.ToString();
+                    vegetarianbox.Text = rw.drivers[edititem].reg;
                 }
             }
         }
