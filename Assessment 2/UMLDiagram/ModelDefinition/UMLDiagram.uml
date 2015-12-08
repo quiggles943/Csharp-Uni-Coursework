@@ -1044,6 +1044,47 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="4fe6f057-3b52-4469-b671-fc79e3a54cad"
+            isDerived="false"
+            sourceEndRoleName="Encryption"
+            targetEndRoleName="setting"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="95753d87-a866-4d78-a89b-90bad11df4e8"
+              LastKnownName="setting"
+              LastKnownLocation="UMLDiagram.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8260d618-bff7-4990-9230-657353341720"
+                  name="Encryption"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bdcd4d24-cdb1-40a6-affd-9800e0134fd2"
+                  name="setting"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedOperationsInternal>
           <operation
             Id="35dfc22e-d451-4230-8aff-d2b5467f5b82"

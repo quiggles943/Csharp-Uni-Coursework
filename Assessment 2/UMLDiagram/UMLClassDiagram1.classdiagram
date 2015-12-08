@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="50d97951-394d-42ab-b776-126ac3a31b4b" name="UMLClassDiagram1" linkedPackageId="ca7fb305-26e3-4af4-b261-22118b760d76" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
-  <profileInstances>
-    <packageHasProfileInstances Id="04653ed9-749e-452f-93f0-81e826db8c92">
-      <profileInstance Id="16676d65-c1a4-4558-8d76-4dc785943ab2" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="adb879bf-bd03-4cec-a1a9-9ea350fa5b2c">
-      <profileInstance Id="a70afc22-325d-4ba7-98a5-0d563193ebc6" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <packageHasNamedElement>
       <referencedType Id="952b1305-3cdc-4284-95a7-5e8c12e920f6" name="String" isAbstract="false" isLeaf="false" cachedFullName="String">
@@ -409,6 +395,24 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="307095a6-174f-4dc7-afa8-d03224a9b282" name="Encryption" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="7bf759f8-1da9-41db-9d71-f683028e4426" />
+        <targetEnds>
+          <association Id="a6caf6c9-af9e-49ad-8c58-59350fde28f8" isDerived="false" sourceEndRoleName="Encryption" targetEndRoleName="setting" isLeaf="false" isAbstract="false">
+            <classMoniker Id="f3c159db-941f-458c-b9bd-de14e346dde2" LastKnownName="setting" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="a0ec297b-4ae7-484c-9ee6-9bad0f647bb2" name="Encryption" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="8260d618-bff7-4990-9230-657353341720" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0d874857-75d3-4ee2-be99-ccfc395de4e1" name="setting" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bdcd4d24-cdb1-40a6-affd-9800e0134fd2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="4fe6f057-3b52-4469-b671-fc79e3a54cad" />
+          </association>
+        </targetEnds>
         <ownedOperationsInternal>
           <operation Id="4214af72-0fd1-4fcc-bd70-5ecc2984f3cb" name="encrypt" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="35dfc22e-d451-4230-8aff-d2b5467f5b82" />
@@ -422,5 +426,19 @@
   </packagedElements>
   <package Id="ca7fb305-26e3-4af4-b261-22118b760d76" name="UMLDiagram">
     <elementDefinition Id="41ce5749-8c4c-4e36-973b-061d5bdbfec6" />
+    <profileInstances>
+      <packageHasProfileInstances Id="04653ed9-749e-452f-93f0-81e826db8c92">
+        <profileInstance Id="16676d65-c1a4-4558-8d76-4dc785943ab2" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="adb879bf-bd03-4cec-a1a9-9ea350fa5b2c">
+        <profileInstance Id="a70afc22-325d-4ba7-98a5-0d563193ebc6" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>
