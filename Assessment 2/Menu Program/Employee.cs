@@ -23,12 +23,26 @@ namespace Menu_Program
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set
+            {
+                if(value == "")
+                {
+                    throw new ArgumentException("Name cannot be blank");
+                }
+                else
+                    name = value; 
+            }
         }
         public int ID
         {
             get { return id; }
-            set { id = value; }
+            set
+            { 
+                if(value <= 0)
+                {
+                    throw new ArgumentException("Id must be a positive number i.e. greater than 0");
+                }
+                id = value; }
         }
     }
 

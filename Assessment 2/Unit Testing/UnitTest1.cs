@@ -28,6 +28,21 @@ namespace Unit_Testing
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Servervalid_ID()
+        {
+            Server test = new Server("Aidan", -3);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Servervalid_Name()
+        {
+            Server test = new Server("", 8);
+        }
+
+
+        [TestMethod]
         public void MenuTest()
         {
             int expected = 950;
@@ -60,15 +75,6 @@ namespace Unit_Testing
             d.Dishes(item3);
             double total = d.total();
             Assert.AreEqual(expected, total, 0.001);
-        }
-        [TestMethod]
-        public void noteTest()
-        {
-            sitinOrder s = new sitinOrder();
-            s.Dishes(item1);
-            s.addNote(0, "Extra Cheese");
-            s.Dishes(item2);
-            Assert.AreEqual(s.readNote(1), "None");
         }
     }
 }

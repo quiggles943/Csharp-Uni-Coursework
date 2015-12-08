@@ -56,6 +56,7 @@ namespace Menu_Program
 
         public void MenuRead()      //reads from menu file
         {
+            menuitems.Clear();
             int filelength = 0;
             using (StreamReader r = new StreamReader(menufilepath))
             {
@@ -102,6 +103,7 @@ namespace Menu_Program
         public void ServerRead()        //reads from server file
         {
                 //read in server text file
+            servers.Clear();
                 int filelength = 0;
                 StreamReader r = new StreamReader(serverfilepath);
                 using (r)
@@ -146,6 +148,7 @@ namespace Menu_Program
 
         public void DriverRead()        //reads from driver file
             {
+                drivers.Clear();
             int filelength = 0;
                 StreamReader r = new StreamReader(driverfilepath);
                 using (r)

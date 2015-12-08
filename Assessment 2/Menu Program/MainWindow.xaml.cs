@@ -110,28 +110,29 @@ namespace Menu_Program
             rw.DriverRead();
             foreach (var item in rw.menuitems)
             {
-                foodlistbox.Items.Add(item.Description);
+                foodlistbox.Items.Add(item.Description);        //reads in each item to the food list box
             }
 
             foreach (var item in rw.servers)
             {
-                serverlist.Items.Add(item.Name);
+                serverlist.Items.Add(item.Name);        //reads in each server to the serverlist
             }
 
             foreach (var item in rw.drivers)
             {
-                driverbox.Items.Add(item.Name);
+                driverbox.Items.Add(item.Name);     //reads in each driver to the driver list
             }
         }
 
         public void fontsize()
         {
-            this.FontSize = setting.Fontsize;
+            this.FontSize = setting.Fontsize;       //sets the fontsize
         }
 
         private void writetofile(int server, int table, double paid)     //writes to sit in order log 
         {
             string items = "";
+            //creates the string of items for the order log
             for (int i = 0; i <= itemsordered - 1; i++)
             {
                 if (i == 0)
@@ -162,6 +163,7 @@ namespace Menu_Program
         private void writetofile(int server, string driver, string name, double paid)        //writes to delivery order log 
         {
             string items = "";
+            //creates the string of items for the order log
             for (int i = 0; i <= itemsordered - 1; i++)
             {
                 if (i == 0)
@@ -199,6 +201,7 @@ namespace Menu_Program
         {
             if (serverlist.SelectedIndex != -1)
             {
+                //sets the required enabled constraints
                 serverlist.IsEnabled = false;
                 serverstatusbox.Content = serverlist.SelectedItem;
                 sitinradbtn.IsEnabled = true;
@@ -222,16 +225,16 @@ namespace Menu_Program
                 orderlistbox.IsEnabled = false;
             }
             else
-                orderlistbox.IsEnabled = true;
+                orderlistbox.IsEnabled = true;  //enables the orderlistbox
 
         }
 
         private void addtobtn_Click(object sender, RoutedEventArgs e)
         {
             if (foodlistbox.SelectedIndex == -1)
-                return;
+                return;     //ensures no error if no item selected
             double buffer = 0;
-            if (sitin)
+            if (sitin)      //adds item to sitin order
             {
                 buffer = rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
@@ -239,7 +242,7 @@ namespace Menu_Program
                 s.Note("none");
                 subtotallabel.Content = Math.Round((s.total()/100),2);
             }
-            else
+            else           //adds item to delivery order
             {
                 buffer = rw.menuitems.Find(x => x.Description == foodlistbox.SelectedItem.ToString()).Price;
                 buffer = (buffer / 100);
@@ -489,6 +492,7 @@ namespace Menu_Program
                 MessageBox.Show("Password incorrect", "error");
             fontsize();
             readin();
+            logoutbtn_Click(sender, e);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
