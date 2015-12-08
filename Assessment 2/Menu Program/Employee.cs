@@ -12,23 +12,35 @@ namespace Menu_Program
     //Last Modified: 20/10/2015
     public class Employee
     {
-        public string name;
-        public int ID;
-
+        private string name;
+        private int id;
+        public List<int> used_ids = new List<int>();       //list of used ids
         public Employee()
         {
 
         }
 
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
     }
 
     public class Server : Employee
     {
         public Server(string n, int id)
         {
-            name = n;
+            Name = n;
             ID = id;
         }
+
+        
     }
 
     public class Driver : Employee
@@ -37,7 +49,7 @@ namespace Menu_Program
 
         public Driver(string n, int id, string r)
         {
-            name = n;
+            Name = n;
             ID = id;
             reg = r;
         }
