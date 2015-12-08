@@ -77,7 +77,7 @@ namespace Menu_Program
             serverbox.Items.Clear();
             foreach(var item in rw.servers)
             {
-                serverbox.Items.Add(item.Name);
+                serverbox.Items.Add(item.name);
             }
         }
 
@@ -99,12 +99,12 @@ namespace Menu_Program
             serverbox.SelectedIndex = -1;
             serverbtn.Content = "Please select server";
             listsetup();
-            for (int i = rw.sitinlength - 1; i >= 1 ; i--)
+            for (int i = 1; i <= rw.sitinlength - 1; i++)
             {
                 loadsitin(i);
             }
             orderlistview.ItemsSource = sitinorders;
-            for (int i = rw.deliverylength - 1; i >= 1 ; i--)
+            for (int i = 1; i <= rw.deliverylength - 1; i++)
             {
                 loaddelivery(i);
             }
@@ -164,23 +164,23 @@ namespace Menu_Program
             listsetup();
             DateTime dt;
             DateTime Today = DateTime.Today;
-            for (int j = rw.sitinlength - 1; j >= 1; j--)
-            {
-
-                dt = Convert.ToDateTime(rw.sit[j, 0]);
-                if (rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).Name == serverbox.SelectedItem.ToString())
+                for (int j = 1; j <= rw.sitinlength - 1; j++)
                 {
-                    loadsitin(j);
+                    
+                    dt = Convert.ToDateTime(rw.sit[j, 0]);
+                    if (rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[j, 1])).name == serverbox.SelectedItem.ToString())
+                    {
+                        loadsitin(j);                       
+                    }                  
                 }
-            }
                 orderlistview.ItemsSource = sitinorders;
                 string dash = "-";
                 for (int k = 0; k <= rw.longsitin+32; k++)
                     dash = string.Concat(dash, "-");
-                    for (int i = rw.deliverylength - 1; i >= 1; i--)
+                    for (int i = 1; i <= rw.deliverylength - 1; i++)
                     {
                         dt = Convert.ToDateTime(rw.deliver[i, 0]);
-                        if (rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).Name == serverbox.SelectedItem.ToString())
+                        if (rw.servers.Find(x=> x.ID == Int32.Parse(rw.deliver[i,1])).name == serverbox.SelectedItem.ToString())
                         {
                             loaddelivery(i);
                         }
@@ -202,7 +202,7 @@ namespace Menu_Program
             {
                 foreach (var item in rw.servers)
                 {
-                    item_selection.Items.Add(item.Name);
+                    item_selection.Items.Add(item.name);
                 }
                 staffidlabel.Content = "Staff Id";
                 vegetarianlabel.Visibility = Visibility.Hidden;
@@ -214,7 +214,7 @@ namespace Menu_Program
             {
                 foreach (var item in rw.drivers)
                 {
-                    item_selection.Items.Add(item.Name);
+                    item_selection.Items.Add(item.name);
                 }
                 vegetarianlabel.Visibility = Visibility.Hidden;
                 vegetarianbox.Visibility = Visibility.Hidden;
@@ -356,8 +356,8 @@ namespace Menu_Program
                 {
                     if (editrbtn.IsChecked == true)
                     {
-                        var edititem = rw.servers.FindIndex(x => x.Name == item_selection.SelectedItem.ToString());
-                        rw.servers[edititem].Name = namebox.Text;
+                        var edititem = rw.servers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
+                        rw.servers[edititem].name = namebox.Text;
                         rw.servers[edititem].ID = Int32.Parse(staffidbox.Text);
                         rw.ServerWrite();       //writes changes to file
 
@@ -371,7 +371,7 @@ namespace Menu_Program
                     }
                     if (removerbtn.IsChecked == true)
                     {
-                        var removeitem = rw.servers.Single(x => x.Name == item_selection.SelectedItem.ToString());
+                        var removeitem = rw.servers.Single(x => x.name == item_selection.SelectedItem.ToString());
                         rw.servers.Remove(removeitem);
                         rw.ServerWrite();       //writes changes to file
                     }
@@ -381,10 +381,10 @@ namespace Menu_Program
                 {
                     if (editrbtn.IsChecked == true)
                     {
-                        var edititem = rw.drivers.FindIndex(x => x.Name == item_selection.SelectedItem.ToString());
-                        rw.drivers[edititem].Name = namebox.Text;
+                        var edititem = rw.drivers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
+                        rw.drivers[edititem].name = namebox.Text;
                         rw.drivers[edititem].ID = Int32.Parse(staffidbox.Text);
-                        rw.drivers[edititem].Name = vegetarianbox.Text;
+                        rw.drivers[edititem].reg = vegetarianbox.Text;
                         rw.DriverWrite();       //writes changes to file
 
                     }
@@ -397,7 +397,7 @@ namespace Menu_Program
                     }
                     if (removerbtn.IsChecked == true)
                     {
-                        var removeitem = rw.drivers.Single(x => x.Name == item_selection.SelectedItem.ToString());
+                        var removeitem = rw.drivers.Single(x => x.name == item_selection.SelectedItem.ToString());
                         rw.drivers.Remove(removeitem);
                         rw.DriverWrite();       //writes changes to file
                     }
@@ -412,7 +412,7 @@ namespace Menu_Program
 
                         try
                         {
-                            var edititem = rw.servers.FindIndex(x => x.Name == item_selection.SelectedItem.ToString());
+                            var edititem = rw.servers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
                             rw.menuitems[edititem].Description = namebox.Text;
                             rw.menuitems[edititem].Price = Int32.Parse(staffidbox.Text);
                             rw.menuitems[edititem].Vegetarian = veg;
@@ -522,8 +522,8 @@ namespace Menu_Program
             {
                 if (edit_selection.SelectionBoxItem.ToString() == "Servers")
                 {
-                    var edititem = rw.servers.FindIndex(x => x.Name == item_selection.SelectedItem.ToString());
-                    namebox.Text = rw.servers[edititem].Name;
+                    var edititem = rw.servers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
+                    namebox.Text = rw.servers[edititem].name;
                     staffidbox.Text = rw.servers[edititem].ID.ToString();
                 }
             }
@@ -532,9 +532,10 @@ namespace Menu_Program
             {
                 if (edit_selection.SelectionBoxItem.ToString() == "Drivers")
                 {
-                    var edititem = rw.drivers.FindIndex(x => x.Name == item_selection.SelectedItem.ToString());
-                    namebox.Text = rw.drivers[edititem].Name;
+                    var edititem = rw.drivers.FindIndex(x => x.name == item_selection.SelectedItem.ToString());
+                    namebox.Text = rw.drivers[edititem].name;
                     staffidbox.Text = rw.drivers[edititem].ID.ToString();
+                    vegetarianbox.Text = rw.drivers[edititem].reg;
                 }
             }
         }
@@ -549,27 +550,27 @@ namespace Menu_Program
                 dt = Convert.ToDateTime(rw.sit[i, 0]);
                 if (orderdatebox.SelectedIndex == 0)
                 {
-                    sitinorders.Add(new sitinOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).Name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                    sitinorders.Add(new sitinOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
                 }
                 if(orderdatebox.SelectedIndex == 1)
                 {
                     if (dt.Date == Today)
                     {
-                        sitinorders.Add(new sitinOrder() { Date = dt.ToShortTimeString(), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).Name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                        sitinorders.Add(new sitinOrder() { Date = dt.ToShortTimeString(), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
                     }
                 }
                 if (orderdatebox.SelectedIndex == 2)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-6))
                     {
-                        sitinorders.Add(new sitinOrder() { Date = dt.ToString("ddd HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).Name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                        sitinorders.Add(new sitinOrder() { Date = dt.ToString("ddd HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
                     }
                 }
                 if (orderdatebox.SelectedIndex == 3)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
                     {
-                        sitinorders.Add(new sitinOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).Name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
+                        sitinorders.Add(new sitinOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.sit[i, 1])).name, Table = Int32.Parse(rw.sit[i, 2]), Paid = double.Parse(rw.sit[i, 3].Substring(1)) });
                     }
                 }              
             
@@ -581,28 +582,28 @@ namespace Menu_Program
                 dt = Convert.ToDateTime(rw.deliver[i, 0]);
                 if (orderdatebox.SelectedIndex == 0)
                 {
-                    deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).Name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                    deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
                    
                 }
                 if (orderdatebox.SelectedIndex == 1)
                 {
                     if (dt.Date == Today)
                     {
-                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToShortTimeString(), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).Name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToShortTimeString(), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
                     }
                 }
                 if (orderdatebox.SelectedIndex == 2)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-6))
                     {
-                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).Name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
                     }
                 }
                 if (orderdatebox.SelectedIndex == 3)
                 {
                     if (dt.Date <= DateTime.Today && dt >= Today.AddDays(-28))
                     {
-                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).Name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
+                        deliveryorders.Add(new deliveryOrder() { Date = dt.ToString("dd/MM HH:mm"), Server = rw.servers.Find(x => x.ID == Int32.Parse(rw.deliver[i, 1])).name, Driver = rw.deliver[i, 2], Name = rw.deliver[i, 3], Paid = double.Parse(rw.deliver[i, 4].Substring(1)) });
                     }
                 }
 
