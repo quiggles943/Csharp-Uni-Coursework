@@ -41,7 +41,7 @@ namespace Menu_Program
             totallabel.Content = Math.Round((d.Paid + (d.Paid * 0.15)),2);
             serverlabel.Content = d.Server;
             name_tablelabel.Content = "Name:";
-            name_tablecontentlabel.Content = d.name;
+            name_tablecontentlabel.Content = d.Name;
             addresstxt.Content = d.Address;
         }
         public Bill(sitinOrder s, bool sitin)

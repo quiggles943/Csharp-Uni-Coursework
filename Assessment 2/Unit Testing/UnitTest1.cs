@@ -22,7 +22,7 @@ namespace Unit_Testing
             servers.Add(server1);
             servers.Add(server2);
 
-            string actual = servers.Find(x => x.ID == 8).name;
+            string actual = servers.Find(x => x.ID == 8).Name;
 
             Assert.AreEqual(expected, actual,true,"Incorrect server selected");
         }
