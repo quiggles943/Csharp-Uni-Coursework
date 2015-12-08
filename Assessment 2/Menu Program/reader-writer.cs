@@ -138,7 +138,7 @@ namespace Menu_Program
                 logfile.WriteLine("Name\tID");
                 foreach (var item in servers)
                 {
-                    logfile.WriteLine(item.name + "\t" + item.ID);
+                    logfile.WriteLine(item.Name + "\t" + item.ID);
                 }
                 logfile.Close();
             }
@@ -184,7 +184,7 @@ namespace Menu_Program
             logfile.WriteLine("Name\tID\tReg");
             foreach (var item in drivers)
             {
-                logfile.WriteLine(item.name + "\t" + item.ID + "\t" +item.reg);
+                logfile.WriteLine(item.Name + "\t" + item.ID + "\t" +item.reg);
             }
             logfile.Close();
         }

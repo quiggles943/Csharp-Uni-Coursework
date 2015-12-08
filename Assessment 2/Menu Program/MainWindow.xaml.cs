@@ -115,12 +115,12 @@ namespace Menu_Program
 
             foreach (var item in rw.servers)
             {
-                serverlist.Items.Add(item.name);
+                serverlist.Items.Add(item.Name);
             }
 
             foreach (var item in rw.drivers)
             {
-                driverbox.Items.Add(item.name);
+                driverbox.Items.Add(item.Name);
             }
         }
 
