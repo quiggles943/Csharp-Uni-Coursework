@@ -48,8 +48,27 @@ namespace Unit_Testing
             int expected = 1000;
             s.Dishes(item2);
             s.Dishes(item2);
-            int total = s.total();
+            double total = s.total();
             Assert.AreEqual(expected, total, 0.001);
+        }
+        [TestMethod]
+        public void DeliveryTest()
+        {
+            deliveryOrder d = new deliveryOrder();
+            int expected = 950;
+            d.Dishes(item1);
+            d.Dishes(item3);
+            double total = d.total();
+            Assert.AreEqual(expected, total, 0.001);
+        }
+        [TestMethod]
+        public void noteTest()
+        {
+            sitinOrder s = new sitinOrder();
+            s.Dishes(item1);
+            s.addNote(0, "Extra Cheese");
+            s.Dishes(item2);
+            Assert.AreEqual(s.readNote(1), "None");
         }
     }
 }

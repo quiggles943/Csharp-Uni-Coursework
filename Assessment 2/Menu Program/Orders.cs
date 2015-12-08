@@ -65,6 +65,7 @@ namespace Menu_Program
 
         public void Dishes(Menu item)
         {
+
             items.Add(item);
 
         }
@@ -94,7 +95,6 @@ namespace Menu_Program
         private int table;
         public sitinOrder()
         {
-
         }
         public int Table
         {
@@ -109,7 +109,6 @@ namespace Menu_Program
         public string driver;
         public deliveryOrder()
         {
-
         }
         public string Driver
         {
